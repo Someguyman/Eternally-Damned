@@ -1,0 +1,151 @@
+
+//		Weapons		//
+
+wold3dknife/attack WSKFSTAB
+wold3dpisol/fire WSPSFIRE
+wold3dmachinegun/fire WSMGFIRE
+wold3dchaingun/fire WSGGFIRE
+Wold3dWeapon/pickup WSWPNUP
+Wold3dChaingun/pickup WSGGNUP
+$limit Wold3dChaingun/pickup 256
+Wold3dammo/pickup WSCLPUP
+
+$pitchshiftrange 3
+weapons/sawup dssawup
+weapons/sawidle	dssawidl
+weapons/sawfull	dssawful
+weapons/sawhit dssawhit
+$limit weapons/sawup 0
+$limit weapons/sawidle 0
+$limit weapons/sawhit 0
+$pitchshiftrange 4
+$attenuation weapons/rocklx 0.4
+
+Weapons/Knifestab DSKNIFE
+$limit Weapons/Knifestab 0
+
+$Random Weapons/Axehit { Weapons/Axehit1 Weapons/Axehit2 }
+$limit Weapons/Axehit 0
+Weapons/Axehit1 DSAXEHT1
+Weapons/Axehit2 DSAXEHT2
+Weapons/Axeclink DSAXECG1
+$limit Weapons/Axeclink 0
+Weapons/Axeclink1 DSAXECG1
+Weapons/Axeclink2 DSAXECG2
+Weapons/Axeswing DSFIRSWG
+Weapons/Axepowerswing DSSWGPWR
+
+Weapons/Plasmafire DSPLASMA
+$limit Weapons/Plasmafire 0
+Weapons/Plasmadie DSPLADTH
+$limit Weapons/Plasmadie 0
+Terminator/Plasma TERMPLA
+$limit Terminator/Plasma 0
+Terminator/PDeath DSFI2XPL
+$limit Terminator/PDeath 0
+Weapons/Lighninggunstart lstart
+$limit Weapons/Lighninggunstart 0
+Weapons/Lighninggunfire lhit
+$limit Weapons/Lighninggunfire 0
+
+Weapons/RifleFire DSRIFFIR
+Weapons/Rifleup DSM1LD
+Weapons/RiflePickup DSM1RL
+
+Weapons/Poweredbfgfire DSBFGPWD
+Weapons/Poweredbfgexplode dsrxplo2
+
+Weapons/PoweredRedbfgpow DSBFGFIR
+Weapons/PoweredRedbfgIdle DSBFGFLY
+
+$limit weapons/rocklx 0
+
+weapons/bfgx dsrxplod
+
+weapons/pistol bspistol
+grunt/attack bspistol
+weapons/Superpistol CGN2FIRE
+weapons/chngun CGN2FIRE
+weapons/chngun2 CGN2ECHO
+Weapons/suprchngun DSSCHGN
+$volume Weapons/suprchngun 0.6
+Weapons/suprchngun2 CHAINSTO
+
+weapons/rocketlauncher dsroketl
+$alias chainguy/attack weapons/chngun
+
+Pickup/Demonkey DPICKUPD
+$limit Weapons/Umakerfire 0
+
+Railgun/Fire DSRAILFR
+$limit RailGun/Idle 1
+RailGun/Idle RAILIDLE
+Railgun/Charge DSRAILCH
+$volume Railgun/Charge 0.6
+
+Weapons/Autoshotgunfire DSAUTOSG
+Weapons/Autoshotgununload DRUMOUT
+Weapons/Autoshotgunload DRUMIN
+Weapons/Shellgunfire DSAUTOSG
+Weapons/Tacticalssgfire DSTACSSG
+Weapons/Sawedofffire DSWGFIRE
+Weapons/SawedoffOpen BSDBOPN
+Weapons/SawedoffLoad BSDBLOAD
+Weapons/SawedoffClose BSDBCLS
+
+Weapons/Chaingunfire DSCGNPU
+Weapons/GrenadeFire	DSGRFIRE
+Weapons/GrenadeBounce DSGRBNCE
+Weapons/GrenadeOpen	DSGROPEN
+Weapons/GrenadeLoad	DSGRLOAD
+Weapons/GrenadeClose DSGRCLOS
+
+$volume Weapons/Umakerfire 0.6
+$limit Weapons/Umakerfire 2
+Weapons/Umakerfire DSUNMAKE
+BFG/Tracerexp DSFI2XPL
+$attenuation BFG/Tracerexp 0.5
+
+Weapons/BFG10KC		DSBFG10K
+Weapons/BFG10KF	    DS10KFIR
+Weapons/BFG10KX		DS10KEXP
+Weapons/BFG10KCool	DS10KCDN
+Weapons/BFG10KIdle	DS10KIDL
+
+
+//		Pickup		//
+
+Weapons/fistsup DSPNCHUP
+
+Weapons/Sawpickup DSSWPIC
+
+Weapons/Pistolup DSPISUP
+Weapons/PistolPickup DSPISPU
+Weapons/SuperPup DSSPTUP
+Weapons/SuperPPickup DSSPTPU
+
+Weapons/Shotgunup DSSHGNUP
+Weapons/ShotgunPickup DSSHGNPU
+Weapons/SsgPickup DSDSGNPU
+
+Weapons/Chaingunup DSCGNPU
+Weapons/Chaingunpickup DSCGNPK
+Weapons/SuperCup DSSCGUP
+Weapons/SuperCPickup DSSCGPU
+
+Weapons/Nailgunup DSSHGNPU
+Weapons/Nailgunpickup DSNAILPU
+
+Weapons/RLauncherup dsrokLup
+Weapons/RLauncherPickup dsrokLpu
+Weapons/GLauncherup DSGRPKUP
+Weapons/GLauncherPickup DSGRPKPU
+
+Weapons/Plasmaup D3PLSMUP
+Weaopns/PlasmaPickup D3PLSMPU
+
+Weapons/Bfg9000up D3BFGUP
+Weapons/Bfg9000Pickup D3BFGPU
+
+Weapons/Unmakerup DSUNMUP
+Weapons/UnmakerPickup DSUNMPU

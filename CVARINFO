@@ -1,0 +1,13 @@
+
+server int Bstoggle = 0;
+server int Aptoggle = 0;
+server int Kitoggle = 0;
+server int Ivstoggle = 0;
+server int Hztoggle = 0;
+server int Spctoggle = 0;
+server int Pjtoggle = 1;
+server int Megawadspawns = 0;
+server int D2spawns = 0;
+server int Bspawns = 1;
+server int Mppawns = 1;
+

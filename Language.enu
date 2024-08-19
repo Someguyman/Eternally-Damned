@@ -1,0 +1,20 @@
+
+[enu default]
+
+PD_BLUEC = "\chThis object requires a blue key card for use!";
+PD_REDC = "\cgThis object requires a red key card for use!";
+PD_YELLOWC = "\ckThis object requires a yellow key card for use!";
+
+PD_BLUES = "\cyThis object requires a sapphire skull key for use!";
+PD_REDS = "\caThis object requires a ruby skull key for use!";
+PD_YELLOWS = "\cfThis object requires a topaz skull key for use!";
+
+PD_BLUEO = "\chYou need a blue key to activate this object!";
+PD_REDO = "\cgYou need a red key to activate this object!";
+PD_YELLOWO = "\ckYou need a yellow key to activate this object!";
+
+PD_BLUEK = "\chYou need a blue key to open this door!";
+PD_REDK = "\cgYou need a red key to open this door!";
+PD_YELLOWK = "\ckYou need a yellow key to open this door!";
+
+SECRETMESSAGE = "\cfA secret is revealed!";

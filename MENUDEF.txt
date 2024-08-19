@@ -1,0 +1,225 @@
+DefaultListMenu
+{
+	Font "BigFont", "Red"
+	LineSpacing 18
+	Selector "M_SKULL1", -32, -5
+	Size Clean
+}
+
+ListMenu "PlayerclassMenu"
+{
+	NetgameMessage "$NEWGAME"
+	StaticTextCentered 160, 15, "$MNU_CHOOSECLASS"
+	Position 48, 63
+	Selector "M_SKULL1", -30, -8
+	PlayerDisplay 220, 63, "20 00 00", "80 00 40"
+	MouseWindow 0, 220
+}
+
+ListMenu "SkillMenu"
+{
+	Size "Clean"
+	//Font "BigFont", "Red"
+	StaticTextCentered 160, 38, "$MNU_CHOOSESKILL"
+	Position 48, 63
+	Selector "M_SKULL1", -30, -8
+	centermenu
+}
+
+OptionValue Berserkskin
+{
+	0.0, "\cjSphere"
+	1.0, "\cjOriginal"
+}
+
+OptionValue Invisskin
+{
+	0.0, "\cjWhite"
+	1.0, "\cjRed (Original)"
+}
+
+OptionValue Hazmatskin
+{
+	0.0, "\cjOriginal"
+	1.0, "\cjArtifact"
+}
+
+OptionValue Hellknightskin
+{
+	0.0, "\cfNew"
+	1.0, "\coOriginal"
+}
+
+OptionValue Spectreskin
+{
+	0.0, "\cfNew"
+	1.0, "\coOriginal"
+}
+
+OptionValue Arachplasmaskin
+{
+	0.0, "\chBlue"
+	1.0, "\cdGreen"
+}
+
+OptionValue Projtrail
+{
+	0.0, "\cdEnabled"
+	1.0, "\crDisabled"
+}
+
+OptionValue Megawadspawns
+{
+	0.0, "\cfDefault Doom" //The base setting used for Doom 2/Masterlevels/TNT/Plutonia/No rest for the living.
+	1.0, "\cxUltimate Doom" //For maps made with Doom 1/ultimate Doom in mind as well as sigil and sigil II.
+	2.0, "\ciGoing down" //Replaces wolfentein ss and commander keen with the red mastermind boss and forbiden fruit respectively.
+	3.0, "\cuDoom Zero" //Replaces the SS, Keen, and Icon of sin with the Alpha soul, Dopefish, and demon witch respectively.
+	4.0, "\ckDoom 64 for Doom 2" //Replaces Keen, Deadlostsoul, and Spidermastermind with the Nightmare imp, Nightmare cacodemon, and Motherdemon boss sespectively.
+	5.0, "\cjEviternity"
+	6.0, "\cdValiant"
+	7.0, "\coScythe 2"
+	//8.0, "\ctAncient Aliens"
+	//9.0, "\crTNT: Revilution"
+	//10.0, "\cnJenesis"
+	//11.0, "\ceEpic 2"
+	12.0, "\cdKDIKDIZD"
+	13.0, "\cfAlternate Doom"
+}
+
+OptionValue Doom2spawns
+{
+	0.0, "Only cut monsters (Supposedly)"
+	1.0, "Full doom 2 content"
+}
+
+OptionValue Bonusspawns
+{
+	0.0, "\crOff"
+	1.0, "\cdOn"
+}
+
+OptionValue Multispawns
+{
+	0.0, "\crOff"
+	1.0, "\cdOn"
+}
+
+ListMenu "Mainmenu"
+{
+	LineSpacing 16	// This must account for some single-graphic replacements, so it cannot be widened
+	StaticPatch 94, 2, "M_DOOM"
+	Position 97, 72
+	TextItem "New Game",			"n",	"PlayerclassMenu"
+	TextItem "Options",				"o",	"OptionsMenu"
+	TextItem "Mod Options",			"e",	"EDOptions"
+	TextItem "Load Game",			"l",	"LoadGameMenu"
+	TextItem "Save Game",			"s",	"SaveGameMenu"
+	TextItem "Read This",			"r",	"ReadThisMenu"
+	TextItem "Quit Game",			"q",	"QuitMenu"
+}
+
+AddOptionMenu "OptionsMenu"
+{
+Submenu "Eternally Damned Options","EDOptions"
+}
+
+OptionMenu "EDOptions"
+{
+Title "Eternally Damned Options"
+//
+//
+StaticText " "
+Submenu "Mod Graphics","EdGraphicsoptions"
+StaticText "Adjusts some of the graphics in the mod to your liking"
+StaticText " "
+Submenu "Gameplay mutators", "EdGameplayoptions"
+StaticText "Alters the gameplay of the mod slighty to fit the mapset you're playing"
+StaticText " "
+//
+//
+}
+
+OptionMenu "EdGraphicsoptions"
+{
+//
+Title "Eternally Damned Appearance Options"
+//
+StaticText " "
+//
+StaticText "Special effects",1
+//
+option "Proformace mode", "Pjtoggle","Projtrail"
+StaticText "Toggles the special effects in the mod like projectile trails and boss explosions"
+StaticText " "
+//
+//
+StaticText "Powerups",1
+//
+option "Berserk style", "Bstoggle","Berserkskin"
+//
+StaticText "Toggles the design of the berserk between the original and a power-up sphere"
+StaticText " "
+//
+option "Partial Invisibility style", "Ivstoggle","Invisskin"
+//
+StaticText "Toggles the color of the partial Invisibility"
+StaticText " "
+//
+option "Hazard Protection", "Hztoggle","Hazmatskin"
+//
+StaticText "Toggles the design of the Hazard Protection between the original and an artifact"
+StaticText " "
+//
+//
+//
+StaticText "Enemies",1
+//
+option "Spectre style", "Spctoggle","Spectreskin"
+//
+StaticText "Toggles the spectre design"
+StaticText " "
+//
+option "Hellknight style", "Kitoggle","Hellknightskin"
+//
+StaticText "Toggles the Hell knight design"
+StaticText " "
+//
+option "Arachnotron Plasma color", "Aptoggle","Arachplasmaskin"
+//
+StaticText "Toggles the color of the arachnotron's plasma"
+StaticText " "
+}
+
+OptionMenu "EdGameplayoptions"
+{
+	Title "Eternally Damned Gameplay Options"
+	StaticText " "
+	//
+	option "Monster Spawns", "Megawadspawns","Megawadspawns"
+	StaticText "toggles the spawns for the mod to match the map pack you're using"
+	StaticText " "
+	//
+	StaticText "General spawn options",1
+	//StaticText "For all spawns here"
+	StaticText " "
+	//
+	option "Revert multiplayer spawn changes", "Mppawns", "Multispawns"
+	StaticText "Reverts the multiplayer spawns back to normal, only used for maps that utalize multiplayer weapons"
+	StaticText " "
+	//
+	option "Bonus spawns", "Bspawns", "Bonusspawns"
+	StaticText "Enables extra monsters related to certain megawads your playing"
+	StaticText " "
+	//
+	//StaticText "New bosses",1
+	//StaticText "Enables new bosses for the offical doom maps, mainly ultimate doom and no rest for the living"
+	//StaticText " "
+	//
+	StaticText "Ultimate Doom spawn options",1
+	//StaticText "These options on pretain to ultimate doom only"
+	StaticText " "
+	//
+	option "Doom 2 content", "D2spawns", "Doom2spawns"
+	StaticText "Alter how much doom 2 content you want for Ultimate Doom"
+	StaticText " "
+}

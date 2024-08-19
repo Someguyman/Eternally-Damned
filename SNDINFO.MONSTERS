@@ -1,0 +1,695 @@
+//		Possesed		//
+
+$attenuation grunt/attack 0.5
+$attenuation shotguy/attack 0.5
+$attenuation chainguy/attack 0.5
+
+Ranger/attack DSMACHGN
+$attenuation Ranger/attack 0.5
+
+//	Chaingun commando	//
+
+$random chainguy/sight { chainguy/sight1 chainguy/sight2 chainguy/sight3 }
+chainguy/sight1 CPOSSIT1
+chainguy/sight2 CPOSSIT2
+chainguy/sight3 CPOSSIT3
+chainguy/active CPOSACT
+chainguy/pain CPOSPAIN
+$random chainguy/death { chainguy/death1 chainguy/death2 chainguy/death3 }
+chainguy/death1 CPOSDTH1
+chainguy/death2 CPOSDTH2
+chainguy/death3 CPOSDTH3
+
+//	Greater zombies	//
+
+$RANDOM StrongZombie/Sight { StrongZombie/sight1 StrongZombie/sight2 StrongZombie/sight3 }
+StrongZombie/sight1	SPOSSIT1
+StrongZombie/sight2	SPOSSIT2
+StrongZombie/sight3	SPOSSIT3
+StrongZombie/Active SPOSACT
+StrongZombie/Pain SPOSPIN
+$RANDOM StrongZombie/Death { StrongZombie/death1 StrongZombie/death2 StrongZombie/death3 }
+StrongZombie/death1	SPOSDTH1
+StrongZombie/death2	SPOSDTH2
+StrongZombie/death3	SPOSDTH3
+
+//	Grand Zombies	//
+
+$RANDOM GrandZombie/Sight { Grandzombie/sight1 Grandzombie/sight2 Grandzombie/sight3 }
+Grandzombie/sight1	CPOSSIT1
+Grandzombie/sight2	CPOSSIT2
+Grandzombie/sight3	CPOSSIT3
+Grandzombie/Active CPOSACT
+$RANDOM GrandZombie/Death { Grandzombie/Death1 Grandzombie/Death2 Grandzombie/Death3 }
+Grandzombie/Death1	CPOSDTH1
+Grandzombie/Death2	CPOSDTH2
+Grandzombie/Death3	CPOSDTH3
+
+//	Shock Trooper	//
+
+ShockTrooper/Active DSPPOACT
+ShockTrooper/Pain DSPPOPAI
+ShockTrooper/Death DSPPODTH
+
+ShockTrooper/Head DSPPOHED
+
+//	Evil marine	//
+
+$RANDOM Evilmarine/Sight { Evilmarine/Sight1 Evilmarine/Sight2 Evilmarine/Sight3 }
+Evilmarine/Sight1 EVMNSIT1
+Evilmarine/Sight2 EVMNSIT2
+Evilmarine/Sight3 EVMNSIT3
+Evilmarine/Active EVMNACTI
+Evilmarine/Pain EVMNPAIN
+$RANDOM Evilmarine/Death { Evilmarine/Death1 Evilmarine/Death2 Evilmarine/Death3 }
+Evilmarine/Death1 EVMNDTH1
+Evilmarine/Death2 EVMNDTH2
+Evilmarine/Death3 EVMNDTH3
+
+//		Kamikasi		//
+
+suicide/scream dssuscrm
+suicide/sing SSBOPERA
+suicide/sit dssusit
+
+//		SSGFatty		//
+
+Fatty/Sight DSGPOSIT
+Fatty/Death DSGPODTH
+
+//		WolfensteinSS		//
+
+wolfenteinss/Sight DSWSSIT
+wolfenteinss/Active DSWSACT
+wolfenteinss/Pain	DSWSPAIN
+wolfenteinss/Death	DSWSDTH
+
+//		WolfensteinGaurd		//
+
+$RANDOM Officer/Sight { Officer/Sight1 Officer/Sight2 }
+Officer/Sight1 DSOF0ST1
+Officer/Sight2 DSOF0ST2
+Officer/Active DSOF0AC1
+Officer/Pain DSOF0PN1
+$RANDOM Officer/Death { Officer/Death1 Officer/Death2 }
+Officer/Death1 DSOF0DT2
+Officer/Death2 DSOF0DT1
+
+//		WolfensteinMutant		//
+
+Mutant/Sight DSMT0ST1
+Mutant/Active dsposact
+Mutant/Pain DSMT0PN1
+$RANDOM Mutant/Death { Mutant/Death1 Mutant/Death2 Mutant/Death3 }
+Mutant/Death1 DSMT0DT1
+Mutant/Death2 DSMT0DT2
+Mutant/Death3 DSMT0DT3
+
+//		WolfesteinHansGrosse		//
+
+Grosse/Sight DSGS0ST1
+Grosse/Active DSGS0AC1
+Grosse/Pain DSGS0PN1
+Grosse/Death DSGS0DT1
+
+//		Doom imp		//
+
+imp/pain DSBGPIN
+
+//		Satyr		//
+
+satyr/sight SATYRSIT
+satyr/death SATYRDTH
+NightmareSatyr/Sight NMHGSIT
+NightmareSatyr/Death NMHGDTH
+goatman/sight AZAZLSIT
+goatman/death AZAZLDTH
+
+//		Devil imp		//
+
+$RANDOM Devil/Sight { Devil/sight1 Devil/sight2 }
+Devil/sight1 DSDVLSI1
+Devil/sight2 DSDVLSI2
+Devil/Active DSDVLACT
+Devil/Pain DSDVLPAI
+$RANDOM Devil/death { Devil/death1 Devil/death2 }
+Devil/death1 DSDVLDT1
+Devil/death2 DSDVLDT2
+
+//		Shadow		//
+
+$random Shadow/active { act1 act2 }
+act1			SHDACT1
+act2			SHDACT2
+$random Shadow/pain { pain1 pain2 }
+pain1			SHDPAIN1
+pain2			SHDPAIN2
+Shadow/attack		SHDATTAK
+Shadow/death		SHDDEATH
+
+//		Mutant imp		//
+
+$RANDOM Superimp/Sight { Superimp/sight1 Superimp/sight2 }
+Superimp/sight1 SHSIGHT1
+Superimp/sight2 SHSIGHT2
+Superimp/Active DSMTROAC
+Superimp/Pain 3DSNPN
+$RANDOM Superimp/death { Superimp/death1 Superimp/death2 }
+Superimp/death1 SHDEATH1
+Superimp/death2 SHDEATH2
+Superimp/attack DSMTIPAT
+
+//		Dark imps		//
+
+$random darkimp/sight	{ darkimp/sight1  darkimp/sight2 }
+darkimp/sight1 DKIMPST1
+darkimp/sight2 DKIMPST2
+darkimp/active DKIMPACT
+darkimp/pain   DKIMPPIN
+$random darkimp/death	{ darkimp/death1  darkimp/death2 }
+darkimp/death1 DKIMPDH1
+darkimp/death2 DKIMPDH2
+
+//		Soul Harvester		//
+
+$RANDOM harvester/sight { shsight1 shsight2 }
+shsight1 shsight1
+shsight2 shsight2
+$RANDOM harvester/death { shdeath1 shdeath2 }
+shdeath1 shdeath1
+shdeath2 shdeath2
+harvester/scream SHFBSCRM
+harvester/ghost shghscrm
+
+//		Impgantic		//
+
+Impgantic/Death IMPGDTH
+
+//		LostSoul		//
+
+skull/sight DSSKLSIT
+skull/pain DSSKLPN
+skull/active DSSKLAC
+skull/Death DSSKLDH
+
+//		Forgottensoul		//
+
+Forgotten/melee FORGOTAT
+Forgotten/death FORGOTDH
+
+//		Phantasem		//
+
+Phantom/see ALSSIT
+Phantom/attack DEFIATK
+Phantom/pain ALSPIN
+Phantom/death ALSDTH
+
+//		Ghoul		//
+
+Ghoul/Sight DSGHLSIT
+Ghoul/Active DSGHLACT
+Ghoul/Pain DSGHLPAI
+Ghoul/Death DSGHLDTH
+
+Ghoul/Shot dsfirsht
+Ghoul/ShotX dsfirxpl
+
+//		Banshee		//
+
+Banshee/See DSBANACT
+Banshee/Active DSBANACT
+Banshee/Pain DSBANPAI
+Banshee/Death DSBANDTH
+
+//		Blooddemon		//
+
+BloodDemon/Sight BLDDESIT
+BloodDemon/Active BLDDEACT
+BloodDemon/Attack BLDDEATK
+BloodDemon/Pain BLDDEPAI
+BloodDemon/Death BLDDEDTH
+
+//		Mulardemon		//
+
+Mulardemon/Sight BLDDESIT
+Mulardemon/Active BLDDEACT
+Mulardemon/Attack BLDDEATK
+Mulardemon/Pain BLDDEPAI
+Mulardemon/Death BLDDEDTH
+
+//		Mechafiend		//
+
+Mecha/Walk MPWAL
+$volume Mecha/Walk 0.33
+Mechafiend/sight DSBLDSIT
+Mechafiend/pain DSBLDPAI
+Mechafiend/death DSBLDDTH
+Mechafiend/active DSBLDACT
+Mechafiend/melee DSBLDATK
+
+//		Nightmarepinky/spectre		//
+
+Nightmarepinky/See DSNIPKIT
+Nightmarepinky/Active DSNIPKAC
+Nightmarepinky/Attack DSNIPKAT
+Nightmarepinky/Pain DSNIPKPN
+Nightmarepinky/death DSNIPKDH
+
+KDNightmarepinky/See DSNMDSIT
+KDNightmarepinky/Active DSNMDACT
+KDNightmarepinky/Attack DSNMDATK
+$alias KDNightmarepinky/Pain Nightmarepinky/Pain
+KDNightmarepinky/Death DSNMDDTH
+
+//		Cacodemon		//
+
+caco/melee dsdembit
+caco/active	DSCACACT
+caco/pain DSCACPIN
+caco/attack	CACODSEE
+caco/shotx CACODDTH
+
+//		Astralcaco		//
+
+Astralcaco/Sight DSASTLST
+Astralcaco/Active DSASTACT
+Astralcaco/Attack DSASTATK
+Astralcaco/Pain DSASTLPN
+Astralcaco/Death DSASTLDT
+
+//		DarkCaco		//
+
+DarkCaco/sight DSDKCSIT
+DarkCaco/active DSDKCACT
+DarkCaco/pain DSDKCPIN
+DarkCaco/death DSDKCDTH
+
+//		BabyCaco		//
+
+Babycaco/Sight CACOBSIT
+Babycaco/Active BABYACT
+Babycaco/Attack BABYBITE
+Babycaco/Pain CACOBPAI
+Babycaco/Death CACOBDTH
+
+//		Cacolantern		//
+
+CacoLantern/Sight CALASIT
+CacoLantern/Active CALAACT
+CacoLantern/Pain CALAPAIN
+CacoLantern/Death CALADTH
+
+//		Painelemental		//
+
+pain/active DSPINACT
+
+//		Sufferingelemental		//
+
+Suffering/sight dstrtsit
+Suffering/pain dstrtpn
+Suffering/death dstrtdth
+
+//		Agoneyelemental		//
+
+Agoney/Sight DSAGONST
+Agoney/Pain DSAGONPN
+Agoney/Death DSAGONDH
+
+//		Bombelemental		//
+
+Bombcaco/sight DSINFSIT
+Bombcaco/active DSINFACT
+Bombcaco/pain DSINFPAI
+Bombcaco/death DSINFDTH
+Bombcaco/anger DSBLANG
+Bombcaco/explode DSBEEXP
+
+//		Revenant		//
+
+skeleton/pain REVENPIN
+skeleton/tracex DSBEEXP
+///$attenuation skeleton/attack 0.6
+$random skeleton/melee { skeleton/melee1 skeleton/melee2 skeleton/melee3 skeleton/melee4 skeleton/melee5 }
+skeleton/melee1	dsskepch
+skeleton/melee2	dsskpch1
+skeleton/melee3	dsskpch2
+skeleton/melee4 dsskpch3
+skeleton/melee5	dsskpch3
+$random skeleton/walk { skeleton/walk1 skeleton/walk2 skeleton/walk3 skeleton/walk4 }
+skeleton/walk1 DSSKEWK1
+skeleton/walk2 DSSKEWK2
+skeleton/walk3 DSSKEWK3
+skeleton/walk4 DSSKEWK4
+$volume skeleton/walk 0.5
+
+//		Drauger		//
+
+Drauger/Sight DRAGRSIT
+Drauger/Active DRAGRACT
+Drauger/Swing DRAGRSWG
+$random Drauger/Punch { Drauger/Punch1 Drauger/Punch2 }
+Drauger/Punch1 DRAGRPCH
+Drauger/Punch2 DRAGRPH2
+Drauger/Attack DRAGRATK
+Drauger/Pain DRAGRPIN
+Drauger/Death DRAGRDTH
+
+
+//		Sentry		//
+
+Sentry/Sight SNTYESIT
+Sentry/Active SNTYEACT
+Sentry/Pain SNTYEPIN
+Sentry/Death SNTYEDTH
+
+//		Mancubus		//
+
+fatso/active DSMANACT
+Fatso/flamethrower FMTRFIRE
+//$attenuation Fatso/flamethrower 0.6
+$Limit Fatso/flamethrower 0
+fatso/attack dsbwoosh
+//$attenuation fatso/attack 0.6
+fatso/shotx dshadexp
+
+$Random Behemoth/step { Behemoth/step1 Behemoth/step2 Behemoth/step3 Behemoth/step4 Behemoth/step5 }
+$volume Behemoth/step 0.4
+Behemoth/step1 DSBEHST1
+Behemoth/step2 DSBEHST2
+Behemoth/step3 DSBEHST3
+Behemoth/step4 DSBEHST4
+Behemoth/step5 DSBEHST5
+
+//		Mechabus		//
+
+Mechabus/Sight CYMANSIT
+Mechabus/Active CYMANACT
+Mechabus/Attack CYMANATK
+$attenuation Mechabus/Attack 0.6
+Mechabus/Pain CYMANPIN
+Mechabus/Death CYMANDTH
+
+//		Hellcubus		//
+
+Hellcubus/Sight DSMN2SIT
+Hellcubus/Act DSMN2ACT
+Hellcubus/attack DSMN2ATK
+Hellcubus/pain DSMN2PIN
+Hellcubus/Death DSMN2DTH
+
+//		Deadcubus		//
+
+Dead/Sight DECUSIT
+Dead/Act DECUACT
+Dead/attack DECUATK
+Dead/pain DECUPIN
+Dead/Death DECUDTH
+
+//		Wargrin		//
+
+Wargrin/Sight DSWAGSIT
+Wargrin/Active DSWAGATK
+Wargrin/Pain DSWAGPIN
+Wargrin/Death DSWAGDTH
+
+//		Arachnorb		//
+
+VArachnorb/Sight VARNBSIT
+VArachnorb/Active VARNBACT
+VArachnorb/Attack VARNBATK
+VArachnorb/Death VARNBDTH
+
+//		Arachnotron		//
+
+Arachnotron/sight			DSARCSIT
+Arachnotron/active			DSARCACT
+Arachnotron/pain 			DSARCPIN
+Arachnotron/death			DSARCDTH
+Arachnotron/walk			DSARCWLK
+$volume Arachnotron/walk 0.4
+$Random Arachnotron/walk2 { Arachnotron/walk21 Arachnotron/walk22 Arachnotron/walk23 Arachnotron/walk24 }
+Arachnotron/walk21 DSARCSP1
+Arachnotron/walk22 DSARCSP2
+Arachnotron/walk23 DSARCSP3
+Arachnotron/walk24 DSARCSP4
+//$volume Arachnotron/walk2 0.6
+Arachnotron/attack			ARACPLA
+//$attenuation Arachnotron/attack 0.6
+Arachnotron/Fade			ARACPLX
+$limit Arachnotron/attack 0
+
+//		Mindweaver		//
+
+Mindweaver/sight DSCSPSIT
+Mindweaver/active DSCSPACT
+$alias Mindweaver/pain Aracknight/pain
+Mindweaver/death DSCSPDTH
+Mindweaver/walk DSCSPWLK
+
+$volume Mindweaver/walk 0.4
+
+
+//		Arachnotron 2		//
+
+Arachnotron2/Sight ARAM2SIT
+Arachnotron2/Pain ARAM2PIN
+Arachnotron2/Active ARAM2ACT
+VArachnotron2/Walk ARAM2WLK
+Arachnotron2/Death ARAM2DTH
+
+
+//		Aracknight		//
+
+Aracknight/sight dsarasit
+Aracknight/walk dsarawlk
+Aracknight/active dsaraact
+Aracknight/pain dsarapin
+Aracknight/death dsaradth
+$volume Aracknight/walk 0.33
+Aracknight/Plasma DSKITPLA
+
+//		Babydemolisher		//
+
+Arachnotron/Death2 ATRNDTH2
+
+//		Nobles		//
+
+baronofhell/sight		dsbrnsit
+baronofhell/active 		DSBRNACT
+hellknight/active 		NOBLEACT
+baronofhell/pain 		DSNOLPIN
+hellknight/pain			DSKNTPIN
+//hellknight/pain			DSNOLPIN
+baronofhell/melee		dsclaw
+baronofhell/death		DSBRNDTH
+baronofhell/attack 		DSFI2SHT
+baronofhell/shotx		DSFI2XPL
+$Random Baronofhell/Walk { Baronofhell/Walk1 Baronofhell/Walk2 Baronofhell/Walk3 Baronofhell/Walk4 }
+$volume Baronofhell/Walk 0.4
+Baronofhell/Walk1 NOBHOOF1
+Baronofhell/Walk2 NOBHOOF2
+Baronofhell/Walk3 NOBHOOF3
+Baronofhell/Walk4 NOBHOOF4
+
+$Random Heavynoble/Walk { Heavynoble/Walk1 Heavynoble/Walk2 Heavynoble/Walk3 Heavynoble/Walk4 }
+$volume Heavynoble/Walk 0.4
+Heavynoble/Walk1 BRNHOOF1
+Heavynoble/Walk2 BRNHOOF2
+Heavynoble/Walk3 BRNHOOF3
+Heavynoble/Walk4 BRNHOOF4
+
+//		Vassago		//
+
+Vassago/sight DSVASSIT
+Vassago/active DSVASACT
+Vassago/attack DSVASATK
+Vassago/pain DSVASPAI
+Vassago/death DSVASDTH
+
+Vassago/Shot DSINCBRN
+$alias Vassago/ShotX vile/firecrkl
+$Random Vassago/fire { Vassago/fire1 Vassago/fire2 Vassago/fire3 }
+Vassago/fire1 DSINCHT1
+Vassago/fire2 DSINCHT2
+Vassago/fire3 DSINCHT3
+
+//		Hellwarrior		//
+
+Hellwarrior/sight HWARSIT
+Hellwarrior/Active HWARACT
+Hellwarrior/Pain HWARPAI
+Hellwarrior/death HWARDTH
+
+//		Cybruiser		//
+
+Cybru/sight CBRUSIT
+$attenuation Cybru/sight 0.2
+Cybru/death CBRUDTH
+$attenuation Cybru/death 0.2
+Cybernoble/pain CBRUPIN
+Cybernoble/active CBRUACT
+Cybernoble/walk CBRUWLK
+$volume Cybernoble/walk 0.5
+
+//		Cyberbaron		//
+
+Cybaron/sight CYBNSIT
+$attenuation Cybaron/sight 0.2
+Cybernoble2/pain ELITEPIN
+Cybaron/death CYBNDTH
+$attenuation Cybaron/death 0.2
+Cybaron/metal CMETAL
+
+//		Infernoble		//
+
+InfernoBaron/Sight INFNSIT
+InfernoBaron/Active INFNACT
+InfernoBaron/Pain INFNPIN
+InfernoBaron/Death INFNDTH
+InfernoBaron/Death2 INFNDH2
+InfernoBaron/XDeath INFNXDH
+InfernoBaron/Fade INFNFAD
+InfernoBaron/Soul INFNSOL
+
+//		Bruiserdemon		//
+
+Bruiserdemon/Sight BRUSSIT
+$attenuation Bruiserdemon/Sight 0.2
+Bruiserdemon/Active INFNACT
+Bruiserdemon/Pain INFNPIN
+Bruiserdemon/Death BRUSDTH
+$attenuation Bruiserdemon/Death 0.2
+
+//		Archvile		//
+
+$limit vile/sight 0
+vile/Firestart		DSFIREST
+$limit vile/Firestart 0
+$Random vile/walk { vile/walk1 vile/walk2 vile/walk3 vile/walk4 }
+vile/walk1 DSVILWK1
+vile/walk2 DSVILWK2
+vile/walk3 DSVILWK3
+vile/walk4 DSVILWK4
+$volume vile/walk 0.5
+
+//		Diablolist		//
+
+Diablolist/Sight DSDIASIT
+Diablolist/Active DSDIAACT
+Diablolist/Pain DSDIAPAI
+Diablolist/Death DSDIADTH
+
+//		Electric ball		//
+
+Elecball/Sound ELECBAL1
+Elecball/Death ELECBLDH
+$limit Elecball/Death 1
+
+//		Motherdemon		//
+
+Mother/Sight MODESIT
+$limit Mother/Sight 4
+Mother/Active MODEACT
+Mother/Pain MODEPIN
+Mother/Death MODEDTH
+$limit Mother/Death 4
+
+//		Spidermastermind		//
+
+spider/active DSSPIACT
+$attenuation spider/active 0.4
+spider/attack DSSPIATK
+$attenuation spider/attack 0.5
+spider/pain DSSPIPIN
+$attenuation spider/pain 0.4
+$limit Mastermind/walk 0
+$limit Mastermind/walk2 0
+Mastermind/walk dsmwalk
+$Random Mastermind/walk2 { Mastermind/walk21 Mastermind/walk22 Mastermind/walk23 Mastermind/walk24 }
+Mastermind/walk21 DSMWALK2
+Mastermind/walk22 DSMWALK3
+Mastermind/walk23 DSMWALK4
+Mastermind/walk24 DSMWALK5
+$attenuation Flyingspider/Death 0
+Flyingspider/Death DSFSPDTH
+Spider/death2 DSSPIDH2
+
+Weapons/NailMGFire	NAILFIRE
+$attenuation Weapons/NailMGFire 0.6
+Weapons/NailHit		NAILHIT
+Weapons/NailHitBleed	NAILHTBD
+Weapons/NailFlight	NAILFLY
+
+$Limit Weapons/NailHit		0
+$Limit Weapons/NailHitBleed	0
+
+Mastermindboss/death DSDEMDTH
+
+//		Dread widow		//
+
+Widow/sight DSWIDSIT
+$attenuation Widow/sight 0.2
+Widow/active DSSPIACT
+Widow/pain DSWIDPIN
+Widow/death DSWIDDTH
+$attenuation Widow/death 0.2
+
+//		Cyberdemon		//
+
+cyber/active DSCYBACT
+$attenuation cyber/active 0.4
+cyber/attack DSCYBATK
+$attenuation cyber/attack 0.5
+cyber/pain CYBERPIN
+$attenuation cyber/pain 0.4
+$limit Cyber/hoof 0
+$limit Cyber/hoof2 0
+cyber/hoof2	DSHOOF2
+cyber/death2 DSCYBDH2
+
+//		Lesser Cyber	//
+
+LesserCyber/sight DSLCYSIT
+$attenuation LesserCyber/sight 0.2
+LesserCyber/active DSCYBACT
+LesserCyber/pain DSLCYPIN
+LesserCyber/death DSLCYDTH
+$attenuation LesserCyber/death 0.2
+
+//		Tyrant		//
+
+Tyrant/sight DSTYRSIT
+$attenuation Tyrant/sight 0.2
+Tyrant/active DSCYBACT
+Tyrant/hoof DSTYRWLK
+$limit Tyrant/hoof 0
+$alias Tyrant/pain LesserCyber/pain
+Tyrant/death DSTYRDTH
+$attenuation Tyrant/death 0.2
+
+//		Clockworkdemon		//
+
+$limit Clockwork/Expolsion 0
+$attenuation Clockwork/Expolsion 0.6
+$limit misc/brainexplode 0
+$alias misc/brainexplode Clockwork/Expolsion
+Clockwork/Expolsion DSBAREP2
+$volume Epic/Expolsions 0.5
+$limit Epic/Expolsions 10
+$attenuation Epic/Expolsions 0.5
+Epic/Expolsions STOEXP
+$volume Grand/Expolsion 0.6
+$limit Grand/Expolsion 1
+$attenuation Grand/Expolsion 0
+Grand/Expolsion STOEXP2
+
+//		CommanderKeen		//
+
+Commanderkeen/pain keenpain
+Commanderkeen/death keendth
+
+Dopefish/grunt DSDOPEFS
+$volume wolfss/attack 0.4
+
+Fruit/Pain DSFRUTPN
+Fruit/Death DSFRUTDT

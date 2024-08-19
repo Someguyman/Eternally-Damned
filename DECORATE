@@ -1,0 +1,7 @@
+
+#include "Actors/Players/Spawners.txt"
+#include "Actors/Players/Players.txt"
+#include "Actors/Monsters/Decorate Monsters.txt"
+#include "Actors/Misc/Decorations.txt"
+#include "Actors/Misc/Ammo.txt"
+#include "Actors/Misc/Powerups.txt"

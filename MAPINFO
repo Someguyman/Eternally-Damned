@@ -1,0 +1,263 @@
+ClearSkills
+Gameinfo
+{
+	PlayerClasses = "ET_player", "ET_player_alt", "ET_player_slaughter", "ET_Player_Wolf"
+	//PlayerClasses = "ET_player"
+	MenuFontColor_Value = "White"
+	MenuFontColor_Label = "Red"
+	MenuFontColor_Header = "gold"
+	menufontcolor_highlight = "YELLOW"
+}
+
+skill easy
+{
+	ACSReturn = 0
+	EasyBossBrain
+	SpawnFilter = Easy
+	PicName = "M_WIMPY"
+	Textcolor = Yellow
+	Name = "I'm such a wimp!"
+	ReplaceActor = "MM_CybruiserMKII", "MM_Cybruiserstrong"
+	Key = "i"
+}
+
+skill normal
+{
+	ACSReturn = 1
+	SpawnFilter = Normal
+	Key = "h"
+	PicName = "M_HURTM"
+	Textcolor = Yellow
+	Name = "Hurt me a plenty."
+	DefaultSkill
+}
+
+skill hard
+{
+	ACSReturn = 2
+	MustConfirm = "Say, if you're new here you might wanna try an easier difficulty? press y to continue."
+	SpawnFilter = Hard
+	PicName = "M_BRING"
+	Textcolor = Orange
+	Name = "Bring me the carnage."
+	Key = "w"
+}
+
+skill superhard
+{
+	ACSReturn = 3
+	SpawnFilter = Hard
+	SpawnMulti
+	PicName = "M_WAMDI"
+	Name = "Watch me die!"
+	Textcolor = Orange
+	MustConfirm = "Alot more monsters than before and their tuffer at that. dare to continue? Press y."
+	ReplaceActor = "MM_imp", "MM_Hellgremlin"
+	ReplaceActor = "MM_DarkImp", "MM_NightmareHellgremlin"
+	ReplaceActor = "MM_Zombieman", "MM_Plasmazombie"
+	ReplaceActor = "MM_ShotgunGuy", "MM_Zspecop"
+	ReplaceActor = "DeadZombieman", "MM_DeadPlasmazombie"
+	ReplaceActor = "DeadShotgunGuy", "MM_DeadZspecop"
+	ReplaceActor = "DeadDoomImp", "MM_DeadGremlin"
+	ReplaceActor = "Demon", "Spectre"
+	ReplaceActor = "MM_Maulardemon", "MM_Spectremaular"
+	ReplaceActor = "deaddemon", "MM_DeadSpectre"
+	ReplaceActor = "MM_DeadSpectre", "MM_DeadNightmarespectre"
+	ReplaceActor = "Spectre", "MM_NightmareSpectre"
+	ReplaceActor = "MM_Mancubus", "MM_Mechabus"
+	ReplaceActor = "MM_Nightmaredemon", "MM_SuperNightmareSpectre"
+	ReplaceActor = "ED_NightmareSpectre", "MM_SuperNightmareSpectre" 
+	ReplaceActor = "MM_KDIKDIZD_Nightmaredemon", "MM_SuperNightmareSpectre"
+	ReplaceActor = "MM_Nightmareimp", "MM_NightmareHellgremlin"
+	ReplaceActor = "ED_Nightmareimp", "MM_NightmareHellgremlin"
+	ReplaceActor = "MM_Mutantimp", "MM_ValiantHellgremlin"
+	Replaceactor = "MM_Painelemental", "MM_AngerElemental"
+	ReplaceActor = "MM_lostsoul", "MM_ForgottenSoul"
+	ReplaceActor = "MM_Megasphere", "MM_Supersphere"
+	ReplaceActor = "InvulnerabilitySphere", "MM_OnslaughtPickup"
+	ReplaceActor = "MM_Icon_Imp", "MM_Icon_Gremlin"
+	ReplaceActor = "MM_Icon_Pinky", "MM_Icon_Spectre"
+	ReplaceActor = "MM_Icon_Spectre", "MM_Icon_NightmareSpectre"
+	Replaceactor = "MM_Icon_Painelemental", "MM_Icon_AngerElemental"
+	ReplaceActor = "cell", "MM_nullactor"
+	ReplaceActor = "cellpack", "cell"
+	ReplaceActor = "Backpack", "Medikit"
+	//ReplaceActor = "BlueArmor", "MM_Greenarmor"
+	
+	Replaceactor = "MM_Baronofhell", "MM_InfernoBaron"
+	Replaceactor = "MM_HellKnight", "MM_CybruiserWeak"
+	Replaceactor = "MM_D1_HellKnight", "MM_CybruiserWeak"
+	Replaceactor = "MM_Classic_HellKnight", "MM_CybruiserWeak"
+	Replaceactor = "MM_D1_Classic_HellKnight", "MM_CybruiserWeak"
+	Replaceactor = "MM_Icon_Baron", "MM_Icon_InfernoBaron"
+	Replaceactor = "MM_Arachnotron", "MM_Mindweaver"
+	
+	Key = "u"
+}
+
+skill slayer
+{
+	ACSReturn = 4
+	SpawnFilter = Hard
+	PicName = "M_SLAYR"
+	Name = "Rip and tear!"
+	Textcolor = Red
+	ammofactor = 3.0
+	damagefactor = 1.2
+	monsterhealth = 0.8
+	FastMonsters
+	InstantReaction
+	replaceactor = "ShellBox", "Shell"
+	replaceactor = "ClipBox", "Clip"
+	replaceactor = "RocketBox", "RocketAmmo"
+	replaceactor = "CellPack", "Cell" 
+	replaceactor = "Medikit", "Stimpack"
+	replaceactor = "Stimpack", "MM_MegaHealthBonus"
+	replaceactor = "BlurSphere", "Medikit"
+	replaceactor = "InvulnerabilitySphere", "Medikit"
+	ReplaceActor = "Backpack", "Medikit"
+	MustConfirm = "Rewards are greater and punishment is harsher, for experienced marines only. press y to continue."
+	Key = "s"
+}
+
+skill nightmare
+{
+	ACSReturn = 5
+	AmmoFactor = 2
+	FastMonsters
+	InstantReaction
+	DisableCheats
+	RespawnTime = 12
+	SpawnFilter = Nightmare
+	Textcolor = Red
+	PicName = "M_NMARE"
+	Name = "Unholy Nightmare!"
+	MustConfirm
+	Key = "n"
+}
+
+skill Superslayer
+{
+	ACSReturn = 6
+	SpawnFilter = Hard
+	SpawnMulti
+	Name = "True Demigod."
+	Textcolor = purple
+	PicName = "M_TDEMI"
+	ammofactor = 3.0
+	damagefactor = 1.2
+	monsterhealth = 0.8
+	DisableCheats
+	FastMonsters
+	InstantReaction
+	replaceactor = "ShellBox", "Shell"
+	replaceactor = "ClipBox", "Clip"
+	replaceactor = "RocketBox", "RocketAmmo"
+	replaceactor = "CellPack", "Cell"
+	replaceactor = "Medikit", "Stimpack"
+	replaceactor = "Stimpack", "MM_MegaHealthBonus"
+	replaceactor = "BlurSphere", "Medikit"
+	ReplaceActor = "InvulnerabilitySphere", "MM_OnslaughtPickup"
+	ReplaceActor = "MM_Megasphere", "MM_Supersphere"
+	ReplaceActor = "MM_Maulardemon", "MM_Spectremaular"
+	ReplaceActor = "Doomimp", "MM_Hellgremlin"
+	ReplaceActor = "MM_Zombieman", "MM_Plasmazombie"
+	ReplaceActor = "DeadZombieman", "MM_DeadPlasmazombie"
+	ReplaceActor = "MM_ShotgunGuy", "MM_Zspecop"
+	ReplaceActor = "DeadShotgunGuy", "MM_DeadZspecop"
+	ReplaceActor = "DeadDoomImp", "MM_DeadGremlin"
+	ReplaceActor = "MM_Nightmareimp", "MM_NightmareHellgremlin"
+	ReplaceActor = "ED_Nightmareimp", "MM_NightmareHellgremlin"
+	ReplaceActor = "MM_DarkImp", "MM_NightmareHellgremlin"
+	ReplaceActor = "MM_Mutantimp", "MM_ValiantHellgremlin"
+	ReplaceActor = "MM_lostsoul", "MM_ForgottenSoul"
+	ReplaceActor = "MM_Pinky", "MM_Spectre"
+	ReplaceActor = "MM_Spectre", "MM_NightmareSpectre"
+	ReplaceActor = "MM_Mancubus", "MM_Mechabus"
+	ReplaceActor = "ED_NightmareSpectre", "MM_SuperNightmareSpectre" 
+	ReplaceActor = "MM_KDIKDIZD_Nightmaredemon", "MM_SuperNightmareSpectre"
+	ReplaceActor = "deaddemon", "MM_DeadSpectre"
+	ReplaceActor = "MM_DeadSpectre", "MM_DeadNightmarespectre"
+	ReplaceActor = "MM_Nightmaredemon", "MM_SuperNightmareSpectre"
+	Replaceactor = "MM_Painelemental", "MM_AngerElemental"
+	ReplaceActor = "MM_Icon_Imp", "MM_Icon_Gremlin"
+	ReplaceActor = "MM_Icon_Pinky", "MM_Icon_Spectre"
+	ReplaceActor = "MM_Icon_Spectre", "MM_Icon_NightmareSpectre"
+	Replaceactor = "MM_Icon_Painelemental", "MM_Icon_AngerElemental"
+	MustConfirm = "You're choosing the path of perpetual torment. dare to step any further? press y."
+	ReplaceActor = "Backpack", "Medikit"
+	ReplaceActor = "cell", "MM_nullactor"
+	ReplaceActor = "cellpack", "cell"
+	//ReplaceActor = "BlueArmor", "MM_Greenarmor"
+	
+	Replaceactor = "MM_Baronofhell", "MM_InfernoBaron"
+	Replaceactor = "MM_HellKnight", "MM_CybruiserWeak"
+	Replaceactor = "MM_D1_HellKnight", "MM_CybruiserWeak"
+	Replaceactor = "MM_Classic_HellKnight", "MM_CybruiserWeak"
+	Replaceactor = "MM_D1_Classic_HellKnight", "MM_CybruiserWeak"
+	Replaceactor = "MM_Icon_Baron", "MM_Icon_InfernoBaron"
+	Replaceactor = "MM_Arachnotron", "MM_Mindweaver"
+	
+	Key = "t"
+}
+
+skill ultranightmare
+{
+	ACSReturn = 7
+	ammofactor = 3.0
+	damagefactor = 1.2
+	monsterhealth = 0.8
+	FastMonsters
+	InstantReaction
+	DisableCheats
+	SpawnMulti
+	Textcolor = purple
+	RespawnTime = 12
+	SpawnFilter = Nightmare
+	PicName = "M_DINCR"
+	Name = "Death Incarnate!"
+	MustConfirm = "This difficulty will make your life a living hell. press y to continue."
+	ReplaceActor = "Doomimp", "MM_Hellgremlin"
+	ReplaceActor = "MM_Zombieman", "MM_Plasmazombie"
+	ReplaceActor = "DeadZombieman", "MM_DeadPlasmazombie"
+	ReplaceActor = "MM_ShotgunGuy", "MM_Zspecop"
+	ReplaceActor = "DeadShotgunGuy", "MM_DeadZspecop"
+	ReplaceActor = "DeadDoomImp", "MM_DeadGremlin"
+	ReplaceActor = "MM_Nightmareimp", "MM_NightmareHellgremlin"
+	ReplaceActor = "ED_Nightmareimp", "MM_NightmareHellgremlin"
+	ReplaceActor = "MM_Mutantimp", "MM_ValiantHellgremlin"
+	ReplaceActor = "lostsoul", "MM_ForgottenSoul"
+	ReplaceActor = "MM_Maulardemon", "MM_Spectremaular"
+	ReplaceActor = "MM_Pinky", "MM_Spectre"
+	ReplaceActor = "MM_Spectre", "MM_NightmareSpectre"
+	ReplaceActor = "ED_NightmareSpectre", "MM_SuperNightmareSpectre" 
+	ReplaceActor = "MM_DarkImp", "MM_NightmareHellgremlin"
+	ReplaceActor = "MM_KDIKDIZD_Nightmaredemon", "MM_SuperNightmareSpectre"
+	ReplaceActor = "deaddemon", "MM_DeadSpectre"
+	ReplaceActor = "MM_Mancubus", "MM_Mechabus"
+	ReplaceActor = "MM_DeadSpectre", "MM_DeadNightmarespectre"
+	ReplaceActor = "MM_Nightmaredemon", "MM_SuperNightmareSpectre"
+	Replaceactor = "MM_Painelemental", "MM_AngerElemental"
+	ReplaceActor = "MM_Icon_Imp", "MM_Icon_Gremlin"
+	ReplaceActor = "MM_Icon_Pinky", "MM_Icon_Spectre"
+	ReplaceActor = "MM_Icon_Spectre", "MM_Icon_NightmareSpectre"
+	Replaceactor = "MM_Icon_Painelemental", "MM_Icon_AngerElemental"
+	ReplaceActor = "Backpack", "Medikit"
+	ReplaceActor = "InvulnerabilitySphere", "MM_OnslaughtPickup"
+	ReplaceActor = "MM_Megasphere", "MM_Supersphere"
+	ReplaceActor = "cell", "MM_nullactor"
+	ReplaceActor = "cellpack", "cell"
+	ReplaceActor = "Backpack", "Medikit"
+	//ReplaceActor = "BlueArmor", "MM_Greenarmor"
+	
+	Replaceactor = "MM_Baronofhell", "MM_InfernoBaron"
+	Replaceactor = "MM_HellKnight", "MM_CybruiserWeak"
+	Replaceactor = "MM_D1_HellKnight", "MM_CybruiserWeak"
+	Replaceactor = "MM_Classic_HellKnight", "MM_CybruiserWeak"
+	Replaceactor = "MM_D1_Classic_HellKnight", "MM_CybruiserWeak"
+	Replaceactor = "MM_Icon_Baron", "MM_Icon_InfernoBaron"
+	Replaceactor = "MM_Arachnotron", "MM_Mindweaver"
+	
+	MustConfirm
+	Key = "d"
+}

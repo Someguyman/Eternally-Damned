@@ -1,0 +1,126 @@
+Base doom;
+Height 0;
+//Resolution 320, 240;
+
+mugshot "Normal", health2
+{
+	{ST00, ST01, ST02} 10;
+}
+
+mugshot "death"
+{
+	DEAD0 -1;
+}
+
+mugshot "XDeath"
+{
+	EXPO0 5;
+	EXPO1 5;
+	EXPO2 5;
+	EXPO3 5;
+	EXPO4 5;
+	EXPO5 -1;
+}
+
+statusbar normal, fullscreenoffsets
+{
+	//Health
+	DrawImage "STHEAL", 0, -32;
+	DrawImage "EDHUD1", 57, -64;
+	drawnumber 3, HUDFONT_DOOM, untranslated, health, 50, -28;
+
+	//armor
+	DrawImage "STARMR", 0, -64;
+	drawimage armoricon, 75, -34;
+	drawnumber 3, HUDFONT_DOOM, untranslated, armor, whennotzero, 50, -60;
+
+	//ammo
+	DrawImage "STAMMO", -70, -32;
+	drawnumber 3, HUDFONT_DOOM, untranslated, ammo1, -8, -28;
+	
+	DrawImage "STAMM2", -70, -64;
+	drawnumber 3, INDEXFONT_DOOM, untranslated, ammo(Clip), -22, -59;
+	drawnumber 3, INDEXFONT_DOOM, untranslated, ammo(Shell), -22, -53;
+	drawnumber 3, INDEXFONT_DOOM, untranslated, ammo(RocketAmmo), -22, -47;
+	drawnumber 3, INDEXFONT_DOOM, untranslated, ammo(Cell), -22, -41;
+
+	drawnumber 3, INDEXFONT_DOOM, untranslated, ammocapacity(Clip), -2, -59;
+	drawnumber 3, INDEXFONT_DOOM, untranslated, ammocapacity(Shell), -2, -53;
+	drawnumber 3, INDEXFONT_DOOM, untranslated, ammocapacity(RocketAmmo), -2, -47;
+	drawnumber 3, INDEXFONT_DOOM, untranslated, ammocapacity(Cell), -2, -41;
+
+	gamemode deathmatch
+	{
+		drawnumber 2147483647, HUDFONT_DOOM, untranslated, frags, -3, 1;
+	}
+	else
+	{
+		drawswitchableimage keyslot 2 && 5, "nullimage", "STKEYS0", "STKEYS3", "STKEYS6", -67, -29;
+		drawswitchableimage keyslot 3 && 6, "nullimage", "STKEYS1", "STKEYS4", "STKEYS7", -67, -19;
+		drawswitchableimage keyslot 1 && 4, "nullimage", "STKEYS2", "STKEYS5", "STKEYS8", -67, -9;
+	}
+
+	DrawSwitchableImage MM_Orangekeyicon, "nullimage", "STDKEY1", -67, -61;
+	DrawSwitchableImage MM_Purplekeyicon, "nullimage", "STDKEY2", -67, -51;
+	DrawSwitchableImage MM_Cyankeyicon, "nullimage", "STDKEY3", -67, -41;
+
+	DrawImage "EDHUD1", 57, -32;
+	drawmugshot "STF", 5, xdeathface, 59, -32;
+	
+}
+
+statusbar fullscreen, fullscreenoffsets
+{
+	//Health
+	DrawImage "HEALTXT", 64, -32;
+	drawnumber 3, HUDFONT_DOOM, untranslated, health, Alignment(center), 84, -20;
+	
+	//ammo
+	drawnumber 3, HUDFONT_DOOM, untranslated, ammo1, alignment(center), 0+center, -20;
+	
+	//armor
+	DrawImage "ARMRTXT", -100, -32;
+	DrawImage "ARMRTXT", -100, -32;
+	drawnumber 3, HUDFONT_DOOM, untranslated, armor, Alignment(center), -82, -20;
+
+	gamemode deathmatch
+	{
+		drawnumber 2147483647, HUDFONT_DOOM, untranslated, frags, -3, 1;
+	}
+	else
+	{
+		//Bluekey
+		drawswitchableimage keyslot 2, "nullimage", "STKEYS0", 117, -11;
+		//Yellowkey
+		drawswitchableimage keyslot 3, "nullimage", "STKEYS1", 127, -11;
+		//Redkey
+		drawswitchableimage keyslot 1, "nullimage", "STKEYS2", 137, -11;
+		//Blueskull
+		drawswitchableimage keyslot 5, "nullimage", "STKEYS3", 117, -19;
+		//Yellowskull
+		drawswitchableimage keyslot 6, "nullimage", "STKEYS4", 127, -19;
+		//Redskull
+		drawswitchableimage keyslot 4, "nullimage", "STKEYS5", 137, -19;
+	}
+	
+	//DrawImage weaponicon, -25, -38; 
+	DrawSwitchableImage MM_Orangekeyicon, "nullimage", "STDKEY1", -139, -15;
+	DrawSwitchableImage MM_Purplekeyicon, "nullimage", "STDKEY2", -129, -15;
+	DrawSwitchableImage MM_Cyankeyicon, "nullimage", "STDKEY3", -119, -15;
+
+	//DrawImage "EDHUD1", 57, -32;
+	//drawmugshot "STF", 5, xdeathface, 59, -32;
+	
+}
+
+statusbar inventory // Standard bar overlay (ZDoom Addition)
+{
+	drawinventorybar Doom, 7, INDEXFONT, 50, 170;
+}
+
+statusbar inventoryfullscreen, fullscreenoffsets // ZDoom HUD overlay.
+{
+	drawinventorybar Doom, translucent, 7, INDEXFONT, -106+center, -31;
+}
+
+StatusBar Automap {}

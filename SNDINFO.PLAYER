@@ -1,0 +1,131 @@
+
+//		Players		//
+
+//		Original		//
+
+$playeralias	Original	male	*death		Player/Death
+$Random Player/Death { Player/Death1 Player/Death2 Player/Death3 }
+Player/Death1 DSPLDETH
+Player/Death2 DSPLDEH2
+Player/Death3 DSPLDEH3
+$playeralias	Original	male	*xdeath		Player/XDeath
+$Random Player/XDeath { Player/XDeath1 Player/XDeath2 Player/XDeath3 }
+Player/XDeath1 DSPDIEHI
+Player/XDeath2 DSPLDTH2
+Player/XDeath3 DSPLDTH3
+$playeralias	Original	male	*fist		Weapons/Punch
+$Random Weapons/Punch { Weapons/Punch1 Weapons/Punch2 Weapons/Punch3 }
+Weapons/Punch1 DSPNCH1
+Weapons/Punch2 DSPNCH2
+Weapons/Punch3 DSPNCH3
+
+$playersound	Original	male	*gibbed		misc/gibbed
+$playersound	Original	male	*pain100	dsplpin1
+$playersound	Original	male	*pain75		dsplpin2
+$playersound	Original	male	*pain50		dsplpin2
+$playersound	Original	male	*pain25		dsplpin3
+$playersound	Original	male	*land		DSLAND
+$playersound	Original	male	*jump		dsjump
+$playersound	Original	male	*grunt		psoof
+$playersound	Original	male	*weaponlaugh	dstaunt
+$playersound	Original	male	*weaponlaugh2	dstant2
+
+//	To ensure we always play male sounds as the original style
+
+$playeralias	Original	female	*death		Player/Death
+$playeralias	Original	female	*xdeath		Player/XDeath
+$playersound	Original	female	*gibbed		misc/gibbed
+$playersound	Original	female	*pain100	dsplpin1
+$playersound	Original	female	*pain75		dsplpin2
+$playersound	Original	female	*pain50		dsplpin2
+$playersound	Original	female	*pain25		dsplpin3
+$playersound	Original	female	*land		DSLAND
+$playersound	Original	female	*jump		dsjump
+$playersound	Original	female	*grunt		psoof
+$playersound	Original	female	*weaponlaugh	dstaunt
+$playersound	Original	female	*weaponlaugh2	dstant2
+
+//	Same with other
+
+$playersound	Original	other	*death		Player/Death
+$playersound	Original	other	*xdeath		Player/XDeath
+$playersound	Original	other	*gibbed		misc/gibbed
+$playersound	Original	other	*pain100	dsplpin1
+$playersound	Original	other	*pain75		dsplpin2
+$playersound	Original	other	*pain50		dsplpin2
+$playersound	Original	other	*pain25		dsplpin3
+$playersound	Original	other	*land		DSLAND
+$playersound	Original	other	*jump		dsjump
+$playersound	Original	other	*grunt		psoof
+$playersound	Original	other	*weaponlaugh	dstaunt
+$playersound	Original	other	*weaponlaugh2	dstant2
+
+//		Alternate		//
+
+$playersound	Alternate	female	*death		PlayerFemale/Death
+$Random PlayerFemale/Death { PlayerFemale/Death1 PlayerFemale/Death2 PlayerFemale/Death3 }
+PlayerFemale/Death1 DFPLDETH
+PlayerFemale/Death2 DFPLDEH2
+PlayerFemale/Death3 DFPLDEH3
+$playersound	Alternate	female	*xdeath		PlayerFemale/XDeath
+$Random PlayerFemale/XDeath { PlayerFemale/XDeath1 PlayerFemale/XDeath2 PlayerFemale/XDeath3 }
+PlayerFemale/XDeath1 DFPDIEHI
+PlayerFemale/XDeath2 DFPLDTH2
+PlayerFemale/XDeath3 DFPLDTH3
+
+$playersound	Alternate	female	*gibbed		misc/gibbed
+$playersound	Alternate	female	*pain100	DFPLPIN1
+$playersound	Alternate	female	*pain75		DFPLPIN2
+$playersound	Alternate	female	*pain50		DFPLPIN2
+$playersound	Alternate	female	*pain25		DFPLPIN3
+$playersound	Alternate	female	*grunt		pfoof
+$playersound	Alternate	female	*land		dfland
+$playersound	Alternate	female	*jump		dfjump
+$playersound	Alternate	female	*fist		Weapons/Punch
+$playersound	Alternate	female	*usefail	dfnoway
+
+// To ensure we only play the female sounds as the alternate style 
+
+$playeralias	Alternate	male *death		PlayerFemale/Death
+$playeralias	Alternate	male *xdeath	PlayerFemale/XDeath
+$playersound	Alternate	male *gibbed	misc/gibbed
+$playersound	Alternate	male *pain100	DFPLPIN1
+$playersound	Alternate	male *pain75	DFPLPIN2
+$playersound	Alternate	male *pain50	DFPLPIN2
+$playersound	Alternate	male *pain25	DFPLPIN3
+$playersound	Alternate	male *grunt		pfoof
+$playersound	Alternate	male *land		dfland
+$playersound	Alternate	male *jump		dfjump
+$playersound	Alternate	male *fist		dspunch
+$playersound	Alternate	male *usefail	dfnoway
+
+//	Samme reaon as original
+
+$playersound	Alternate	other	*death		PlayerFemale/Death
+$playersound	Alternate	other	*xdeath		PlayerFemale/XDeath
+$playersound	Alternate	other	*gibbed		misc/gibbed
+$playersound	Alternate	other	*pain100	DFPLPIN1
+$playersound	Alternate	other	*pain75		DFPLPIN2
+$playersound	Alternate	other	*pain50		DFPLPIN2
+$playersound	Alternate	other	*pain25		DFPLPIN3
+$playersound	Alternate	other	*grunt		pfoof
+$playersound	Alternate	other	*land		dfland
+$playersound	Alternate	other	*jump		dfjump
+$playersound	Alternate	other	*fist		dspunch
+$playersound	Alternate	other	*usefail	dfnoway
+
+
+//		Slaughter		//
+
+$playersound	Slaughter	male	*death		Player/Death
+$playersound	Slaughter	male	*xdeath		Player/XDeath
+$playersound	Slaughter	male	*gibbed		misc/gibbed
+$playersound	Slaughter	male	*pain100	dsplpin1
+$playersound	Slaughter	male	*pain75		dsplpin2
+$playersound	Slaughter	male	*pain50		dsplpin2
+$playersound	Slaughter	male	*pain25		dsplpin3
+$playersound	Slaughter	male	*grunt		dsoof
+$playersound	Slaughter	male	*land		DsLAND
+$playersound	Slaughter	male	*jump		dsjump
+$playersound	Slaughter	male	*fist		DSSPPNCH
+$playersound	Slaughter	male	*usefail	dsnoway

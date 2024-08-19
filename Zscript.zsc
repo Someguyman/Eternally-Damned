@@ -1,0 +1,160 @@
+
+version "4.5.0"
+
+//////////////////////////////////////////
+//										//
+//				Monsters				//
+//										//
+//////////////////////////////////////////
+
+#include "Actors/Monsters/Chexmonsters.zsc"
+#include "Actors/Monsters/Spawners.zsc"
+
+#include "Actors/Monsters/Zombies/FormerTroppers.zsc"
+
+#include "Actors/Monsters/Zombies/Formerseregants.zsc"
+#include "Actors/Monsters/Zombies/Suicidebomber.zsc"
+
+#include "Actors/Monsters/Zombies/Formercammandos.zsc"
+#include "Actors/Monsters/Zombies/Formercaptain.zsc"
+
+#include "Actors/Monsters/Zombies/FormerRanger.zsc"
+#include "Actors/Monsters/Zombies/FormerLuetenant.zsc"
+
+#include "Actors/Monsters/Zombies/ShockTrooper.zsc"
+#include "Actors/Monsters/Zombies/Evilmarine.zsc"
+
+#include "Actors/Monsters/Implings/Imps.zsc"
+#include "Actors/Monsters/Implings/DarkImp.zsc"
+#include "Actors/Monsters/Implings/Mutantimp.zsc"
+#include "Actors/Monsters/Implings/Boxartdemon.zsc"
+#include "Actors/Monsters/Implings/Impgantic.zsc"
+#include "Actors/Monsters/Implings/SoulHarvester.zsc"
+#include "Actors/Monsters/Implings/Shadow.zsc"
+
+//Pinkies
+
+#include "Actors/Monsters/Pinkies/Pinky.zsc"
+#include "Actors/Monsters/Pinkies/Nightmaredemon.zsc"
+#include "Actors/Monsters/Pinkies/Maular.zsc"
+
+//Spectres
+
+#include "Actors/Monsters/Pinkies/Spectre.zsc"
+#include "Actors/Monsters/Pinkies/Nightmarespectre.zsc"
+
+#include "Actors/Monsters/Lostsouls/Lostsoul.zsc"
+#include "Actors/Monsters/Lostsouls/Forgottenone.zsc"
+#include "Actors/Monsters/Lostsouls/Alphasoul.zsc"
+#include "Actors/Monsters/Lostsouls/Ghoul.zsc"
+
+#include "Actors/Monsters/Banshee/Banshee.zsc"
+
+#include "Actors/Monsters/Cacodemons/Cacodemon.zsc"
+#include "Actors/Monsters/Cacodemons/Astralcaco.zsc"
+#include "Actors/Monsters/Cacodemons/DarkCaco.zsc"
+
+#include "Actors/Monsters/Painelementals/Painelemental.zsc"
+#include "Actors/Monsters/Painelementals/Bombelemental.zsc"
+
+#include "Actors/Monsters/Revenants/Revenant.zsc"
+
+#include "Actors/Monsters/Mancubi/Mancubus.zsc"
+#include "Actors/Monsters/Mancubi/Mechabus.zsc"
+#include "Actors/Monsters/Mancubi/Deadcubus.zsc"
+#include "Actors/Monsters/Mancubi/Wargrin.zsc"
+
+#include "Actors/Monsters/Arachnids/Arachnotron.zsc"
+
+#include "Actors/Monsters/Knights/Hellknight.zsc"
+#include "Actors/Monsters/Knights/Bruiser.zsc"
+#include "Actors/Monsters/Knights/Cybruiser.zsc"
+#include "Actors/Monsters/Knights/Pyroknight.zsc"
+#include "Actors/Monsters/Knights/Hellwarrior.zsc"
+#include "Actors/Monsters/Knights/Soulreaper.zsc"
+
+#include "Actors/Monsters/Vassago/Vassago.zsc"
+
+#include "Actors/Monsters/Barons/Baronofhell.zsc"
+#include "Actors/Monsters/Barons/InfernoBaron.zsc"
+#include "Actors/Monsters/Barons/CybruiserMKII.zsc"
+#include "Actors/Monsters/Barons/Bruiserdemon.zsc"
+#include "Actors/Monsters/Barons/Afrit.zsc"
+
+#include "Actors/Monsters/Archviles/Archvile.zsc"
+#include "Actors/Monsters/Archviles/Resurrector.zsc"
+
+#include "Actors/Monsters/Masterminds/Spidermaster.zsc"
+
+#include "Actors/Monsters/Cyberdemons/Cyberdemon.zsc"
+
+#include "Actors/Monsters/Wolfenstein/WolfensteinSS.zsc"
+#include "Actors/Monsters/Wolfenstein/Officer.zsc"
+#include "Actors/Monsters/Wolfenstein/Mutant.zsc"
+#include "Actors/Monsters/Wolfenstein/Hansgrosse.zsc"
+
+#include "Actors/Monsters/Keen/Commanderkeen.zsc"
+#include "Actors/Monsters/Friendlies/MBFDog.zsc"
+
+#include "Actors/Monsters/Bosses/UDoomcyberdemon.zsc"
+#include "Actors/Monsters/Bosses/UDoomspidermastermind.zsc"
+#include "Actors/Monsters/Bosses/Iconofsin.zsc"
+#include "Actors/Monsters/Bosses/Motherdemon.zsc"
+#include "Actors/Monsters/Bosses/Diabalo.zsc"
+#include "Actors/Monsters/Bosses/Electricball.zsc"
+#include "Actors/Monsters/Bosses/Goingdownboss.zsc"
+
+#include "Actors/Misc/Projectiles.zsc"
+#include "Actors/Misc/Powerups.zsc"
+#include "Actors/Misc/Healthandarmor.zsc"
+#include "Actors/Misc/Ammo.zsc"
+#include "Actors/Misc/Artifacts.zsc"
+#include "Actors/Misc/Decorations.zsc"
+#include "Actors/Misc/Deadbodies.zsc"
+#include "Actors/Misc/Obstacles.zsc"
+#include "Actors/Misc/Keys.zsc"
+#include "Actors/Misc/Universal.zsc"
+#include "Actors/Misc/Cheats.zsc"
+#include "Actors/Special/Levelpostprocessors.zsc"
+#include "Actors/Special/Eventhanlders.zsc"
+
+#include "Actors/Players/Player.zsc"
+#include "Actors/Players/Spawners.zsc"
+
+#include "Actors/Players/Fists.zsc"
+#include "Actors/Players/Chainsaw.zsc"
+#include "Actors/Players/Pistol.zsc"
+#include "Actors/Players/Shotgun.zsc"
+#include "Actors/Players/Supershotgun.zsc"
+#include "Actors/Players/Chaingun.zsc"
+#include "Actors/Players/Rocketlauncher.zsc"
+#include "Actors/Players/Plasmarifle.zsc"
+#include "Actors/Players/Incinerator.zsc"
+#include "Actors/Players/Bfg9000.zsc"
+#include "Actors/Players/CalamityBlade.zsc"
+#include "Actors/Players/Unmaker.zsc"
+
+#include "Actors/Players/Knife.zsc"
+#include "Actors/Players/Axe.zsc"
+#include "Actors/Players/Rifle.zsc"
+#include "Actors/Players/Sawedoff.zsc"
+#include "Actors/Players/Autoshotty.zsc"
+#include "Actors/Players/Nailgun.zsc"
+#include "Actors/Players/Grenadelauncher.zsc"
+#include "Actors/Players/Lightninggun.zsc"
+#include "Actors/Players/Wroaringgun2702.zsc"
+#include "Actors/Players/Soulcube.zsc"
+
+#include "Actors/Players/Superfists.zsc"
+#include "Actors/Players/Ubersaw.zsc"
+#include "Actors/Players/Machinegun.zsc"
+#include "Actors/Players/Shellblaster.zsc"
+#include "Actors/Players/Tacticalssg.zsc"
+#include "Actors/Players/Superchaingun.zsc"
+#include "Actors/Players/Devestator.zsc"
+#include "Actors/Players/PlasmagunmkII.zsc"
+#include "Actors/Players/BFG10K.zsc"
+
+#include "Actors/Players/Pacifistweapons.zsc"
+#include "Actors/Players/TysonWeapons.zsc"
+#include "Actors/Players/BjblastkowitzWeapons.zsc"

@@ -1,0 +1,109 @@
+//		Other		//
+
+Powerup/pickup1 DSGETPW1
+Powerup/pickup2 DSGETPW2
+Powerup/pickup3 DSGETPW3
+Powerup/pickup4 DSGETPW4
+Powerup/pickup5 DSGETPW5
+Powerup/pickup6 DSGETPW6
+Powerup/pickup7 DSGETPW7
+Powerup/pickup8 DSGETPW8
+Powerup/pickup9 DSGETPW9
+
+weapons/firex5	dsfirex5
+monster/curse1	dscurse1
+monster/curse2	dscurse2 
+Micromissile/Explode RIEXPL
+Micromissile/Fire RIFIRE
+fusionspid/die FUSPDIE
+fusionspid/see FUSPSEE
+weapons/firmfi dsfirmfi
+weapons/firex3 dsfirex3
+weapons/bloodf dsbloodf
+weapons/bloodx dsbloodx
+weapons/firsfi dsfirsfi
+weapons/maceex dsmaceex
+TOXICBALL/Pain TOXICPIN
+TOXICBALL/Death TOXICDTH
+
+Bullet/shoot BULLPRO
+$limit Bullet/shoot 0
+$Random Bullet/Death { Bullet/Death1 Bullet/Death2 Bullet/Death3 }
+Bullet/Death1 BULLPD1
+Bullet/Death2 BULLPD2
+Bullet/Death3 BULLPD3
+$limit Bullet/Death 0
+
+Rocket2/Spawn DSMIS2
+Firebig/Spawn HELLFSIT
+Firebig/Death HELLFDTH
+Afrit/CometFire FRITCMFR
+Afrit/CometHit	FRITCMHT
+Charge/railgun DSRGCHRG
+Bloody/crush SMOOSH
+Exploplas/sight EXPPSSIT
+Exploplas/death EXPPSDTH
+$limit Charge/Generic 0
+Charge/Generic DSCHRGEN
+weapons/gntidl dsgntidl
+weapons/chaofi dschaofi
+weapons/shock dsshock
+monster/heltel dsheltel
+weapons/devexp dsdevexp
+weapons/devzap dsdevzap
+q2weapon/bfgball			bfg_fire
+q2weapon/bfgballexplo		bfg__x1b
+q2weapon/rocketlauncherfire	rocklf1a
+q2weapon/rocketexplo q2roklx1
+h2necromancer/magiccast		h2ncmagh
+comet/explosion			cometexp
+Apocalypse/cast			apocast
+
+Armor/Pickup DSARMOR
+Armor/Pickup2 DSARMR2
+Armor/Bonusup DSARMRB
+Health/Pickup DSHEALTH
+Health/Pickup2 DSHELTH2
+Health/Bonusup DSHELTHB
+
+$Random Ammo/PickupS { Ammo/Pickup1 Ammo/Pickup2 }
+Ammo/Pickup1 HLCLIP1
+Ammo/Pickup2 HLCLIP2
+
+$Random Ammo/PickupL { Ammo/Pickup3 Ammo/Pickup4 }
+Ammo/Pickup3 HLPIKUP1
+Ammo/Pickup4 HLPIKUP2
+
+Ammo/RocketSup DSRKTUP
+Ammo/RocketLup DSRBXUP
+Ammo/CellSup DSCELUP
+Ammo/CellLup DSCEPUP
+
+$Random Ammo/Backpackup { Ammo/Backpackup1 Ammo/Backpackup2 }
+Ammo/Backpackup1 HLPIKUP3
+Ammo/Backpackup2 HLPIKUP4
+
+Keycard/Pickup DPICKUPK
+Skullkey/Pickup DPICKUPS
+misc/keytry dsnokey
+
+$Random misc/gibbed { misc/gibbed1 misc/gibbed2 misc/gibbed3 misc/gibbed4 misc/gibbed5 }
+misc/gibbed1 DSSLOP1
+misc/gibbed2 DSSLOP2
+misc/gibbed3 DSSLOP3
+misc/gibbed4 DSSLOP4
+misc/gibbed5 DSSLOP5
+
+//		Chex		//
+
+$RANDOM Flemoid/Sight { Flemoid/Sight1 Flemoid/Sight2 Flemoid/Sight3 }
+Flemoid/Sight1 CXFMSIT1
+Flemoid/Sight2 CXFMSIT2
+Flemoid/Sight3 CXFMSIT3
+Flemoid/Active CXFMSACT
+Flemoid/Attack CXSPLAT1
+Flemoid/Pain CXFMPAIN
+$RANDOM Flemoid/Death { Flemoid/Death1 Flemoid/Death2 Flemoid/Death3 }
+Flemoid/Death1 CXFMDTH1
+Flemoid/Death2 CXFMDTH2
+Flemoid/Death3 CXFMDTH3

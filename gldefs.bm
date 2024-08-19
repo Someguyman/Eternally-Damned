@@ -1,0 +1,4 @@
+#include Brightmaps/Monsterbrightmaps.bm
+#include Brightmaps/Weaponbrightmaps.bm
+#include Brightmaps/Itembrightmaps.bm
+#include Brightmaps/DecorationBrightmaps.bm
