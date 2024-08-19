@@ -1,0 +1,38 @@
+#library "GraphicOptions"
+#include "zcommon.acs"
+
+script "Knightskintoggle" (void)
+{
+    SetResultValue(GetCVar("Kitoggle"));
+}
+
+script "Spectreskintoggle" (void)
+{
+    SetResultValue(GetCVar("Spctoggle"));
+}
+
+script "Arachtoggle" (void)
+{
+    SetResultValue(GetCVar("Aptoggle"));
+}
+
+script "Berserktoggle" (void)
+{
+    SetResultValue(GetCVar("Bstoggle"));
+}
+
+script "Haztoggle" (void)
+{
+    SetResultValue(GetCVar("Hztoggle"));
+}
+
+script "Invistoggle" (void)
+{
+    SetResultValue(GetCVar("Ivstoggle"));
+}
+
+script "Projtoggle" (void)
+{
+    SetResultValue(GetCVar("Pjtoggle"));
+}
+

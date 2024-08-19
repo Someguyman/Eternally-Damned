@@ -1,0 +1,74 @@
+#library "UDoomZombiespawns"
+#include "zcommon.acs"
+
+// 1 = Default/all spawns
+// 2 = Shotgunners only
+// 3 = Chaingunners only
+
+script "UdoomZombiescript" (void)
+{
+	str mapName = StrParam(n:PRINTNAME_LEVEL);
+	str episode = StrMid(mapName, 1, 1);
+	str mission = StrMid(mapName, 3, 1);
+	
+	if (StrICmp(episode, "1") == 0)
+	{
+		if (StrICmp(mapName, "E1M1") == 0 || StrICmp(mapName, "E1M2") == 0 || StrICmp(mapName, "E1M3") == 0 || StrICmp(mapName, "E1M4") == 0 || StrICmp(mapName, "E1M9") == 0)
+		{
+			SetResultValue(2);
+			terminate;
+		}
+		
+		SetResultValue(1);
+		terminate;
+	}
+	
+	if (StrICmp(episode, "2") == 0)
+	{
+		if (StrICmp(mapName, "E2M1") == 0)
+		{
+			SetResultValue(2);
+			terminate;
+		}
+		
+		SetResultValue(1);
+		terminate;
+	}
+	
+	if (StrICmp(episode, "4") == 0)
+	{
+		if (StrICmp(mapName, "E4M1") == 0)
+		{
+			SetResultValue(2);
+			terminate;
+		}
+		SetResultValue(1);
+		terminate;
+		
+	}
+	
+	if (StrICmp(episode, "5") == 0)
+	{
+		if (StrICmp(mapName, "E5M1") == 0)
+		{
+			SetResultValue(2);
+			terminate;
+		}
+		SetResultValue(1);
+		terminate;
+	}
+	
+	if (StrICmp(episode, "6") == 0)
+	{
+		if (StrICmp(mapName, "E6M1") == 0)
+		{
+			SetResultValue(2);
+			terminate;
+		}
+		SetResultValue(1);
+		terminate;
+	}
+
+	SetResultValue(1);
+	terminate;
+}

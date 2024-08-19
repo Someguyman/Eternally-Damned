@@ -1,0 +1,49 @@
+#library "UDoomBossspawns"
+#include "zcommon.acs"
+
+// 1 = Default spawns
+// 2 = E2M8 boss
+// 3 = E3M8 boss
+// 4 = E4M8 boss
+// 5 = E5M8 boss
+// 6 = E6M8 boss
+
+script "Udoombossscript" (void)
+{
+	str mapName = StrParam(n:PRINTNAME_LEVEL);
+	str episode = StrMid(mapName, 1, 1);
+	str mission = StrMid(mapName, 3, 1);
+	
+	if (StrICmp(mapName, "E2M8") == 0)
+		{
+			SetResultValue(2);
+			terminate;
+		}
+	
+	if (StrICmp(mapName, "E3M8") == 0)
+		{
+			SetResultValue(3);
+			terminate;
+		}
+	
+	//if (StrICmp(mapName, "E4M8") == 0)
+		//{
+			//SetResultValue(3);
+			//terminate;
+		//}
+	
+	if (StrICmp(mapName, "NV_MAP08") == 0 || StrICmp(mapName, "LEVEL08") == 0)
+		{
+			SetResultValue(2);
+			terminate;
+		}
+	
+	if (StrICmp(mapName, "NV_MAP09") == 0 || StrICmp(mapName, "LEVEL09") == 0)
+		{
+			SetResultValue(3);
+			terminate;
+		}
+
+	SetResultValue(1);
+	terminate;
+}
