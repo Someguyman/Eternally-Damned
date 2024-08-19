@@ -1,0 +1,270 @@
+
+class MM_Hellgremlin : MM_HellKnight
+{
+	Default
+	{
+		Health 100;
+		Radius 20;
+		Height 56;
+		Mass 100;
+		Speed 8;
+		PainChance 150;
+		Monster;
+		+FLOORCLIP
+		Gibhealth 20;
+		BloodColor "green";
+		Species "Baronofhell";
+		SeeSound "satyr/sight";
+		PainSound "Demon/pain";
+		DeathSound "satyr/death";
+		ActiveSound "baronofhell/active ";
+		HitObituary "$OB_IMPHIT";
+		Obituary "%o was bruised by a Hellrable";
+		HitObituary "%o was clawed by a Hellrable";
+		Tag "Hellrable";
+	}
+	
+	void A_GremlinAttack()
+	{
+		A_FaceTarget();
+		A_CustomComboAttack("MM_Gremlinball", 32, 40, "baron/melee");
+	}
+	States
+	{
+	Spawn:
+		SIMP AB 10 A_Look;
+		Loop;
+	See:
+		SIMP AABBCCDD 3 A_Chase;
+		Loop;
+	Melee:
+	Missile:
+		SIMP EF 8 A_FaceTarget;
+		SIMP G 6 A_GremlinAttack();
+		Goto See;
+	Pain:
+		SIMP H 2;
+		SIMP H 2 A_Pain;
+		Goto See;
+	Death.Ice:
+		SIMP H 5 A_GenericFreezeDeath;
+		TNT1 A 1 A_Freezedeathchunks;
+		wait;
+	Death:
+		SIMP I 8;
+		SIMP J 8 A_Scream;
+		SIMP K 6;
+		SIMP L 6 A_NoBlocking;
+		SIMP M -1;
+		Stop;
+	XDeath:
+		SIMP N 5;
+		SIMP O 5 A_XScream;
+		SIMP P 5;
+		SIMP Q 5 A_NoBlocking;
+		SIMP RST 5;
+		SIMP U -1;
+		Stop;
+	Raise:
+		SIMP L 8;
+		SIMP KJI 6;
+		Goto See;
+	}
+}
+
+Class MM_DeadGremlin : MM_Hellgremlin
+{
+	Default
+	{
+		-COUNTKILL
+	}
+	States
+	{
+		Spawn:
+			TNT1 A 0;
+			TNT1 A 0 A_Die("spawndeath");
+			Stop;
+		Idle:
+			SIMP AB 10 A_Look;
+			Loop;
+		Death.Spawndeath:
+			SIMP A 0 A_NoBlocking;
+			SIMP A 0 A_Jump(80, "Gibbed");
+			SIMP M -1;
+		Gibbed:
+			SIMP U -1;
+			Stop;
+	}
+}
+
+class MM_ValiantHellgremlin : MM_Hellgremlin
+{
+	Default
+	{
+		Health 100;
+		Radius 20;
+		Height 56;
+		Mass 100;
+		Speed 8;
+		PainChance 150;
+		Monster;
+		+FLOORCLIP
+		Gibhealth 20;
+		BloodColor "green";
+		Species "Baronofhell";
+		SeeSound "satyr/sight";
+		PainSound "Demon/pain";
+		DeathSound "satyr/death";
+		ActiveSound "baronofhell/active ";
+		HitObituary "$OB_IMPHIT";
+		Obituary "%o was bruised by a Hellrable";
+		Tag "$FN_IMP";
+	}
+	
+	void A_GremlinAttack()
+	{
+		A_FaceTarget();
+		A_CustomComboAttack("MM_BaronBall", 32, 40, "baron/melee");
+	}
+	States
+	{
+	Spawn:
+		SMPV AB 10 A_Look;
+		Loop;
+	See:
+		SMPV AABBCCDD 3 A_Chase;
+		Loop;
+	Melee:
+	Missile:
+		SMPV EF 8 A_FaceTarget;
+		SMPV G 6 A_GremlinAttack();
+		SMPV VW 8 A_FaceTarget;
+		SMPV X 6 A_GremlinAttack();
+		Goto See;
+	Pain:
+		SMPV H 2;
+		SMPV H 2 A_Pain;
+		Goto See;
+	Death.Ice:
+		SMPV H 5 A_GenericFreezeDeath;
+		TNT1 A 1 A_Freezedeathchunks;
+		wait;
+	Death:
+		SMPV I 8;
+		SMPV J 8 A_Scream;
+		SMPV K 6;
+		SMPV L 6 A_NoBlocking;
+		SMPV M -1;
+		Stop;
+	XDeath:
+		SMPV N 5;
+		SMPV O 5 A_XScream;
+		SMPV P 5;
+		SMPV Q 5 A_NoBlocking;
+		SMPV RST 5;
+		SMPV U -1;
+		Stop;
+	Raise:
+		SMPV ML 8;
+		SMPV KJI 6;
+		Goto See;
+	}
+}
+
+class MM_NightmareHellgremlin : MM_Hellgremlin
+{
+	Default
+	{
+		Speed 16;
+		RenderStyle "subtract";
+		BloodColor "Purple";
+		SeeSound "Nightmaresatyr/sight";
+		PainSound "Baronofhell/pain";
+		DeathSound "Nightmaresatyr/death";
+		ActiveSound "baronofhell/active ";
+	}
+	States
+	{
+	Melee:
+	Missile:
+		SIMP EF 8 A_FaceTarget;
+		SIMP G 6
+		{
+		A_FaceTarget();
+		A_CustomComboAttack("MM_Gremlinball2", 32, 40, "baron/melee");
+		}
+		Goto See;
+	}
+}
+
+class MM_Gremlinball : MM_BaronBall
+{
+	Default
+	{
+	Renderstyle "Add";
+	FastSpeed 20;
+	}
+	States
+	{
+	Spawn:
+		10B2 A 0 nodelay A_JumpIf(CallACS("Projtoggle")==1, "AltSpawn");
+		10B2 AB 4 BRIGHT;
+		10B2 A 0 Bright A_JumpIf(CallACS("Projtoggle")==1, "AltSpawn");
+		Loop;
+	AltSpawn:
+		BL10 AAAABBBB 1 BRIGHT A_SpawnItemEx("MM_Gremlinballtrail", 0, 0, 0, 0, 0, 0, 0, 128);
+		Goto Spawn;
+	Death:
+		BL10 CDE 6 BRIGHT;
+		Stop;
+	}
+}
+
+class MM_Gremlinballtrail : MM_Baronballtrail
+{
+	States
+	{
+	Spawn:
+		tnt1 a 2;
+		10BL AABBCCDD 1 Bright A_Fadeout;
+		Stop;
+	}
+}
+
+class MM_Gremlinball2 : MM_BaronBall
+{
+	Default
+	{
+	RenderStyle "add";
+	FastSpeed 20;
+	}
+	States
+	{
+	Spawn:
+		B10O A 0 nodelay A_JumpIf(CallACS("Projtoggle")==1, "AltSpawn");
+		B10O AB 4 BRIGHT;
+		B10O A 0 Bright A_JumpIf(CallACS("Projtoggle")==1, "AltSpawn");
+		Loop;
+	AltSpawn:
+		B10N AAAABBBB 1 BRIGHT A_SpawnItemEx("MM_Gremlinballtrail2", 0, 0, 0, 0, 0, 0, 0, 128);
+		Goto spawn;
+	Death:
+		B10N CDE 6 BRIGHT;
+		Stop;
+	}
+}
+
+class MM_Gremlinballtrail2 : MM_Baronballtrail
+{
+	Default
+	{
+		RenderStyle "add";
+	}
+	States
+	{
+	Spawn:
+		tnt1 A 2;
+		10BN AABBCCDD 1 Bright A_Fadeout;
+		Stop;
+	}
+}

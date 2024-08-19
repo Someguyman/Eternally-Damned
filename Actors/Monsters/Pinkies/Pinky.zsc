@@ -1,0 +1,213 @@
+
+Class MM_Pinkyspawner : MM_Monsterspawners
+{
+	Default
+	{
+		-Noblockmap
+		Radius 30;
+		Height 64;
+	}
+	States
+	{
+	Spawn:
+		SARG F 0;
+		Goto spawncheck;
+	KDIKDIZDSpawn:
+	Goingdownspawn:
+	DoomZerospawn:
+	D64D2spawner:
+	Eviternityspawn:
+	Scythe2spawn:
+	AAilenspawn:
+	TNTRevoSpawn:
+	JenesisSpawner:
+	Epic2spawner:
+	Alternatespawn:
+	Normalspawn:
+		TNT1 A 0 A_NoBlocking;
+		TNT1 A 0 A_SpawnItemEx("MM_Pinky",0,0,0,0,0,0,0,SXF_NOCHECKPOSITION | SXF_TRANSFERAMBUSHFLAG | SXF_TRANSFERPOINTERS | 288,0,tid);
+		Stop;
+	Ultimatedoomspawn:
+		TNT1 A 0 A_JumpIf(CallACS("UdoomPinkyscript")==3, "Skeletonspawn");
+		TNT1 A 0 A_JumpIf(CallACS("UdoomPinkyscript")==2, "Normalspawn");
+		//TNT1 A 0 A_NoBlocking;
+		TNT1 A 0 A_Jump(90, "Skeletonspawn");
+		Goto Normalspawn;
+	Skeletonspawn:
+		TNT1 A 0;
+		TNT1 A 0 A_CheckCeiling("Normalspawn");
+		TNT1 A 0 A_NoBlocking;
+		TNT1 A 0 A_JumpIf(CallACS("UdoomPinkyscript")==4, "Knightspawn");
+		TNT1 A 0 A_SpawnItemEx("MM_D1_Revenant",0,0,0,0,0,0,0,SXF_NOCHECKPOSITION | SXF_TRANSFERAMBUSHFLAG | SXF_TRANSFERPOINTERS | 288,0,tid);
+		Stop;
+	Knightspawn:
+		TNT1 A 0 A_NoBlocking;
+		TNT1 A 0 A_Knightspawn2();
+		Stop;
+	Valiantspawn:
+		TNT1 A 0 A_NoBlocking;
+		TNT1 A 0 A_SpawnItemEx("MM_CyberPinky",0,0,0,0,0,0,0,SXF_NOCHECKPOSITION | SXF_TRANSFERAMBUSHFLAG | SXF_TRANSFERPOINTERS | 288,0,tid);
+		Stop;
+	}
+}
+
+class MM_Pinky : Demon
+{
+	Default
+	{
+		Gibhealth 20;
+		Scale 1.1;
+		Speed 12;
+		Damage 1;
+		+NOINFIGHTSPECIES +DONTHARMSPECIES
+		Tag "Pinky demon";
+		Obituary "\cg%o was eaten by a Demon";
+	}
+	States
+	{
+	Spawn:
+		PNKY AB 10 A_Look;
+		Loop;
+	See:
+		PNKY AABBCCDD 2 fast A_Chase;
+		Loop;
+	Melee:
+		PNKY EF 8 Fast A_FaceTarget;
+		PNKY G 8 Fast A_SargAttack;
+		Goto See;
+	Pain:
+		PNKY H 2 Fast;
+		PNKY H 2 Fast A_Pain;
+		Goto See;
+	Death.Ice:
+		PNKY H 5 A_GenericFreezeDeath;
+		TNT1 A 1 A_Freezedeathchunks;
+		WAIT;
+	Death:
+		PNKY I 8;
+		PNKY J 8 A_Scream;
+		PNKY K 4;
+		PNKY L 4 A_NoBlocking;
+		PNKY M 4;
+		PNKY N -1;
+		Stop;
+	Raise:
+		PNKY M 5;
+		PNKY LKJI 5;
+		Goto See;
+	XDeath:
+		PKYX A 4;
+		PKYX B 4 A_XScream;
+		PKYX C 4 A_NoBlocking();
+		PKYX DEFGHI 4;
+		PKYX J -1;
+		Stop;
+	Death.SSGGIBING:
+		TNT1 A 0 A_Jumpifcloser(128, "XDeath");
+		TNT1 A 0 A_Jump(256, "Death");
+		Goto Death;
+	Crush:
+		POL5 A 0;
+		POL5 A 0 A_Startsound("Bloody/crush");
+		POL5 A -1;
+		stop;
+	}
+}
+
+Class MM_DeadPinky : MM_Pinky
+{
+	Default
+	{
+		-COUNTKILL
+	}
+	States
+	{
+		Spawn:
+			TNT1 A 0;
+			TNT1 A 0 A_Die("spawndeath");
+			Stop;
+		Idle:
+			PNKY AB 10 A_Look;
+			Loop;
+		Death.Spawndeath:
+			PNKY N 0 A_NoBlocking;
+			PNKY N 0 A_Jump(80, "Gibbed");
+			PNKY N -1;
+			Stop;
+		Gibbed:
+			PKYX J -1;
+			Stop;
+	}
+}
+
+class MM_CyberPinky : MM_Pinky
+{
+	Default
+	{
+		SeeSound "Mechafiend/sight";
+		AttackSound "Mechafiend/melee";
+		PainSound "Mechafiend/pain";
+		DeathSound "Mechafiend/death";
+		ActiveSound "Mechafiend/active";
+		Tag "Cyber Pinky";
+	}
+	
+		Void A_Pinkywalk()
+	{
+		A_Chase();
+		A_StartSound("Mecha/walk", CHAN_BODY, CHANF_DEFAULT, 1, ATTN_IDLE);
+	}
+	
+	States
+	{
+	Spawn:
+		MEDM AB 10 A_Look;
+		Loop;
+	See:
+		MEDM A 2 A_Pinkywalk();
+		MEDM ABB 2 A_Chase;
+		MEDM C 2 A_Pinkywalk();
+		MEDM CDD 2 A_Chase;
+		Loop;
+	Melee:
+		MEDM EF 3 Fast A_FaceTarget;
+		MEDM G 18 Fast A_SargAttack;
+		Goto See;
+	Pain:
+		MEDM H 2 Fast;
+		MEDM H 2 Fast A_Pain;
+		Goto See;
+	Death.Ice:
+		MEDM H 5 A_GenericFreezeDeath;
+		TNT1 A 1 A_Freezedeathchunks;
+		WAIT;
+	Death:
+		MEDM I 8;
+		MEDM J 8 A_Scream;
+		MEDM K 4;
+		MEDM L 4 A_NoBlocking;
+		MEDM M 4;
+		MEDM N -1;
+		Stop;
+	Raise:
+		MEDM N 5;
+		MEDM MLKJI 5;
+		Goto See;
+	XDeath:
+		MEDM O 4;
+		MEDM P 4 A_XScream;
+		MEDM Q 4 A_NoBlocking();
+		MEDM RSTUVW 4;
+		MEDM X -1;
+		Stop;
+	Death.SSGGIBING:
+		TNT1 A 0 A_Jumpifcloser(128, "XDeath");
+		TNT1 A 0 A_Jump(256, "Death");
+		Goto Death;
+	Crush:
+		POL5 A 0;
+		POL5 A 0 A_Startsound("Bloody/crush");
+		POL5 A -1;
+		stop;
+	}
+}

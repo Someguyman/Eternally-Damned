@@ -1,0 +1,135 @@
+
+class MM_Astralcaco : MM_Cacodemon
+{
+	Default
+	{
+		Species "Cacodemon";
+		+NOINFIGHTSPECIES +DONTHARMSPECIES +FLOATBOB
+		BloodColor "black";
+		+NOBLOODDECALS
+		FloatBobStrength 0.5;
+		Scale 1.1;
+		Speed 16;
+		SeeSound "Astralcaco/sight";
+		ActiveSound "Astralcaco/active";
+		PainSound "Astralcaco/pain";
+		DeathSound "Astralcaco/death";
+		Obituary "%o was burned down by an astral cacodemon.";
+		Tag "Astral Cacodemon";
+	}
+	
+	Void A_Astralcacoatk()
+	{
+		A_FaceTarget();
+		A_SpawnProjectile("AstralShot",22,0,0,0);
+		A_SpawnProjectile("AstralShot",22,0,-10,0);
+		A_SpawnProjectile("AstralShot",22,0,10,0);
+	}
+	
+	States
+	{
+	Spawn:
+		ASTL A 10 A_Look;
+		Loop;
+	See:
+		ASTL A 3 A_Chase;
+		Loop;
+	Melee:
+		Stop;
+	Missile:
+		ASTL A 1 A_FaceTarget;
+		ASTL B 1 A_startsound("Astralcaco/attack", CHAN_AUTO);
+		ASTL BBBBBBB 1 A_Chase;
+		ASTL C 5 BRIGHT A_FaceTarget;
+		ASTL D 3 BRIGHT A_Astralcacoatk();
+		Goto See;
+	Pain:
+		ASTL E 3;
+		ASTL F 3 A_Pain;
+		Goto See;
+	Death:
+		ASTL G 6 {bFLOATBOB = False;}
+		ASTL H 6 A_Scream;
+		ASTL IJKLMN 6;
+		ASTL O 6 A_NoBlocking;
+		ASTL P -1 A_SetFloorClip;
+		Stop;
+	Death.Ice:
+		ASTL E 0 {bFLOATBOB = False;}
+		ASTL E 5 A_GenericFreezeDeath;
+		TNT1 A 1 A_Freezedeathchunks;
+		WAIT;
+	XDeath:
+		ASTG A 4 {bFLOATBOB = False;}
+		ASTG B 4 A_XScream;
+		ASTG C 4;
+		ASTG D 4 A_NoBlocking();
+		ASTG EFGHI 4;
+		ASTG J -1;
+		Stop;
+	Crush:
+		ATCS A 0;
+		ATCS A 0 A_Startsound("Bloody/crush");
+		ATCS A -1;
+		stop;
+	Raise:
+		ASTL O 8 A_UnSetFloorClip;
+		ASTL NMLKJI 8;
+		ASTL A 0 {bFLOATBOB = True;}
+		Goto See;
+	}
+}
+
+class AstralShot : MancubusShot
+{
+	Default
+	{
+		Scale 0.9;
+	}
+	
+	Void A_ManPPtrail()
+	{
+			A_SpawnItemEx("Astraltrail", 0, 0, -2, 0, 0, 0, 0, 128);
+	}
+	
+	Void A_ManPPtrail2()
+	{
+			A_SpawnItemEx("Astraltrail", 0, 0, -2, 0, 0, 0, 0, 128);
+			A_SpawnItemEx("MancubusTrail", 0, 0, 2, 0, 0, 0, 0, 128);
+	}
+	
+	States
+	{
+	Spawn:
+		AFB2 A 0 nodelay A_JumpIf(CallACS("Projtoggle")==1, "AltSpawn");
+		AFB2 AB 3 Bright;
+		AFB2 A 0 A_JumpIf(CallACS("Projtoggle")==1, "AltSpawn");
+		Loop;
+	AltSpawn:
+		ASTF AA 1 BRIGHT A_ManPPtrail();
+		ASTF A 1 BRIGHT A_ManPPtrail2();
+		ASTF BB 1 BRIGHT A_ManPPtrail();
+		ASTF B 1 BRIGHT A_ManPPtrail2();
+		Goto spawn;
+	Death:
+		ASTX A 8 BRIGHT;
+		ASTX B 6 BRIGHT;
+		ASTX C 4 BRIGHT;
+		Stop;
+	}
+}
+
+Class Astraltrail : Fatsotrail
+{
+	Default
+	{
+		Scale 1.2;
+	}
+	States
+	{
+		Spawn:
+		TNT1 A 2;
+		ASTT CDEFGHIJ 1 Bright;
+		Stop;
+	}
+}

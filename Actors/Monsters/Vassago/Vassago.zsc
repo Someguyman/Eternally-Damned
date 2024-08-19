@@ -1,0 +1,166 @@
+
+class MM_Vassago : Actor
+{
+	Default
+	{
+		Health 1200;
+		Radius 24;
+		Height 64;
+		Mass 1000;
+		Speed 8;
+		PainChance 100;
+		ReactionTime 8;
+		Monster;
+		+FLOORCLIP
+		+BOSSDEATH
+		+DONTHARMCLASS
+		+NOINFIGHTSPECIES
+		+NOICEDEATH
+		Species "BaronOfHell";
+		Scale 1.2;
+		SeeSound "Vassago/sight";
+		PainSound "Vassago/pain";
+		DeathSound "Vassago/death";
+		ActiveSound "Vassago/active";
+		Obituary "";
+		HitObituary "";
+		Tag "Vassago";
+	}
+	
+	Void A_Noblewalk()
+	{
+		A_Chase();
+		A_StartSound("Heavynoble/Walk", CHAN_BODY, CHANF_DEFAULT, 1, ATTN_IDLE);
+	}
+	
+	Void A_Pyrosoul()
+	{
+		if (CallACS("Projtoggle")==1)
+		{
+			A_SpawnProjectile("MM_PyroSoul",86,0,0,2,-90);
+		}
+	}
+	
+	Void A_VassCry()
+	{
+		A_Startsound("Vassago/attack", CHAN_VOICE);
+		A_FaceTarget();
+	}
+	
+	Void A_Vassattack()
+	
+	{
+		A_CustomComboAttack("MM_VassagoFlame", 40, 40, "baron/melee");
+		A_Facetarget();
+	}
+	
+	States
+	{
+	Spawn:
+		VASS AB 10 A_Look ;
+		Loop;
+	See:
+		VASS A 3 A_Noblewalk();
+		VASS ABB 3 A_Chase;
+		VASS C 3 A_Noblewalk();
+		VASS CDD 3 A_Chase;
+		Loop;
+	Melee:
+	Missile:
+		VASS E 0 A_VassCry();
+		VASS E 8 A_FaceTarget;
+		VASS FG 4 A_FaceTarget;
+		VASS H 8 A_Vassattack();
+		Goto See;
+	Pain:
+		VASS I  2;
+		VASS I  2 A_Pain;
+		Goto See;
+	Death:
+		VASS J 8 Bright;
+		VASS K 8 Bright A_Scream;
+		VASS L 7 Bright;
+		VASS M 6 Bright { A_NoBlocking(); A_Pyrosoul(); }
+		VASS NO 6 Bright;
+		VASS P 7 Bright;
+		VASS Q -1 A_BossDeath;
+		stop;
+	Death.SSGGIBING:
+		Goto Death;
+	raise:
+		VASS P 8 bright;
+		VASS ONMLKJ 8 bright;
+		goto see;
+	}
+}
+
+class MM_VassagoFlame : Actor
+{
+	Default
+	{
+		Radius 6;
+		Height 16;
+		Speed 15;
+		FastSpeed 20;
+		Damage 5;
+		Projectile ;
+		+RANDOMIZE
+		+ZDOOMTRANS
+		RenderStyle "Add";
+		Alpha 1;
+		SeeSound "Vassago/Shot";
+		DeathSound "Vassago/ShotX";
+		//Decal "BaronScorch";
+	}
+	States
+	{
+		Spawn:
+			VFLM AB 4 BRIGHT;
+			Loop;
+		death:
+			VFLM C 0 Bright
+			{
+				bNOGRAVITY = false;
+				A_ChangeLinkFlags(0);
+			}
+			VFLM C 0 Bright A_Startsound("Vassago/fire");
+			VFLM C 4 bright A_Explode(10,128);
+			VFLM D 4 bright;
+			VFLM E 4 bright;
+			VFLM F 0 bright A_Startsound("Vassago/fire");
+			VFLM F 4 bright A_Explode(10,128);
+			VFLM G 4 bright;
+			VFLM H 4 bright;
+			VFLM F 0 bright A_Startsound("Vassago/fire");
+			VFLM F 4 bright A_Explode(10,128);
+			VFLM G 4 bright;
+			VFLM H 4 bright;
+			VFLM F 0 bright A_Startsound("Vassago/fire");
+			VFLM F 4 bright A_Explode(10,128);
+			VFLM G 4 bright;
+			VFLM H 4 bright;
+			VFLM F 0 bright A_Startsound("Vassago/fire");
+			VFLM F 4 bright A_Explode(10,128);
+			VFLM G 4 bright;
+			VFLM H 4 bright;
+			VFLM F 0 bright A_Startsound("Vassago/fire");
+			VFLM F 4 bright A_Explode(10,128);
+			VFLM G 4 bright;
+			VFLM H 4 bright;
+			VFLM F 0 bright A_Startsound("Vassago/fire");
+			VFLM F 4 bright A_Explode(10,128);
+			VFLM G 4 bright;
+			VFLM H 4 bright;
+			VFLM F 0 bright A_Startsound("Vassago/fire");
+			VFLM F 4 bright A_Explode(10,128);
+			VFLM G 4 bright;
+			VFLM H 4 bright;
+			VFLM I 0 bright A_Startsound("Vassago/fire");
+			VFLM I 4 bright A_Explode(10,128);
+			VFLM J 4 bright;
+			VFLM K 4 bright;
+			VFLM L 4 bright A_Explode(10,128);
+			VFLM MNOPQ 4 bright;
+			stop;
+	}
+}

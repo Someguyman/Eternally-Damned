@@ -1,0 +1,130 @@
+class MM_ShockTrooper : Actor
+{
+	Default
+	{
+		Health 100;
+		Radius 20;
+		Height 56;
+		Speed 10;
+		Mass 100;
+		PainChance 30;
+		Gibhealth 20;
+		Monster;
+		+FLOORCLIP
+		+NOINFIGHTING
+		Species "MM_Evilmarine";
+		//SeeSound "grunt/sight";
+		//AttackSound "grunt/attack";
+		PainSound "ShockTrooper/Pain";
+		ActiveSound "ShockTrooper/Active";
+		DeathSound "ShockTrooper/Death";
+		Obituary "";
+		Tag "Shock Trooper";
+	}
+	
+	Void A_EvilMAttack()
+	{
+		A_FaceTarget();
+		A_SpawnProjectile("MM_PlasmaBall");
+	}
+	
+	States
+	{
+	Spawn:
+		PPOS AB 10 A_Look;
+		Loop;
+	See:
+		PPOS AABBCCDD 2 fast A_Chase;
+		Loop;
+	Missile:
+		PPOS E 10 A_FaceTarget;
+		PPOS F 2 fast Bright A_EvilMAttack();
+		PPOS E 4 fast;
+		PPOS F 2 fast Bright A_EvilMAttack();
+		PPOS E 4 fast;
+		PPOS F 2 fast Bright A_EvilMAttack();
+		PPOS E 4 fast;
+		Goto See;
+	Pain:
+		PPOS G 5 Fast;
+		PPOS G 5 Fast A_Pain;
+		Goto See;
+	death:
+		PPOS H 0 A_FaceTarget;
+		PPOS H 5 A_SpawnItemEx("MM_Shocktrooper_Head", 0, 0, 40, 2.0 , 0, 1.5, 0 ,SXF_ABSOLUTEVELOCITY|SXF_ABSOLUTEPOSITION);
+		//, 175.0, 0.0, 0.0, 40.0, 2.0, 0.0, 1.5
+		PPOS I 5 A_Scream;
+		PPOS J 5 A_NoBlocking;
+		PPOS KL 5;
+		PPOS M -1;
+		stop;
+	Death.SSGGIBING:
+		TNT1 A 0 A_Jumpifcloser(128, "XDeath");
+		TNT1 A 0 A_Jump(256, "Death");
+		Goto Death;
+	xdeath:
+		PPOS N 5;
+		PPOS O 5 A_XScream;
+		PPOS P 5 A_NoBlocking;
+		PPOS Q 0 A_FaceTarget;
+		PPOS Q 5 A_SpawnItemEx("MM_Shocktrooper_Torso", -8.0, 0, 32.0 , 4.0, 0 , 2.0 , 0, SXF_ABSOLUTEVELOCITY|SXF_ABSOLUTEPOSITION);
+		//, 170.0, 0.0, -8.0, 32.0, 4.0, 0.0, 2.0
+		PPOS RST 5;
+		PPOS U -1;
+		stop;
+	raise:
+		PPOS MLKJIH 5;
+		goto see;
+	}
+}
+
+Class MM_Shocktrooper_Head : Actor
+{	
+	Default
+	{
+		Damage 0;
+		Speed 8;
+		Radius 6;
+		Height 16;
+		Gravity 0.125;
+		Projectile;
+		 Mass 5000;
+		-NOBLOCKMAP
+		-NOGRAVITY		
+		DeathSound "ShockTrooper/Head";
+	}
+	States
+	{
+		Spawn:
+			PHED ABCDEFGHI 3;
+			loop;
+		Death:
+			PHED J -1;
+			loop;
+	}
+}
+
+Class MM_Shocktrooper_Torso : Actor
+{	
+	Default
+	{
+		Damage 0;
+		Speed 8;
+		Radius 6;
+		Height 16;
+		Mass 5000;
+		Projectile;
+		-NOGRAVITY
+		+NOBLOCKMAP
+	}
+	States
+	{
+		Spawn:
+			PPOS V -1;
+			loop;
+		Death:
+			PPOS W 5;
+			PPOS X -1;
+			stop;
+	}
+}

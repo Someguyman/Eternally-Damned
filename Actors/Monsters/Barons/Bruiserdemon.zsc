@@ -1,0 +1,402 @@
+
+class MM_BruiserDemon : MM_Baronofhell
+{
+	Default
+	{
+		Health 3000;
+		Radius 24;
+		Height 64;
+		Mass 2000;
+		Speed 8;
+		PainChance 15;
+		Monster;
+		+FLOORCLIP
+		+noradiusdmg
+		+Boss
+		+MissileEvenMore
+		+DONTMORPH
+		+BOSSDEATH
+		+NOINFIGHTSPECIES
+		+DONTHARMSPECIES
+		Scale 1.4;
+		Species "Baronofhell";
+		BloodColor "ed 4c 0c";
+		SeeSound "Bruiserdemon/Sight";
+		PainSound "Bruiserdemon/Pain";
+		DeathSound "Bruiserdemon/Death";
+		ActiveSound "Bruiserdemon/Active";
+		Obituary "$OB_BARON";
+		HitObituary "$OB_BARONHIT";
+		BloodType "MM_Brightblood";
+		Tag "Bruiser demon";
+	}
+	
+	Void A_Pyrowalk()
+	{
+		if (CallACS("Projtoggle")==1)
+		{
+		A_SpawnItemEx("MM_WalkFire",0,0,0,0,0,0,0,128);
+		}
+		A_Chase();
+	
+	}
+	
+	Void A_Pyrowalk2()	// Same as Pyro walk, but with the noble hoof sound
+	{
+		A_StartSound("Baronofhell/Walk", CHAN_BODY, CHANF_DEFAULT, 1, ATTN_IDLE);
+		if (CallACS("Projtoggle")==1)
+		{
+		A_SpawnItemEx("MM_WalkFire",0,0,0,0,0,0,0,128);
+		}
+		A_Chase();
+	
+	}
+	
+	Void A_Bruiserdeath()
+	{
+		if (CallACS("Gamespawntoggle")==12.0)
+		{
+			A_KeenDie();
+		}
+		else
+		{
+			A_BossDeath();
+		}
+	}
+	
+		Void A_Bruisersoul()
+	{
+		if (CallACS("Projtoggle")==1)
+		{
+			A_SpawnProjectile("BruiserSoul",86,0,0,2,-90);
+		}
+	}
+	
+	States
+	{
+	Spawn:
+		BRUS AB 10 Bright A_Look ;
+		Loop;
+	See:
+		BRUS A 3 Bright A_Pyrowalk2();
+		BRUS ABB 3 Bright A_Pyrowalk();
+		BRUS C 3 Bright A_Pyrowalk2();
+		BRUS CDD 3 Bright A_Pyrowalk();
+		Loop;
+  Melee:
+		BRUS EF 6 Bright A_FaceTarget();
+		BRUS G 6 Bright A_BasicAttack(20, "baron/melee", "MM_PyroShot", 32);
+		Goto See;
+  Missile:
+		BRUS E 0 Bright A_Jump(144, "Missile2");
+		BRUS EF 6 Bright A_FaceTarget();
+		BRUS G 6 Bright A_BasicAttack(20, "baron/melee", "MM_PyroShot", 32);
+		BRUS G 0 Bright A_Jump(96, 1);
+		Goto See;
+		BRUS HI 6 Bright A_FaceTarget();
+		BRUS J 6 Bright A_BasicAttack(20, "baron/melee", "MM_PyroShot", 32);
+		Goto See;
+  Missile2:
+		BRUS E 0 Bright A_Jump(96, "Missile3");
+		BRUS E 6 Bright A_FaceTarget();
+		BRUS F 4 Bright A_FaceTarget();
+		BRUS F 2 Bright A_SpawnProjectile("MM_Pyrofireball",32,0,-40,0);
+		BRUS G 1 Bright A_SpawnProjectile("MM_Pyrofireball",32,0,-30,0);
+		BRUS G 1 Bright A_SpawnProjectile("MM_Pyrofireball",32,0,-20,0);
+		BRUS G 1 Bright A_SpawnProjectile("MM_Pyrofireball",32,0,-10,0);
+		BRUS G 1 Bright A_SpawnProjectile("MM_Pyrofireball",32,0,  0,0);
+		BRUS G 1 Bright A_SpawnProjectile("MM_Pyrofireball",32,0, 10,0);
+		BRUS G 1 Bright A_SpawnProjectile("MM_Pyrofireball",32,0, 20,0);
+		BRUS G 0 Bright A_Jump(96, 1);
+		Goto See;
+		BRUS H 6 Bright A_FaceTarget();
+		BRUS I 4 Bright A_FaceTarget();
+		BRUS I 2 Bright A_SpawnProjectile("MM_Pyrofireball",32,0, 40,0);
+		BRUS J 1 Bright A_SpawnProjectile("MM_Pyrofireball",32,0, 30,0);
+		BRUS J 1 Bright A_SpawnProjectile("MM_Pyrofireball",32,0, 20,0);
+		BRUS J 1 Bright A_SpawnProjectile("MM_Pyrofireball",32,0, 10,0);
+		BRUS J 1 Bright A_SpawnProjectile("MM_Pyrofireball",32,0,  0,0);
+		BRUS J 1 Bright A_SpawnProjectile("MM_Pyrofireball",32,0,-10,0);
+		BRUS J 1 Bright A_SpawnProjectile("MM_Pyrofireball",32,0,-20,0);
+		Goto See;
+  Missile3:
+		BRUS LK 6 Bright A_FaceTarget();
+		BRUS L 6 Bright
+		{
+		A_SpawnProjectile("BruiserFireSpawner",16,0,-15,0);
+		A_SpawnProjectile("BruiserFireSpawner",16,0,  0,0);
+		A_SpawnProjectile("BruiserFireSpawner",16,0, 15,0);
+		}
+		BRUS M 6 Bright A_SpawnProjectile("BruiserExplosion",32);
+		Goto See;
+	Pain:
+		BRUS N 2 Bright;
+		BRUS N 2 Bright A_Pain;
+		Goto See;
+  Death:
+		BRUD A 1 Bright;
+		BRUD A 5 Bright A_Scream();
+		BRUD BCDEF 4 Bright;
+		BRUD G 4 Bright A_Bruisersoul();
+		BRUD H 4 Bright A_Fall();
+		BRUD IJKLMNOP 4 Bright;
+		BRUD QRSTUV 4;
+		BRUD W -1 A_Bruiserdeath();
+		loop;
+	XDeath:
+		Stop;
+	Crush:
+		PYDH A 0;
+		PYDH A -1;
+		stop;
+  Raise:
+	stop;
+	}
+}
+
+Class BruiserExplosion : BossExplosion
+{
+	Default
+	{
+	Renderstyle "add";
+	scale 1.0;
+	alpha 1.0;
+	+ZDOOMTRANS
+	}
+	states
+	{
+	Spawn:
+		MISL B 0 bright;
+		MISL B 6 bright A_Startsound("Clockwork/Expolsion", CHAN_BODY);
+		MISL C 4 bright;
+		MISL D 3 bright;
+		Stop;
+	}
+}
+
+Class BruiserSoul : MM_PyroSoul
+{
+  States
+  {
+  Spawn:
+	BSSL AB 6 Bright;
+	BSSL C 6 Bright A_SetRenderStyle(0.80, STYLE_Add);
+	BSSL D 6 Bright;
+    Stop;
+  }
+}
+
+Class BruiserBall1 : Actor
+{
+  Default
+  {
+    Radius 16;
+    Height 16;
+    Speed 18;
+    DamageFunction 36;
+    RenderStyle "Add";
+	DamageType "Enemydamage";
+    Alpha 0.9;
+    SeeSound "baron/attack";
+	DeathSound "baron/shotx";
+    Decal "Scorch";
+    Projectile;
+    +Randomize;
+	+ZDOOMTRANS
+  }
+
+  States
+  {
+  Spawn:
+    BRBA AABB 2 Bright A_SpawnItemEx("BruiserBallTrail", 0, 0, 0, 0, 0, 0, 0, 128);
+    Loop;
+  Death:
+    BRBA KLMNOPQRSTUVWX 3 Bright;
+    Stop;
+  }
+}
+
+Class BruiserBallTrail : Actor
+{
+  Default
+  {
+    Radius 1;
+    Height 1;
+    Speed 0;
+    RenderStyle "Add";
+    Alpha 0.70;
+    Projectile;
+    +NoClip
+	+ZDOOMTRANS
+  }
+
+  States
+  {
+  Spawn:
+    BRBA CDEFGHIJ 4 Bright;
+    Stop;
+  }
+}
+
+Class BruiserBall2 : Actor
+{
+  Default
+  {
+    Radius 8;
+    Height 8;
+    Speed 10;
+    DamageFunction 28;
+	DamageType "Enemydamage";
+    RenderStyle "Add";
+    Alpha 0.9;
+    SeeSound "imp/attack";
+    DeathSound "imp/shotx";
+    Decal "BaronScorch";
+    Projectile;
+    +Randomize
+	+ZDOOMTRANS
+  }
+
+  States
+  {
+  Spawn:
+    BRB2 AB 6 Bright;
+    Loop;
+  Death:
+    BRB2 CDEFGHI 3 Bright;
+    Stop;
+  }
+}
+
+Class BruiserFireSpawner : Actor
+{
+  Default
+  {
+    Radius 8;
+    Height 8;
+    Speed 12;
+    Damage 0;
+    Projectile;
+    +Ripper
+    +FloorHugger
+    +BloodlessImpact
+	+ZDOOMTRANS
+  }
+
+  States
+  {
+  Spawn:
+    TNT1 A 3 Bright A_SpawnProjectile("BruiserFire", 0, 0, 0, CMF_TRACKOWNER);
+    TNT1 AA 3;
+    Loop;
+  Death:
+    TNT1 A 6;
+    Stop;
+  }
+}
+
+Class BruiserFire : Actor
+{
+  Default
+  {
+    Radius 1;
+    Height 1;
+    Speed 0;
+    DamageFunction 116;
+    RenderStyle "Add";
+    Alpha 0.9;
+	DamageType "Enemydamage";
+    SeeSound "weapons/rocklx";
+    Projectile;
+    +NoClip
+    +FloorHugger
+	+ZDOOMTRANS
+  }
+
+  States
+  {
+  Spawn:
+    XXBF AB 3 Bright;
+    XXBF C 3 Bright A_Explode(48,128,0);
+    XXBF DEFGHIJKLMNOPQRST 3 Bright;
+    Stop;
+  }
+}
+
+Class MM_BruiserComet : MM_InfernoComet
+{
+  States
+  {
+  Spawn:
+  	COMT A 0 nodelay A_JumpIf(CallACS("Projtoggle")==1, "AltSpawn");
+	MFDC AB 4 Bright;
+	COMT A 0 A_JumpIf(CallACS("Projtoggle")==1, "AltSpawn");
+	Loop;
+  AltSpawn:
+    COMT AAAABBBBCCCC 1 Bright A_SpawnItemEx("MM_BruiserCometTail", 0, 0, 0, 0, 0, 0, 0, 128);
+	Goto Spawn;
+  Death:
+	COMT A 0 A_JumpIf(CallACS("Projtoggle")==1, "AltDeath");
+	COMT DEFGHI 3 Bright;
+	Stop;
+  AltDeath:
+    COMT D 3 Bright A_SpawnItemEx("MM_BruiserCometDeathGlow", 0, 0, 0, 0, 0, 0, 0, 128);
+    COMT E 3 Bright A_Explode(128,128,0);
+    TNT1 A 0 A_SpawnItemEx("MM_BruiserCometDeath", 0, 0, 0, 0, 0, 0, 0, 128);
+    Stop;
+  }
+}
+
+Class MM_BruiserCometTail : MM_InfernoCometTail
+{
+  Default
+  {
+    RenderStyle "Add";
+    Alpha 0.4;
+    Projectile;
+    +NoClip
+	Scale 1.55;
+  }
+  States
+  {
+  Spawn:
+	TNT1 A 1;
+    FRTB ABCDEFGHI 1 Bright;
+    Stop;
+  }
+}
+
+Class MM_BruiserCometDeathGlow : CometTail
+{
+  Default
+  {
+    Scale 2.55;
+    Alpha 0.6;
+  }
+
+  States
+  {
+  Spawn:
+    FRTB ABCDEFGHI 3 Bright;
+    Stop;
+  }
+}
+
+Class MM_BruiserCometDeath : MM_InfernoCometDeath
+{
+  Default
+  {
+    RenderStyle "Add";
+    Alpha 0.7;
+    Projectile;
+    +NoClip
+	Scale 1.55;
+  }
+
+  States
+  {
+  Spawn:
+    COMT FGHI 3 Bright;
+    Stop;
+  }
+}

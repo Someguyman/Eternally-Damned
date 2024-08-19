@@ -1,0 +1,92 @@
+
+class MM_Autoshotgun2 : Slaughterweapon
+{
+	Default
+	{
+		Weapon.SelectionOrder 1300;
+		Weapon.AmmoUse 1;
+		Weapon.AmmoGive 0;
+		Weapon.AmmoType "Shell";
+		Weapon.UpSound "Weapons/Shotgunup";
+		Inventory.PickupSound "Weapons/ShotgunPickup";
+		Inventory.PickupMessage "$GOTSHOTGUN";
+		Obituary "$OB_MPSHOTGUN";
+		Tag "$TAG_SHOTGUN";
+	}
+	
+			Action Void A_FireAutoshotty2()
+		{
+			A_Startsound("Weapons/Autoshotgunfire", CHAN_AUTO);
+			A_gunflash("Flash");
+			A_Firebullets(5.2, 0, 7, 5, "BulletPuff", FBF_USEAMMO);
+		}
+		
+	States
+	{
+	Ready:
+		ATOS A 1 A_WeaponReady;
+		Loop;
+	Deselect:
+		ATOS A 0 A_Lower;
+		ATOS A 1 A_Lower;
+		Loop;
+	Select:
+		ATOS A 0 A_Raise;
+		ATOS A 1 A_Raise;
+		Loop;
+	Fire:
+		ATOS B 2 A_FireAutoshotty2();
+		ATOS C 2;
+		ATOS A 1;
+		ATOS A 2;
+		ATOS A 2;
+		ATOS A 2;
+		ATOS A 3;
+		ATOS AA 3;
+		ATOS A 0 A_ReFire;
+		Goto Ready;
+	Flash:
+		//STGF A 2 Bright A_Light2;
+		//STGF B 2 Bright A_Light1;
+		Goto LightDone;
+	Spawn:
+		AOSG A -1;
+		Stop;
+	}
+}
+
+Class MM_Shellblasterpickup : CustomInventory 
+{
+Default
+{
+	INVENTORY.RESTRICTEDTO "ET_Player_Slaughter";
+	VISIBLETOPLAYERCLASS "ET_Player_Slaughter";
+	//Inventory.PickupSound "Weapons/PistolPickup";
+	Inventory.PickupMessage "You got the shellblaster!";
+}
+	States
+	{
+	Spawn:
+		TNT1 A 0 A_JumpIfInventory("MM_Autoshotgun2", 1, "Taken");
+		AOSG A -1;
+		Stop;
+	Pickup:
+		TNT1 A 0 A_GiveInventory("MM_Autoshotgun2", 1);
+		TNT1 A 0 A_GiveInventory("Shell", 8);
+		Stop;
+	Taken:
+		TNT1 A 0;
+		Fail;	
+	}
+}
+
+Class MM_Shellblasterpickup2 : MM_Shellblasterpickup
+{
+	States
+	{
+	Pickup:
+		TNT1 A 0 A_GiveInventory("MM_Autoshotgun2", 1);
+		TNT1 A 0 A_GiveInventory("Shell", 4);
+		Stop;
+	}
+}

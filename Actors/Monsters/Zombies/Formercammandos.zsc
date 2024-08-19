@@ -1,0 +1,204 @@
+
+Class MM_Chaingunnerspawner : MM_Monsterspawners
+{
+	States
+	{
+	Spawn:
+		CPOS V 0;
+		Goto spawncheck;
+	Goingdownspawn:
+	DoomZerospawn:
+	D64D2spawner:
+	Eviternityspawn:
+	Valiantspawn:
+	Scythe2spawn:
+	AAilenspawn:
+	TNTRevoSpawn:
+	JenesisSpawner:
+	Epic2spawner:
+	Alternatespawn:
+	Normalspawn:
+		TNT1 A 0 A_NoBlocking;
+		TNT1 A 0 A_SpawnItemEx("MM_ChaingunGuy",0,0,0,0,0,0,0,SXF_NOCHECKPOSITION | SXF_TRANSFERAMBUSHFLAG | SXF_TRANSFERPOINTERS | 288,0,tid);
+		Stop;
+	Ultimatedoomspawn:
+		TNT1 A 0 A_NoBlocking;
+		TNT1 A 0 A_JumpIf(CallACS("Doom2spawntoggle")==1, "d2extraspawn");
+		Goto shotgunguyspawn;
+	d2extraspawn:
+		TNT1 A 0 A_Jump(100, "Nromalspawn");
+		Goto shotgunguyspawn;
+	Shotgunguyspawn:
+		TNT1 A 0 A_Jump(100, "Impspawn");
+		goto ShotgunguyspawnContinued;
+	ShotgunguyspawnContinued:
+		TNT1 A 0 A_SpawnItemEx("MM_ShotgunGuy",0,0,0,0,0,0,0,SXF_NOCHECKPOSITION | SXF_TRANSFERAMBUSHFLAG | SXF_TRANSFERPOINTERS | 288,0,tid);
+		Stop;
+	Impspawn:
+		TNT1 A 0 A_SpawnItemEx("MM_Imp",0,0,0,0,0,0,0,SXF_NOCHECKPOSITION | SXF_TRANSFERAMBUSHFLAG | SXF_TRANSFERPOINTERS | 288,0,tid);
+		Stop;
+	KDIKDIZDSpawn:
+		TNT1 A 0 A_SpawnItemEx("MM_Chaingunseregant",0,0,0,0,0,0,0,SXF_NOCHECKPOSITION | SXF_TRANSFERAMBUSHFLAG | SXF_TRANSFERPOINTERS | 288,0,tid);
+		stop;
+	}
+}
+
+class MM_ChaingunGuy : ChaingunGuy
+{
+	Default
+	{
+		//Seesound "StrongZombie/Sight";
+		//Activesound "StrongZombie/Active";
+		//Painsound "StrongZombie/Pain";
+		//Deathsound "StrongZombie/Death";
+		Dropitem "none";
+		Tag "Former Commando";
+		
+	}
+	
+	void A_Weapondrop()
+	{
+		A_NoBlocking();
+		let pclass = players[consoleplayer].mo.GetClassName();
+		if (CallACS("Gamespawntoggle")==6)
+		{
+			A_DropItem("MM_Magazine");
+		}
+		else
+		{
+			if(pclass == 'ET_Player_Alt')
+			{
+				A_DropItem("MM_Nailgunpickup2");
+			}
+			else if(pclass == 'ET_Player_Slaughter')
+			{
+				A_DropItem("MM_Magazine");
+			}
+			else if(pclass == 'ET_Player')
+			{
+				A_DropItem("MM_Chaingunpickup2");
+			}
+			else if(pclass == 'ET_Player_wolf')
+			{
+				A_DropItem("MM_Wolfentein3dChaingun");
+			}
+		}
+	}
+	
+	States
+	{
+	Spawn:
+		CPOS AB 10 A_Look;
+		Loop;
+	See:
+		CPOS AABBCCDD 3 A_Chase;
+		Loop;
+	Missile:
+		CPOS V 11 A_FaceTarget;
+		CPOS F 2 BRIGHT
+		{
+			A_CustomBulletAttack(5.6, 0, 1, random(3,5), "BulletPuff", 0, CBAF_NORANDOM);
+			A_Facetarget();
+		}
+		CPOS E 2 BRIGHT;
+		CPOS F 0 A_CPosRefire;
+		Goto Missile+1;
+	Pain:
+		CPOS G 3;
+		CPOS G 3 A_Pain;
+		Goto See;
+	Death.Ice:
+		CPOS G 5 A_GenericFreezeDeath;
+		TNT1 A 1 A_Freezedeathchunks;
+		wait;
+	Death:
+		CPOS H 5;
+		CPOS I 5 A_Scream;
+		CPOS J 5 A_Weapondrop();
+		CPOS KLM 5;
+		CPOS N -1;
+		Stop;
+	Death.SSGGIBING:
+		TNT1 A 0 A_Jumpifcloser(128, "XDeath");
+		TNT1 A 0 A_Jump(256, "Death");
+		Goto Death;
+	XDeath:
+		CPOS O 5;
+		CPOS P 5 A_XScream;
+		CPOS Q 5 A_Weapondrop();
+		CPOS RST 5;
+		CPOS U -1;
+		Stop;
+	Raise:
+		CPOS M 5;
+		CPOS LKJIH 5;
+		Goto See;
+	Crush:
+		POL5 A 0;
+		POL5 A 0 A_Startsound("Bloody/crush");
+		POL5 A -1;
+		stop;
+	}
+}
+
+Class MM_D1_ChaingunGuy : MM_ChaingunGuy
+{
+	States
+	{
+	Spawn:
+		TNT1 A 0;
+		TNT1 A 0 A_SpawnItem("MM_shell", 0, 0);
+		Goto Idle;
+	Idle:
+		CPOS AB 10 A_Look;
+		Loop;
+	}
+}
+
+class MM_Chaingunseregant : MM_Chaingunguy
+{
+	States
+	{
+	Spawn:
+		KDCG AB 10 A_Look;
+		Loop;
+	See:
+		KDCG AABBCCDD 3 A_Chase;
+		Loop;
+	Missile:
+		KDCG E 11 A_FaceTarget;
+		KDCG F 2 BRIGHT
+		{
+			A_CustomBulletAttack(5.6, 0, 1, random(3,5), "BulletPuff", 0, CBAF_NORANDOM);
+			A_Facetarget();
+		}
+		KDCG E 2 BRIGHT;
+		KDCG E 0 A_CPosRefire;
+		Goto Missile+1;
+	Pain:
+		KDCG G 3;
+		KDCG G 3 A_Pain;
+		goto See;
+	Death.Ice:
+		KDCG G 5 A_GenericFreezeDeath;
+		TNT1 A 1 A_Freezedeathchunks;
+	Death:
+		KDCG H 5;
+		KDCG I 5 A_Scream();
+		KDCG J 5 A_Weapondrop();
+		KDCG KLMNO 5;
+		KDCG P -1;
+		Stop;
+	XDeath:
+		KDCG Q 5 ;
+		KDCG R 5 A_XScream();
+		KDCG S 5 A_Weapondrop();
+		KDCG TUVWX 5;
+		KDCG Y -1;
+		Stop;
+	Raise:
+		KDCG N 5;
+		KDCG MLKJIH 5;
+		Goto See;
+	}
+}

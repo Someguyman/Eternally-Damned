@@ -1,0 +1,71 @@
+
+class MM_Multiplayerweaponremoveal : LevelPostProcessor 
+{
+		protected void Apply(Name checksum, String mapname)
+		{
+			for (int i = 0; i < GetThingCount(); i++)
+			{
+				let flags = GetThingFlags(i);
+				int ednum = GetThingEdNum(i);
+					if(CallACS("Multiplayerspawns")==1)
+					{
+					if(flags & MTF_COOPERATIVE && !(flags & MTF_SINGLE))
+					{
+					//Ammo
+					if (ednum == 2007 || ednum == 2048 || ednum == 2008 || ednum == 2049 || ednum == 2010 || ednum == 2046 || ednum == 2047 || ednum == 17 || ednum == 8)
+					{
+						SetThingEdNum(i, 0); 
+					}
+					//Health
+					if (ednum == 2012)
+					{
+						SetThingEdNum(i, 2014); 
+					}
+					//Weapons
+					if (ednum == 2001)
+					{
+						SetThingEdNum(i, 2008); 
+					}
+					if (ednum == 2002)
+					{
+						SetThingEdNum(i, 2007); 
+					}
+					if (ednum == 2003)
+					{
+						SetThingEdNum(i, 2010); 
+					}
+					if (ednum == 2004)
+					{
+						SetThingEdNum(i, 2047); 
+					}
+					if (ednum == 2005)
+					{
+						SetThingEdNum(i, 0); 
+					}
+					if (ednum == 2006)
+					{
+						SetThingEdNum(i, 17); 
+					}
+					if (ednum == 82)
+					{
+						SetThingEdNum(i, 2008); 
+					}
+					//Powerups
+					if (ednum == 2013 || ednum == 83 || ednum == 2022 || ednum == 2024 || ednum == 2026 || ednum == 2025 || ednum == 2023 || ednum == 2018 || ednum == 2019)
+					{
+						SetThingEdNum(i, 0); 
+					}
+					//Enemies
+					if (ednum == 16)
+					{
+						SetThingEdNum(i, 669); 
+					}
+					if (ednum == 7)
+					{
+						SetThingEdNum(i, 670); 
+					}
+					}
+			}
+		}
+	}
+}

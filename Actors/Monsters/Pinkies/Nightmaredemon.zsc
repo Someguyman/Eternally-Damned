@@ -1,0 +1,128 @@
+
+class MM_Nightmaredemon : MM_nightmarespectre
+{
+	Default
+	{
+		RenderStyle "normal";
+		BloodColor "Red";
+		Obituary "%o was crushed by a nightmare demon.";
+		SeeSound "Nightmarepinky/see";
+		AttackSound "BloodDemon/Attack";
+		DeathSound "Nightmarepinky/death";
+		PainSound "Nightmarepinky/Pain";		
+		ActiveSound "Nightmarepinky/Active";
+		Tag "Nightmare pinky";
+		+NOFEAR
+	}
+	States
+	{
+	Spawn:
+		NMDM AABB 10 A_Look;
+		Loop;
+	See:
+		NMDM AABBCCDD 2 A_Chase;
+		Loop;
+	Melee:
+		NMDM EF 8 A_FaceTarget;
+		NMDM G 8 A_SargAttack;
+		Goto See;
+	Pain:
+		NMDM H 2;
+		NMDM H 2 A_Pain;
+		Goto See;
+	Death.Ice:
+		NMDM H 5 A_GenericFreezeDeath;
+		TNT1 A 1 A_Freezedeathchunks;
+		wait;
+	Death:
+		NMDM I 8;
+		NMDM J 8 A_Scream;
+		NMDM K 4;
+		NMDM L 4 A_NoBlocking;
+		NMDM M 4;
+		NMDM N -1;
+		Stop;
+	Raise:
+		NMDM M 5;
+		NMDM LKJI 5;
+		Goto See;
+	XDeath:
+		NMDM O 4;
+		NMDM P 4 A_XScream;
+		NMDM Q 4 A_NoBlocking();
+		NMDM RSTUVW 4;
+		NMDM X -1;
+		Stop;
+	Death.SSGGIBING:
+		TNT1 A 0 A_Jumpifcloser(128, "XDeath");
+		TNT1 A 0 A_Jump(256, "Death");
+		Goto Death;
+	Crush:
+		POL5 A 0;
+		POL5 A 0 A_Startsound("Bloody/crush");
+		POL5 A -1;
+		stop;
+	}
+}
+
+Class MM_KDIKDIZD_Nightmaredemon : MM_Pinky
+{
+	Default
+	{
+		Health 200;
+		Speed 16;
+		PainChance 112;
+		Scale 1.2;
+		BloodColor "Green";
+		SeeSound "KDNightmarepinky/See";
+		AttackSound "KDNightmarepinky/Attack";
+		DeathSound "KDNightmarepinky/Death";
+		PainSound "Nightmarepinky/Pain";		
+		ActiveSound "KDNightmarepinky/Active";
+		Tag "Nightmare demon";
+	}
+	States
+	{
+	Spawn:
+		KDND AB 10 A_Look;
+		Loop;
+	See:
+		KDND AABBCCDD 2 A_Chase;
+		Loop;
+	Melee:
+		KDND EF 6 Fast A_FaceTarget;
+		KDND G 8 Fast A_SargAttack;
+		Goto See;
+	Pain:
+		KDND H 2 Fast;
+		KDND H 2 Fast A_Pain;
+		Goto See;
+	Death.Ice:
+		KDND H 5 A_GenericFreezeDeath;
+		TNT1 A 1 A_Freezedeathchunks;
+		WAIT;
+	Death:
+		KDND I 8;
+		KDND J 8 A_Scream;
+		KDND K 4;
+		KDND L 4 A_NoBlocking;
+		KDND M 4;
+		KDND N -1;
+		Stop;
+	Raise:
+		KDND N 5;
+		KDND MLKJI 5;
+		Goto See;
+	XDeath:
+		KNDX A 4;
+		KNDX B 4 A_XScream;
+		KNDX C 4 A_NoBlocking();
+		KNDX DEFGHI 4;
+		KNDX J -1;
+		Stop;
+	Death.SSGGIBING:
+		TNT1 A 0 A_Jumpifcloser(128, "XDeath");
+		TNT1 A 0 A_Jump(256, "Death");
+		Goto Death;	
+	}
+}

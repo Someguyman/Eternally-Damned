@@ -1,0 +1,129 @@
+Class MM_SSspawner : MM_Monsterspawners
+{
+	States
+	{
+	Spawn:
+		SSWV F 0;
+		Goto spawncheck;
+	D64D2spawner:
+	AAilenspawn:
+	TNTRevoSpawn:
+	JenesisSpawner:
+	Epic2spawner:
+	Normalspawn:
+		TNT1 A 0 A_SpawnItemEx("MM_WolfensteinSS",0,0,0,0,0,0,0,SXF_NOCHECKPOSITION | SXF_TRANSFERAMBUSHFLAG | SXF_TRANSFERPOINTERS | 288,0,tid);
+		Stop;
+	Alternatespawn:
+		TNT1 A 0 A_SpawnItemEx("MM_Rangerdude",0,0,0,0,0,0,0,SXF_NOCHECKPOSITION | SXF_TRANSFERAMBUSHFLAG | SXF_TRANSFERPOINTERS | 288,0,tid);
+		Stop;
+	Goingdownspawn:
+		TNT1 A 0 A_SpawnItemEx("MM_GoingDown_Boss",0,0,0,0,0,0,0,SXF_NOCHECKPOSITION | SXF_TRANSFERAMBUSHFLAG | SXF_TRANSFERPOINTERS | 288,0,tid);
+		Stop;
+	Ultimatedoomspawn:
+		TNT1 A 0 A_SpawnItemEx("MM_ShotgunGuy",0,0,0,0,0,0,0,SXF_NOCHECKPOSITION | SXF_TRANSFERAMBUSHFLAG | SXF_TRANSFERPOINTERS | 288,0,tid);
+		Stop;
+	Doomzerospawn:
+		TNT1 A 0 A_SpawnItemEx("MM_Alphasoul",0,0,0,0,0,0,0,SXF_NOCHECKPOSITION | SXF_TRANSFERAMBUSHFLAG | SXF_TRANSFERPOINTERS | 288,0,tid);
+		Stop;
+	Scythe2spawn:
+		TNT1 A 0 A_SpawnItemEx("MM_Evilmarine",0,0,0,0,0,0,0,SXF_NOCHECKPOSITION | SXF_TRANSFERAMBUSHFLAG | SXF_TRANSFERPOINTERS | 288,0,tid);
+		Stop;
+	Eviternityspawn:
+		TNT1 A 0 A_SpawnItemEx("MM_Captainguy",0,0,0,0,0,0,0,SXF_NOCHECKPOSITION | SXF_TRANSFERAMBUSHFLAG | SXF_TRANSFERPOINTERS | 288,0,tid);
+		Stop;
+	Valiantspawn:
+		TNT1 A 0 A_SpawnItemEx("MM_ChaingunGuy",0,0,0,0,0,0,0,SXF_NOCHECKPOSITION | SXF_TRANSFERAMBUSHFLAG | SXF_TRANSFERPOINTERS | 288,0,tid);
+		stop;
+	JenesisSpawner:
+		TNT1 A 0 A_SpawnItemEx("MM_ShotgunGuy",0,0,0,0,0,0,0,SXF_NOCHECKPOSITION | SXF_TRANSFERAMBUSHFLAG | SXF_TRANSFERPOINTERS | 288,0,tid);
+		Stop;
+	KDIKDIZDSpawn:
+		TNT1 A 0 A_SpawnItemEx("MM_Rapidfiredude",0,0,0,0,0,0,0,SXF_NOCHECKPOSITION | SXF_TRANSFERAMBUSHFLAG | SXF_TRANSFERPOINTERS | 288,0,tid);
+		Stop;
+	}
+}
+
+class MM_WolfensteinSS : WolfensteinSS
+{
+	Default
+	{
+		Health 50;
+		Radius 20;
+		Height 56;
+		Speed 8;
+		PainChance 170;
+		Monster;
+		+FLOORCLIP
+		+NOINFIGHTSPECIES
+		DropItem "none";
+		AttackSound "chainguy/attack";
+		SeeSound "wolfenteinss/Sight";
+		Painsound "wolfenteinss/Pain";
+		Activesound "wolfenteinss/Active";
+		Deathsound "wolfenteinss/Death";
+		Tag "SS Elite Nazi";
+	}
+	
+	void A_Weapondrop()
+	{
+		A_NoBlocking();
+		let pclass = players[consoleplayer].mo.GetClassName();
+		if (pclass == 'ET_Player_wolf')
+		{
+			A_DropItem("MM_Wolfentein3dMachinegun");
+		}
+		else
+		{
+			A_DropItem("MM_Magazine");
+		}
+	}
+	
+	States
+	{
+	Spawn:
+		WTSS W 10 A_Look;
+		Loop;
+	See:
+		WTSS AABBCCDD 3 A_Chase;
+		Loop;
+	Missile:
+		WTSS EF 4 A_FaceTarget;
+		WTSS G 2 BRIGHT
+		{
+			A_CustomBulletAttack(22.5, 0, 1, 9, "BulletPuff", 0, CBAF_NORANDOM);
+			A_Facetarget();
+		}
+		WTSS F 3 A_CPosRefire;
+		Goto Missile+1;
+	Death.Ice:
+		WTSS H 5 A_GenericFreezeDeath;
+		TNT1 A 1 A_Freezedeathchunks;
+		wait;
+	Death.SSGGIBING:
+		TNT1 A 0 A_Jumpifcloser(128, "XDeath");
+		TNT1 A 0 A_Jump(256, "Death");
+		Goto Death;
+	Pain:
+		WTSS H 3;
+		WTSS H 3 A_Pain;
+		Goto See;
+	Death:
+		WTSS I 5;
+		WTSS J 5 A_Scream;
+		WTSS K 5 A_Weapondrop();
+		WTSS L 5;
+		WTSS M -1;
+		Stop;
+	XDeath:
+		WTSS N 5 ;
+		WTSS O 5 A_XScream;
+		WTSS P 5 A_Weapondrop();
+		WTSS QRSTU 5;
+		WTSS V -1;
+		Stop;
+	Raise:
+		WTSS L 5;
+		WTSS KJI 5;
+		Goto See ;
+	}
+}

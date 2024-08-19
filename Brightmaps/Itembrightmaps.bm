@@ -1,0 +1,224 @@
+brightmap sprite stima0
+{
+	map "brightmaps/Items/stima0.png"
+	disablefullbright
+}
+
+brightmap sprite media0
+{
+	map "brightmaps/Items/media0.png"
+	disablefullbright
+}
+
+brightmap sprite pstra0
+{
+	map "brightmaps/Items/pstra0.png"
+	disablefullbright
+}
+
+brightmap sprite BON1A0
+{
+	disablefullbright
+}
+
+brightmap sprite BON1B0
+{
+	map "brightmaps/Items/BON1B0.png"
+	disablefullbright
+}
+
+brightmap sprite BON1C0
+{
+	map "brightmaps/Items/BON1C0.png"
+	disablefullbright
+}
+
+brightmap sprite BON1D0
+{
+	map "brightmaps/Items/BON1D0.png"
+	disablefullbright
+}
+
+brightmap sprite BON2A0
+{
+	disablefullbright
+}
+
+brightmap sprite BON2B0
+{
+	map "brightmaps/Items/BON2B0.png"
+	disablefullbright
+}
+
+brightmap sprite BON2C0
+{
+	map "brightmaps/Items/BON2C0.png"
+	disablefullbright
+}
+
+brightmap sprite BON2D0
+{
+	map "brightmaps/Items/BON2D0.png"
+	disablefullbright
+}
+
+brightmap sprite BON3A0
+{
+	map "brightmaps/Items/BON3A0.png"
+	disablefullbright
+}
+
+brightmap sprite BON3B0
+{
+	map "brightmaps/Items/BON3B0.png"
+	disablefullbright
+}
+
+brightmap sprite BON3C0
+{
+	map "brightmaps/Items/BON3C0.png"
+	disablefullbright
+}
+
+brightmap sprite BON3D0
+{
+	map "brightmaps/Items/BON3D0.png"
+	disablefullbright
+}
+
+brightmap sprite BON4A0
+{
+	disablefullbright
+}
+
+brightmap sprite BON4B0
+{
+	map "brightmaps/Items/BON4B0.png"
+	disablefullbright
+}
+
+brightmap sprite BON4C0
+{
+	map "brightmaps/Items/BON4C0.png"
+	disablefullbright
+}
+
+brightmap sprite BON4D0
+{
+	map "brightmaps/Items/BON4D0.png"
+	disablefullbright
+}
+
+brightmap sprite AMMOA0
+{
+	//map "brightmaps/Items/AMMOA0.png"
+	disablefullbright
+}
+
+brightmap sprite SBOXA0
+{
+	//map "brightmaps/Items/SBOXA0.png"
+	disablefullbright
+}
+
+brightmap sprite rocka0
+{
+	map "brightmaps/Items/rocka0.png"
+	disablefullbright
+}
+
+brightmap sprite BROKA0
+{
+	map "brightmaps/Items/BROKa0.png"
+	disablefullbright
+}
+
+brightmap sprite CELLA0
+{
+	map "brightmaps/Items/CELLA0.png"
+	disablefullbright
+}
+
+brightmap sprite CELLB0
+{
+	map "brightmaps/Items/CELLB0.png"
+	disablefullbright
+}
+
+brightmap sprite CELLC0
+{
+	map "brightmaps/Items/CELLC0.png"
+	disablefullbright
+}
+
+brightmap sprite CELLD0
+{
+	map "brightmaps/Items/CELLD0.png"
+	disablefullbright
+}
+
+brightmap sprite CELPA0
+{
+	map "brightmaps/Items/CELPA0.png"
+	disablefullbright
+}
+
+brightmap sprite CELPB0
+{
+	map "brightmaps/Items/CELPB0.png"
+	disablefullbright
+}
+
+brightmap sprite CELPC0
+{
+	map "brightmaps/Items/CELPC0.png"
+	disablefullbright
+}
+
+brightmap sprite CELPD0
+{
+	map "brightmaps/Items/CELPD0.png"
+	disablefullbright
+}
+
+brightmap sprite MRILA0
+{
+	map "brightmaps/Items/MRILA0.png"
+	disablefullbright
+}
+
+brightmap sprite PLGNF0
+{
+	map "brightmaps/Items/PLGNF0.png"
+	disablefullbright
+}
+
+brightmap sprite BFUGA0
+{
+	map "brightmaps/Items/BFUGA0.png"
+	disablefullbright
+}
+
+brightmap sprite ATOMA0
+{
+	map "brightmaps/Items/ATOMA0.png"
+	disablefullbright
+}
+
+brightmap sprite ATOMB0
+{
+	map "brightmaps/Items/ATOMB0.png"
+	disablefullbright
+}
+
+brightmap sprite ATOMC0
+{
+	map "brightmaps/Items/ATOMC0.png"
+	disablefullbright
+}
+
+brightmap sprite ATOMD0
+{
+	map "brightmaps/Items/ATOMA0.png"
+	disablefullbright
+}

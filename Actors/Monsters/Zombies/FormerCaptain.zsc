@@ -1,0 +1,112 @@
+
+class MM_Captainguy : MM_ChaingunGuy
+{
+	Default
+	{
+		Health 80;
+		Mass 100;
+		Speed 8;
+		PainChance 127;
+		DropItem "MM_Magazine";
+		+FLOORCLIP
+		+DOHARMSPECIES
+		Scale 1.1;
+		SeeSound "StrongZombie/Sight";
+		PainSound "StrongZombie/Pain";
+		DeathSound "StrongZombie/Death";
+		ActiveSound "StrongZombie/Active";
+		Obituary "%o was destroyed by a former captain.";
+		Tag "Former captain";
+	}
+	
+	void A_CaptAttack()
+	{
+		A_FaceTarget();
+		A_SpawnProjectile("BulletProjectile",34,12);
+	}
+	
+	States
+	{
+	Spawn:
+		CPTN AB 10 A_Look;
+		Loop;
+	See:
+		CPTN AABBCCDD 2 A_Chase;
+		Loop;
+	Missile:
+		CPTN E 10 A_FaceTarget;
+		CPTN F 2 BRIGHT A_CaptAttack();
+		CPTN E 1 BRIGHT A_FaceTarget;
+		CPTN F 2 BRIGHT A_CaptAttack();
+		CPTN E 1 BRIGHT A_FaceTarget;
+		CPTN F 2 BRIGHT A_CaptAttack();
+		CPTN E 1 BRIGHT A_FaceTarget;
+		CPTN F 2 BRIGHT A_CaptAttack();
+		CPTN E 1 BRIGHT A_FaceTarget;
+		CPTN F 2 BRIGHT A_CaptAttack();
+		CPTN E 9 A_FaceTarget;
+		Goto See;
+	Pain:
+		CPTN G 3;
+		CPTN G 3 A_Pain;
+		Goto See;
+	Death.Ice:
+		CPTN G 5 A_GenericFreezeDeath;
+		TNT1 A 1 A_Freezedeathchunks;
+	Death:
+		CPTN H 5;
+		CPTN I 5 A_Scream;
+		CPTN J 5 A_NoBlocking;
+		CPTN KL 5;
+		CPTN M -1;
+		Stop;
+	Death.SSGGIBING:
+		TNT1 A 0 A_Jump(60, "Death");
+		TNT1 A 0 A_Jumpifcloser(128, "XDeath");
+		TNT1 A 0 A_Jump(256, "Death");
+		Goto Death;
+	XDeath:
+		CPTN N 5;
+		CPTN O 5 A_XScream;
+		CPTN P 5 A_NoBlocking;
+		CPTN QR 5;
+		CPTN S -1;
+		Stop;
+	Raise:
+		CPTN L 5;
+		CPTN KJIH 5;
+		Goto See;
+	Crush:
+		POL5 A 0;
+		POL5 A 0 A_Startsound("Bloody/crush");
+		POL5 A -1;
+		stop;
+	}
+}
+
+class BulletProjectile : Actor
+{
+	Default
+	{
+		Radius 13;
+		Height 8;
+		Speed 30;
+		DamageFunction 20;
+		Projectile;
+		+RANDOMIZE
+		+ZDOOMTRANS
+		RenderStyle "Add";
+		Alpha 0.75;
+		SeeSound "Bullet/shoot";
+		DeathSound "Bullet/Death";
+	}
+	States
+	{
+	Spawn:
+		BPLS AB 5 BRIGHT;
+		Loop;
+	Death:
+		BPBX ABCDE 5 BRIGHT;
+		Stop;
+	}
+}

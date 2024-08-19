@@ -1,0 +1,113 @@
+Class MM_nullactor : Actor
+{}
+
+class MM_TameBulletPuff : BulletPuff
+{
+	Default
+	{
+	//DamageType "CHAINSAWGIBING";
+	+NOEXTREMEDEATH
+	}
+}
+
+class MM_ExtremeBulletPuff : BulletPuff
+{
+	Default
+	{
+	//DamageType "CHAINSAWGIBING";
+	+EXTREMEDEATH
+	}
+}
+
+class MM_Blood : Blood
+{
+	Default
+	{
+	}
+	States
+	{
+	Spawn:
+		BLUD CBA 8;
+		Stop;
+	Spray:
+		SPRY ABCDEF 3;
+		SPRY G 2;
+		Stop;
+	}
+}
+
+class MM_BrightBlood : Blood
+{
+	States
+	{
+	Spawn:
+		BLDB CBA 8 Bright;
+		Stop;
+	Spray:
+		SPRY ABCDEF 3 Bright;
+		SPRY G 2 Bright;
+		Stop;
+	}
+}
+
+class MM_TeleportFog : TeleportFog Replaces TeleportFog
+{
+	default
+	{
+		Scale 1.2;
+	}
+	
+			Void A_Teleporteffect()
+	{
+		if (CallACS("Projtoggle")==1)
+		{
+			A_SpawnItemEx("MM_TeleportFogeffect",0,0,0,0,0,0,0,128);
+		}
+		else
+		{
+			
+		}
+	}
+	
+	States
+	{
+	Spawn:
+		//TNT1 A 0 Bright A_JumpIf(TexMan.GetName(Floorpic) == "Gate3", "Spawnred");
+		TFOG A 4 Bright;
+		TFOG B 4 Bright A_Teleporteffect();
+		TFOG CDEFGHIJIH 4 Bright;
+		Stop;
+	}
+}
+
+class MM_TeleportFogeffect : Actor
+{
+	default
+	{
+		Scale 1.2;
+		+NOBLOCKMAP
+		+NOCLIP;
+		+DROPOFF;
+		+RANDOMIZE;
+		+NOINTERACTION;
+		+NOTELEPORT
+		Damage 0;
+		//+MISSILE
+		RenderStyle "Add";
+		Alpha 0.67;
+	}
+	States
+	{
+	Spawn:
+		TFOG ABCDEFGHIJIH 4 Bright;
+		Stop;
+	}
+}
+
+class MM_IceChunk : IceChunk replaces IceChunk
+{
+	Default
+	{
+		Gravity 0.9;
+	}
+}

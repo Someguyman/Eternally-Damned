@@ -1,0 +1,94 @@
+
+class MM_Shotgun : Originalweapon Replaces Shotgun
+{
+	Default
+	{
+		Weapon.SelectionOrder 1300;
+		Weapon.AmmoUse 1;
+		Weapon.AmmoGive 0;
+		Weapon.AmmoType "Shell";
+		Weapon.UpSound "Weapons/Shotgunup";
+		Inventory.PickupSound "Weapons/ShotgunPickup";
+		Inventory.PickupMessage "\cgYou got the Shotgun!";
+		Obituary "$OB_MPSHOTGUN";
+		Tag "$TAG_SHOTGUN";
+	}
+		Action Void A_Firesg()
+		{
+			A_Startsound("weapons/shotgf", CHAN_AUTO);
+			A_gunflash("Flash");
+			if (CountInv("PowerQuadDamage") == 1)
+			{
+				A_Firebullets(5.2, 0, 7, 5, "MM_ExtremeSSGPuff", FBF_USEAMMO);
+			}
+			else 
+			{
+				A_Firebullets(5.2, 0, 7, 5, "MM_TameBulletPuff", FBF_USEAMMO);
+			}
+		}
+	States
+	{
+	Ready:
+		STGN A 1 A_WeaponReady;
+		Loop;
+	Deselect:
+		STGN A 1 A_Lower;
+		Loop;
+	Select:
+		STGN A 1 A_Raise;
+		Loop;
+	Fire:
+		STGN B 4 A_Firesg();
+		STGN A 5;
+		STGN D 3;
+		STGN E 6;
+		STGN F 6;
+		STGN E 4;
+		STGN DC 2;
+		STGN A 0 A_ReFire;
+		Goto Ready;
+	Flash:
+		STGF A 2 Bright A_Light2;
+		STGF B 2 Bright A_Light1;
+		Goto LightDone;
+	Spawn:
+		SGNP A -1;
+		Stop;
+	}
+}
+
+Class MM_Shotgunpickup : CustomInventory 
+{
+Default
+{
+	INVENTORY.RESTRICTEDTO "ET_Player";
+	VISIBLETOPLAYERCLASS "ET_Player";
+	Inventory.PickupSound "Weapons/ShotgunPickup";
+	Inventory.PickupMessage "\cgYou got the Shotgun!";
+}
+	States
+	{
+	Spawn:
+		TNT1 A 0 A_JumpIfInventory("MM_Shotgun", 1, "Taken");
+		SGNP A -1;
+		Stop;
+	Pickup:
+		TNT1 A 0 A_GiveInventory("MM_Shotgun", 1);
+		TNT1 A 0 A_GiveInventory("Shell", 8);
+		Stop;
+	Taken:
+		TNT1 A 0;
+		Fail;	
+	}
+}
+
+Class MM_Shotgunpickup2 : MM_Shotgunpickup
+{
+	States
+	{
+	Pickup:
+		TNT1 A 0 A_GiveInventory("MM_Shotgun", 1);
+		TNT1 A 0 A_GiveInventory("Shell", 4);
+		Stop;
+	}
+}

@@ -1,0 +1,801 @@
+
+class MM_Candlestick : Candlestick
+{
+	States
+	{
+	Spawn:
+		TNT1 A 0;
+		TNT1 A 0 Bright A_JumpIf(CallACS("Gamespawntoggle")==3, "DoomzeroSpawn");
+		Goto idle;
+	Idle:
+		CNDL ABCB 6 BRIGHT;
+		Loop;
+	DoomzeroSpawn:
+		PTGM A -1 BRIGHT;
+		Stop;
+	}
+}
+
+class MM_Candelabra : Candelabra
+{
+	States
+	{
+	Spawn:
+		CBR1 ABCB 6 BRIGHT;
+		Loop;
+	}
+}
+
+class MM_GreenTorch : GreenTorch
+{
+	Default
+	{
+	}
+		override void PostBeginPlay()
+		{
+		A_Startsound("Torch/crackle", CHAN_BODY, CHANF_LOOPING, 1, ATTN_NORM);
+		}
+	States
+	{
+	Spawn:
+		TNT1 A 0;
+		TNT1 A 0 Bright A_JumpIf(CallACS("Gamespawntoggle")==5, "EviternitySpawn");
+		TNT1 A 0 Bright A_JumpIf(CallACS("Gamespawntoggle")==12.0, "KDIKDIZDSpawn");
+		Goto idle;
+	Idle:
+		TGT1 ABCD 4 BRIGHT;
+		Loop;
+	EviternitySpawn:
+		TGT2 ABCD 4 BRIGHT;
+		Loop;
+	KDIKDIZDSpawn:
+		TNT1 A 0 A_NoBlocking;
+        TNT1 A 0 {bCOUNTKILL = 0; }
+        TNT1 A 0 {bTHRUACTORS = 1; }
+		TNT1 A 0 A_SpawnItemEx("MM_KDIKDIZD_Reflectivetorch",0,0,0,0,0,0,0,SXF_NOCHECKPOSITION | SXF_TRANSFERAMBUSHFLAG ,0);
+		Stop;
+	}
+}
+
+class MM_RedTorch : RedTorch
+{
+	Default
+	{
+	}
+		override void PostBeginPlay()
+		{
+		A_Startsound("Torch/crackle", CHAN_BODY, CHANF_LOOPING, 1, ATTN_NORM);
+		}
+	States
+	{
+	Spawn:
+		TNT1 A 0;
+		TNT1 A 0 Bright A_JumpIf(CallACS("Gamespawntoggle")==5, "EviternitySpawn");
+		Goto idle;
+	Idle:
+		TRT1 ABCD 4 BRIGHT;
+		Loop;
+	EviternitySpawn:
+		TRT2 ABCD 4 BRIGHT;
+		Loop;
+	}
+}
+
+class MM_BlueTorch : BlueTorch
+{
+	Default
+	{
+	}
+		override void PostBeginPlay()
+		{
+		A_Startsound("Torch/crackle", CHAN_BODY, CHANF_LOOPING, 1, ATTN_NORM);
+		}
+	States
+	{
+	Spawn:
+		TNT1 A 0;
+		TNT1 A 0 Bright A_JumpIf(CallACS("Gamespawntoggle")==3, "Doomzerospawn");
+		TNT1 A 0 Bright A_JumpIf(CallACS("Gamespawntoggle")==5, "EviternitySpawn");
+		TNT1 A 0 Bright A_JumpIf(CallACS("Gamespawntoggle")==6, "Valiantspawn");
+		TNT1 A 0 Bright A_JumpIf(CallACS("Gamespawntoggle")==12.0, "KDIKDIZDSpawn");
+		Goto idle;
+	Idle:
+		TBT1 ABCD 4 BRIGHT;
+		Loop;
+	EviternitySpawn:
+		TBT2 ABCD 4 BRIGHT;
+		Loop;
+	Doomzerospawn:
+		TNT1 A 0 A_NoBlocking;
+		TNT1 A 0 A_SpawnItemEx("MM_DoomzeroBigheart",0,0,0,0,0,0,0,SXF_NOCHECKPOSITION | SXF_TRANSFERAMBUSHFLAG ,0);
+		Stop;
+	Valiantspawn:
+		TNT1 A 0 A_NoBlocking;
+		TNT1 A 0 A_SpawnItemEx("MM_ValiantDiabolist",0,0,0,0,0,0,0,SXF_NOCHECKPOSITION | SXF_TRANSFERAMBUSHFLAG ,0);
+		Stop;
+	KDIKDIZDSpawn:
+		TNT1 A 0 A_NoBlocking;
+		TNT1 A 0 A_SpawnItemEx("MM_KDIKDIZD_Walltorch",0,0,0,0,0,0,0,SXF_NOCHECKPOSITION | SXF_TRANSFERAMBUSHFLAG ,0);
+		Stop;
+	}
+}
+
+class MM_KDIKDIZD_Reflectivetorch : Actor
+{
+	Default
+	{
+	Height 8;
+	Radius 16;
+	}
+	States
+	{
+	Spawn:
+		RTOR ABCD 4 BRIGHT;
+		Loop;
+	}
+}
+
+class MM_ShortRedTorch : ShortRedTorch
+{
+	Default
+	{
+	}
+		override void PostBeginPlay()
+		{
+		A_Startsound("Torch/crackle", CHAN_BODY, CHANF_LOOPING, 1, ATTN_NORM);
+		}
+	States
+	{
+	Spawn:
+		TNT1 A 0;
+		TNT1 A 0 Bright A_JumpIf(CallACS("Gamespawntoggle")==5, "EviternitySpawn");
+		Goto idle;
+	Idle:
+		SRT1 ABCD 4 BRIGHT;
+		Loop;
+	EviternitySpawn:
+		SRT2 ABCD 4 BRIGHT;
+		Loop;
+	}
+}
+
+class MM_ShortGreenTorch : ShortGreenTorch
+{
+	Default
+	{
+	}
+		override void PostBeginPlay()
+		{
+		A_Startsound("Torch/crackle", CHAN_BODY, CHANF_LOOPING, 1, ATTN_NORM);
+		}
+	States
+	{
+	Spawn:
+		TNT1 A 0;
+		TNT1 A 0 Bright A_JumpIf(CallACS("Gamespawntoggle")==5, "EviternitySpawn");
+		TNT1 A 0 Bright A_JumpIf(CallACS("Gamespawntoggle")==12.0, "KDIKDIZDSpawn");
+		Goto idle;
+	Idle:
+		SGT1 ABCD 4 BRIGHT;
+		Loop;
+	EviternitySpawn:
+		SGT2 ABCD 4 BRIGHT;
+		Loop;
+	KDIKDIZDSpawn:
+		TNT1 A 0 A_SpawnItemEx("MM_KDIKDIZD_stagelight",0,0, 100000000000,0,0,0,0,SXF_NOCHECKPOSITION | SXF_TRANSFERAMBUSHFLAG | SXF_TRANSFERPITCH ,0);
+		Stop;
+	}
+}
+
+class MM_ShortBlueTorch : ShortBlueTorch
+{
+	Default
+	{
+	}
+		override void PostBeginPlay()
+		{
+		A_Startsound("Torch/crackle", CHAN_BODY, CHANF_LOOPING, 1, ATTN_NORM);
+		}
+	States
+	{
+	Spawn:
+		TNT1 A 0;
+		TNT1 A 0 Bright A_JumpIf(CallACS("Gamespawntoggle")==2, "Goingdownspawn");
+		TNT1 A 0 Bright A_JumpIf(CallACS("Gamespawntoggle")==5, "EviternitySpawn");
+		TNT1 A 0 Bright A_JumpIf(CallACS("Gamespawntoggle")==12.0, "KDIKDIZDSpawn");
+		Goto idle;
+	Idle:
+		SBT1 ABCD 4 BRIGHT;
+		Loop;
+	EviternitySpawn:
+		SBT2 ABCD 4 BRIGHT;
+		Loop;
+	Goingdownspawn:
+		TNT1 A 0 A_SpawnItemEx("MM_Debreenoise",0,0,0,0,0,0,0,SXF_NOCHECKPOSITION | SXF_TRANSFERAMBUSHFLAG | SXF_TRANSFERPOINTERS | 288,0,tid);
+		Stop;
+	KDIKDIZDSpawn:
+		TNT1 A 0 A_SpawnItemEx("MM_KDIKDIZD_Ceilingtalagmite",0,0, 100000000000,0,0,0,0,SXF_NOCHECKPOSITION | SXF_TRANSFERAMBUSHFLAG | SXF_TRANSFERPITCH ,0);
+		Stop;
+	}
+}
+
+Class MM_Debreenoise : Actor
+{
+	Default
+	{
+		Health 10;
+		+SHOOTABLE
+		Radius 16;
+		Height 16;
+		Mass 100;
+		DeathSound "Debree/crumble";
+	}
+	States
+	{
+		Spawn:
+			TNT1 AA 4;
+			Loop;
+		Death:
+			TNT1 A 1;
+			TNT1 A 3 A_Scream;
+			TNT1 A 200;
+			Stop;
+	}
+}
+
+Class MM_KDIKDIZD_Ceilingtalagmite : Actor
+{
+	Default
+	{
+		Radius 20;
+		Height 16;
+		mass 100;
+		+NoGravity
+		+SPAWNCEILING 
+	}
+	States
+	{
+		Spawn:
+			DECO F -1;
+			Loop;
+	}
+}
+
+Class MM_KDIKDIZD_stagelight : Actor
+{
+	Default
+	{
+		Radius 20;
+		Height 16;
+		Mass 100;
+		+Solid
+	}
+	States
+	{
+		Spawn:
+			TLGH A -1; 
+			Loop;
+	}
+}
+
+class MM_BloodyTwitch : BloodyTwitch {}
+
+Class MM_Bloodytwitch_spawner : Actor 
+{
+	Default
+	{
+		+Noblockmap
+		-COUNTKILL 
+		+THRUACTORS
+	}	
+	States
+	{
+	Spawn:
+		TNT1 A 0;
+		TNT1 A 0 Bright A_JumpIf(CallACS("Gamespawntoggle")==12.0, "KDIKDIZDSpawn");
+		Goto Normalspawn;
+	Normalspawn:
+		TNT1 A 0 A_SpawnItemEx("MM_BloodyTwitch",0,0, 100000000000,0,0,0,0,SXF_NOCHECKPOSITION | SXF_TRANSFERAMBUSHFLAG | SXF_TRANSFERPITCH ,0);
+		Stop;
+	KDIKDIZDSpawn:
+		TNT1 A 0 A_SpawnItemEx("MM_BruiserDemon",0,0,0,0,0,0,0,SXF_NOCHECKPOSITION | SXF_TRANSFERAMBUSHFLAG ,0);
+		Stop;
+	}
+}
+
+class MM_BurningBarrel : BurningBarrel
+{
+	Default
+	{
+		+SOLID
+		+SHOOTABLE
+		//+BUDDHA
+		PainChance 256;
+		+INVULNERABLE
+		+ALLOWPAIN
+		+STANDSTILL
+		Radius 16;
+		Height 32;
+		Mass 0x7fffffff;
+		+NOTAUTOAIMED
+		PainChance "Barrelexplosion", 0;
+		PainSound "Barrel/Pain";
+	}
+		override void PostBeginPlay()
+		{
+		A_Startsound("Torch/crackle", CHAN_BODY, CHANF_LOOPING, 1, ATTN_NORM);
+		}
+	States
+	{
+	Spawn:
+		TNT1 A 0;
+		TNT1 A 0 Bright A_JumpIf(CallACS("Gamespawntoggle")==12.0, "KDIKDIZDSpawn");
+		Goto Idle;
+	Idle:
+		FCAN ABC 4 BRIGHT;
+		Loop;
+	Pain:
+		FCAN A 0;
+		FCAN A 0 A_Pain;
+		Goto spawn;
+	Death:
+		FCAN A 0 BRIGHT A_SpawnitemEx ("MM_Barrelblocker");
+		FCAN ABC 4 BRIGHT;
+		Goto Death;
+	KDIKDIZDSpawn:
+		TNT1 A 0 A_Stopsound;
+		TNT1 A 0 A_SpawnItemEx("MM_KDIKDIZD_Bombpickup",0,0,0,0,0,0,0,SXF_NOCHECKPOSITION | SXF_TRANSFERAMBUSHFLAG ,0);
+		Stop;
+	}
+}
+
+Class MM_Barrelblocker : Actor
+{
+	Default
+	{
+		Radius 16;
+		Height 32;
+		ProjectilePassHeight -16;
+		+SOLID
+	}
+	States
+	{
+		Spawn:
+			tntA A -1;
+			Stop;
+	}
+}
+
+Class MM_Techlamp_spawner : Actor 
+{
+	Default
+	{
+		+Noblockmap
+		-COUNTKILL 
+		+THRUACTORS
+	}	
+	States
+	{
+	Spawn:
+		TNT1 A 0;
+		TNT1 A 0 Bright A_JumpIf(CallACS("Gamespawntoggle")==12.0, "KDIKDIZDSpawn");
+		Goto Normalspawn;
+	Normalspawn:
+		TNT1 A 0 A_SpawnItemEx("MM_TechLamp",0,0,0,0,0,0,0,SXF_NOCHECKPOSITION | SXF_TRANSFERAMBUSHFLAG ,0);
+		Stop;
+	KDIKDIZDSpawn:
+		TNT1 A 0 A_SpawnItemEx("MM_Shortlamp2",0,0,0,0,0,0,0,SXF_NOCHECKPOSITION | SXF_TRANSFERAMBUSHFLAG ,0);
+		Stop;
+	}
+}
+
+class MM_TechLamp : TechLamp
+{
+	Default
+	{
+	}
+		override void PostBeginPlay()
+		{
+		A_Startsound("Light/Hum", CHAN_BODY, CHANF_LOOPING, 1, ATTN_NORM);
+		}
+	States
+	{
+	Spawn:
+		TLMP ABCD 4 BRIGHT;
+		Loop;
+	}
+}
+
+Class MM_Techlamp2_spawner : Actor 
+{
+	Default
+	{
+		+Noblockmap
+		-COUNTKILL 
+		+THRUACTORS
+	}	
+	States
+	{
+	Spawn:
+		TNT1 A 0;
+		TNT1 A 0 Bright A_JumpIf(CallACS("Gamespawntoggle")==12.0, "KDIKDIZDSpawn");
+		Goto Normalspawn;
+	Normalspawn:
+		TNT1 A 0 A_SpawnItemEx("MM_TechLamp2",0,0,0,0,0,0,0,SXF_NOCHECKPOSITION | SXF_TRANSFERAMBUSHFLAG ,0);
+		Stop;
+	KDIKDIZDSpawn:
+		TNT1 A 0 A_SpawnItemEx("MM_Lostsoul",0,0,0,0,0,0,0,SXF_NOCHECKPOSITION | SXF_TRANSFERAMBUSHFLAG ,0);
+		Stop;
+	}
+}
+
+class MM_TechLamp2 : TechLamp2
+{
+	Default
+	{
+	}
+		override void PostBeginPlay()
+		{
+		A_Startsound("Light/Hum", CHAN_BODY, CHANF_LOOPING, 1, ATTN_NORM);
+		}
+	States
+	{
+	Spawn:
+		TLP2 ABCD 4 BRIGHT;
+		Loop;
+	}
+}
+
+class MM_Shortlamp : Column
+{
+	Default
+	{
+	}
+		override void PostBeginPlay()
+		{
+		A_Startsound("Light/Hum", CHAN_BODY, CHANF_LOOPING, 1, ATTN_NORM);
+		}
+	States
+	{
+	Spawn:
+		STLP ABCB 6 BRIGHT;
+		Loop;
+	}
+}
+
+class MM_Shortlamp_Nocollision : MM_Shortlamp
+{
+	Default
+	{
+		-SOLID
+	}
+}
+
+class MM_Shortlamp2 : MM_Shortlamp
+{
+	States
+	{
+	Spawn:
+		STP2 ABCB 6 BRIGHT;
+		Loop;
+	}
+}
+
+Class MM_SmallBloodPool_spawner : Actor 
+{
+	Default
+	{
+		+Noblockmap
+		-COUNTKILL 
+		+THRUACTORS
+	}	
+	States
+	{
+	Spawn:
+		TNT1 A 0;
+		TNT1 A 0 Bright A_JumpIf(CallACS("Gamespawntoggle")==12.0, "KDIKDIZDSpawn");
+		Goto Normalspawn;
+	Normalspawn:
+		TNT1 A 0 A_SpawnItemEx("MM_SmallBloodPool",0,0,0,0,0,0,0,SXF_NOCHECKPOSITION | SXF_TRANSFERAMBUSHFLAG ,0);
+		Stop;
+	KDIKDIZDSpawn:
+		TNT1 A 0 A_SpawnItemEx("MM_Shortlamp_Nocollision",0,0,0,0,0,0,0,SXF_NOCHECKPOSITION | SXF_TRANSFERAMBUSHFLAG ,0);
+		Stop;
+	}
+}
+
+class MM_SmallBloodPool : SmallBloodPool 
+{
+	Default
+	{
+		Radius 20;
+		Height 1;
+		+NOBLOCKMAP
+		+MOVEWITHSECTOR
+	}
+	States
+	{
+	Spawn:
+		POB2 A -1;
+		Stop;
+	}
+
+
+}
+
+class MM_HeartColumn : HeartColumn
+{
+	States
+	{
+	Spawn:
+		TNT1 A 0;
+		TNT1 A 0 Bright A_JumpIf(CallACS("Gamespawntoggle")==6, "Valiantspawn");
+		Goto idle;
+	Idle:
+		COL5 A 14;
+		COL5 B 14 A_Startsound("Heartbeat/idle", CHAN_BODY, 0, 1, ATTN_NORM);
+		Loop;
+	Valiantspawn:
+		TNT1 A 0 A_NoBlocking;
+        TNT1 A 0 {bCOUNTKILL = 0; }
+        TNT1 A 0 {bTHRUACTORS = 1; }
+		TNT1 A 0 A_SpawnItemEx("MM_Electricball",0,0,0,0,0,0,0,SXF_NOCHECKPOSITION | SXF_TRANSFERAMBUSHFLAG ,0);
+		Stop;
+	}
+}
+
+class MM_DeadStick : DeadStick
+{
+	Default
+	{
+		Health 1;
+		Radius 16;
+		Height 64;
+		ProjectilePassHeight -16;
+		PainChance 256;
+		+SOLID
+		+SHOOTABLE
+		+BUDDHA
+		+ALLOWPAIN
+		+NOTAUTOAIMED
+		PainSound "Deadstick/Pain";
+		Mass 0x7fffffff;
+		+NOICEDEATH
+		BloodType "MM_Blood";
+		BloodColor "Red";
+	}
+	States
+	{
+	Spawn:
+		POL1 A 1;
+		Loop;
+	Pain:
+		POL1 A 3;
+		POL1 A 3 A_Pain;
+		Goto Spawn;
+	Death:
+		POL1 A 0 A_SpawnitemEx ("MM_Stickblocker");
+		POL1 A 1;
+		POL1 A 1;
+		Goto death+1;
+	}
+}
+
+class MM_LiveStick : LiveStick
+{
+	Default
+	{
+		Health 1;
+		Radius 16;
+		Height 64;
+		PainSound "Livestick/Pain";
+		ProjectilePassHeight -16;
+		PainChance 256;
+		+SOLID
+		+SHOOTABLE
+		+BUDDHA
+		+ALLOWPAIN
+		+NOTAUTOAIMED
+		Mass 0x7fffffff;
+		+NOICEDEATH
+		BloodType "MM_Blood";
+		BloodColor "Red";
+	}
+	States
+	{
+	Spawn:
+		tnt1 A 0;
+		tnt1 A 0 A_JumpIf(CallACS("Gamespawntoggle")==3, "DoomzeroSpawn");
+		Goto Idle;
+	DoomzeroSpawn:
+		tnt1 A 0 A_NoBlocking;
+		Stop;
+	Idle:
+		POL6 A 6;
+		POL6 B 8;
+		Loop;
+	Pain:
+		POL6 A 3;
+		POL6 A 3 A_Pain;
+		Goto Spawn;
+	Death:
+		POL6 A 0 A_SpawnitemEx ("MM_Stickblocker");
+		POL6 A 6;
+		POL6 B 8;
+		Goto death+1;
+	}
+}
+
+Class MM_Stickblocker : Actor
+{
+	Default
+	{
+		Radius 16;
+		Height 64;
+		ProjectilePassHeight -16;
+		+SOLID
+	}
+	States
+	{
+		Spawn:
+			tntA A -1;
+			Stop;
+	}
+}
+
+class MM_EvilEye : EvilEye
+{
+	Default
+	{
+		+FLOATBOB
+		FloatBobStrength 0.3;
+	}
+	override void PostBeginPlay()
+		{
+		A_Startsound("Evileye/Idle", CHAN_BODY, CHANF_LOOPING, 1, ATTN_NORM);
+		}
+	States
+	{
+	Spawn:
+		CEY1 ABCB 6 BRIGHT;
+		Loop;
+	}
+}
+
+class MM_EvilEyeCandle : Candlestick
+{
+	States
+	{
+	Spawn:
+		TNT1 A 0;
+		TNT1 A 0 A_SpawnItemEx("MM_EvilEye",0,0,0,0,0,0,0,SXF_NOCHECKPOSITION | SXF_TRANSFERAMBUSHFLAG ,0);
+		goto idle;
+	Idle:
+		CEY2 ABCB 6 BRIGHT;
+		Loop;
+	}
+}
+
+class MM_FloatingSkull : FloatingSkull
+{
+	Default
+	{
+		+FLOATBOB
+		FloatBobStrength 0.3;
+	}
+		override void PostBeginPlay()
+		{
+		A_Startsound("Torch/crackle", CHAN_BODY, CHANF_LOOPING, 1, ATTN_NORM);
+		}
+	States
+	{
+	Spawn:
+		FSKF ABCB 6 BRIGHT;
+		Loop;
+	}
+}
+
+class MM_BigTree : BigTree
+{
+	States
+	{
+	Spawn:
+		TNT1 A 0;
+		TNT1 A 0 Bright A_JumpIf(CallACS("Gamespawntoggle")==6, "Valiantspawn");
+		Goto idle;
+	Idle:
+		TRE2 A -1;
+		Stop;
+	Valiantspawn:
+		TNT1 A 0 A_NoBlocking;
+        TNT1 A 0 {bCOUNTKILL = 0; }
+        TNT1 A 0 {bTHRUACTORS = 1; }
+		TNT1 A 0 A_SpawnItemEx("MM_GhostRevenant",0,0,0,0,0,0,0,SXF_NOCHECKPOSITION | SXF_TRANSFERAMBUSHFLAG ,0);
+		Stop;
+	}
+}
+
+class MM_TorchTree : TorchTree
+{
+	States
+	{
+	Spawn:
+		TNT1 A 0;
+		TNT1 A 0 Bright A_JumpIf(CallACS("Gamespawntoggle")==6, "Valiantspawn");
+		Goto idle;
+	Idle:
+		TRE1 A -1;
+		Stop;
+	Valiantspawn:
+		TNT1 A 0 A_NoBlocking;
+        TNT1 A 0 {bCOUNTKILL = 0; }
+        TNT1 A 0 {bTHRUACTORS = 1; }
+		TNT1 A 0 A_SpawnItemEx("MM_GhostArchvile",0,0,0,0,0,0,0,SXF_NOCHECKPOSITION | SXF_TRANSFERAMBUSHFLAG ,0);
+		Stop;
+	}
+}
+
+Class MM_KDIKDIZD_Tree : Actor
+{
+	Default
+	{
+		Height 16;
+		Radius 16;
+	}
+	
+	States
+	{
+		Spawn:
+			KTRE A -1;
+			Loop;
+	}
+}
+
+Class MM_SpinningChair : Actor
+{
+	Default
+	{
+		Height 16;
+		Radius 16;
+		+Solid
+	}
+	
+	States
+	{
+		Spawn:
+			CHAI A -1;
+			Loop;
+	}
+}
+
+Class MM_KDIKDIZD_Bombpickup : Actor
+{
+	Default
+	{
+		Height 16;
+		Radius 1;
+	}
+	States
+	{
+		Spawn:
+			BOMB A 8;
+			BOMB A 8 Bright;
+			Loop;
+	}
+}
+Class MM_KDIKDIZD_Walltorch : Actor
+{
+	Default
+	{
+		Radius 1.0;
+		Height 1.0;
+		+Noblockmap
+	}
+	
+	States
+	{
+		Spawn:
+			WTOR ABC 6 Bright;
+			Loop;
+	}
+}

@@ -1,0 +1,285 @@
+
+
+Class Plasmacooldown : Inventory 	//This item is given to you with every shot the plasma rifle fires
+{ 
+Default
+{
+Inventory.MaxAmount 2;
+}
+}
+
+class MM_PlasmaRifle : Originalweapon Replaces Plasmarifle
+{
+	Default
+	{
+		Weapon.SelectionOrder 100;
+		Weapon.AmmoUse 1;
+		Weapon.AmmoGive 50;
+		Weapon.AmmoType "Cell";
+		Weapon.UpSound "Weapons/Plasmaup";
+		Inventory.PickupSound "Weaopns/PlasmaPickup";
+		Inventory.PickupMessage "\cgYou got the plasma rifle!";
+		Tag "$TAG_PLASMARIFLE";
+	}
+	
+		Action Void A_FirePlasma()
+		{
+			//PowerQuadDamage
+			if (CountInv("PowerQuadDamage") == 1)
+			{
+				A_TakeInventory("PlasmaCooldown",4);
+				A_GunFlash("QuadFlash"); 
+				A_FireProjectile("MM_Greenplasma",0,1,-1);
+			}
+			else 
+			{
+				A_GiveInventory("PlasmaCooldown",1);
+				A_GunFlash("Flash"); 
+				A_FireProjectile("MM_PlasmaBall",0,1,-1);
+			}
+		}
+		
+		
+	States
+	{
+	Ready:
+		TNT1 A 0 A_JumpIf(CallACS("Gamespawntoggle")==12.0, "KDIKDIZDReady");
+		PLGN A 1 A_WeaponReady;
+		Loop;
+	Deselect:
+		TNT1 A 0 A_JumpIf(CallACS("Gamespawntoggle")==12.0, "KDIKDIZDDeselect");
+		PLGN A 1 A_Lower;
+		Loop;
+	Select:
+		TNT1 A 0 A_JumpIf(CallACS("Gamespawntoggle")==12.0, "KDIKDIZDSelect");
+		PLGN A 0 A_Startsound("Weapons/Plasmaup", CHAN_WEAPON);
+	Selectloop:
+		PLGN A 1 A_Raise;
+		Loop;
+	
+	KDIKDIZDReady:
+		RIFG A 1 A_WeaponReady;
+		Loop;
+	KDIKDIZDDeselect:
+		RIFG A 1 A_Lower;
+		Loop;
+	KDIKDIZDSelect:
+		PLGN A 0 A_Startsound("Weapons/Rifleup", CHAN_WEAPON);
+	KDIKDIZDSelectloop:
+		RIFG A 1 A_Raise;
+		Loop;
+		
+	Fire:
+		TNT1 A 0 A_JumpIf(CallACS("Gamespawntoggle")==12.0, "KDIKDIZDFire");
+		PLGN A 3 A_FirePlasma();
+		TNT1 A 0 A_ReFire;
+		PLGN A 0 A_JumpIfInventory("PlasmaCooldown",2,"Cooldown");
+		PLGN A 0 A_TakeInventory("PlasmaCooldown",2); //This allows the gun to be tap fired without consequince
+		PLGN A 3;
+		Goto Ready;
+	KDIKDIZDFire:
+		RIFG A 0 A_GunFlash("KDIKDIZDFlash");
+		RIFG A 0 A_Startsound("Weapons/RifleFire", CHAN_AUTO);
+		RIFG A 0 A_FireBullets(0, 0, 9, 5, "", 0);
+		RIFG A 3 A_FireBullets(0, 0, 1, 5, "BulletPuff", 1);
+		RIFG BCDBA 2;
+		RIFG A 3;
+		Goto Ready;
+	Cooldown:	
+		PLGN A 0 A_GunFlash("Flash2");
+		PLGN C 2;
+		PLGN B 15;
+		PLGN C 2 A_TakeInventory("PlasmaCooldown",2);
+		PLGN A 1 Offset(0,34);
+		Goto Ready;
+	Flash:
+		PLGN D 1 Bright A_Light1;
+		PLGN E 1 Bright A_Light1;
+		PLGN A 1 Bright A_Light1;
+		PLGN D 1 Bright A_Light1;
+		Goto LightDone;
+	QuadFlash:
+		PGNG A 1 Bright A_Light1;
+		PGNG B 1 Bright A_Light1;
+		PLGN A 1 Bright A_Light1;
+		PGNG A 1 Bright A_Light1;
+		Goto LightDone;
+		
+	KDIKDIZDFlash:
+		RIFF B 2 Bright A_Light1;
+		RIFF A 1 Bright A_Light2;
+		TNT1 A 0 A_Light0;
+		Goto LightDone;
+		
+	Flash2:
+		PLGN C 2;
+		PLGN B 3;
+		Goto LightDone;
+		
+	Spawn:
+		TNT1 A 0 A_JumpIf(CallACS("Gamespawntoggle")==12.0, "KDIKDIZDSpawn");
+		PLGN F -1;
+		Loop;
+		
+	KDIKDIZDSpawn:
+		RIPU A -1;
+		Goto spawn;
+	}
+}
+
+Class MM_Plasmariflepickup : CustomInventory 
+{
+Default
+{
+	INVENTORY.RESTRICTEDTO "ET_Player";
+	VISIBLETOPLAYERCLASS "ET_Player";
+	Inventory.PickupSound "";
+	Inventory.PickupMessage "";
+}
+	States
+	{
+	Spawn:
+		TNT1 A 0;
+		TNT1 A 0 A_JumpIf(CallACS("Gamespawntoggle")==12.0, "KDIKDIZDSpawn");
+		TNT1 A 0 A_JumpIfInventory("MM_PlasmaRifle", 1, "Taken");
+		PLGN F -1;
+		Loop;
+	KDIKDIZDSpawn:
+		RIPU A -1;
+		loop;
+		Goto spawn;
+	Pickup:
+		TNT1 A 0 A_GiveInventory("MM_PlasmaRifle", 1);
+		TNT1 A 0 A_GiveInventory("cell", 50);
+		Tnt1 A 0
+		{
+		if (CallACS("Gamespawntoggle")==12.0)
+		{
+			A_Log("\cgYou got the rifle!");
+			A_Startsound("Weapons/RiflePickup", CHAN_BODY);
+		}
+		else
+		{
+			A_Log("\cgYou got the plasma rifle!");
+			A_Startsound("Weaopns/PlasmaPickup", CHAN_BODY);
+		}
+		}
+		Stop;
+	Taken:
+		TNT1 A 0;
+		Fail;	
+	}
+}
+
+class MM_PlasmaBall : PlasmaBall Replaces PlasmaBall
+{
+	Default
+	{
+		Speed 30;
+		DamageFunction 20;
+		DamageType "Plasma";
+		SeeSound "Weapons/Plasmafire";
+		DeathSound "Weapons/Plasmadie";
+	}
+	
+		Void A_plasmatrail(Class<Actor> p)
+	{
+		if (CallACS("Projtoggle")==1)
+		{
+			A_SpawnItemEx(p, 0, 0, 0, 0, 0, 0, 0, 128);
+		}
+		else
+		{
+			
+		}
+	}
+	
+	States
+	{
+	Spawn:
+		FDPS AAAAA 1 BRIGHT A_plasmatrail("MM_PlayerPlasmaTrail1");
+		FDPS BBBBB 1 BRIGHT A_plasmatrail("MM_PlayerPlasmaTrail2");
+		loop;
+	Death:
+		FDPE ABCDE 4 Bright;
+		Stop;
+	}
+}
+
+class MM_PlayerPlasmaTrail1 : Actor
+{
+	Default
+	{
+		PROJECTILE;
+		RENDERSTYLE "ADD";
+		+NOCLIP
+		Alpha 0.90;
+		+ZDOOMTRANS
+	}
+	States
+	{
+	Spawn:
+		TNT1 A 2 Bright;
+	Fadeaway:
+		FDPS AA 1 Bright A_Fadeout(0.3);
+		Loop;
+	}
+}
+
+class MM_PlayerPlasmaTrail2 : MM_PlasmaTrail1
+{
+	States
+	{
+	Spawn:
+		TNT1 A 2 Bright;
+	Fadeaway:
+		FDPS BB 1 Bright A_Fadeout(0.3);
+		Loop;
+	}
+}
+
+class MM_Greenplasma : MM_PlasmaBall
+{
+	Default
+	{
+		SeeSound "Terminator/Plasma";
+		DeathSound "BFG/Tracerexp";
+		BounceType "Classic";
+		DamageType "Extreme";
+	}
+	States
+	{
+	Spawn:
+		BEPS AAAAA 1 BRIGHT A_plasmatrail("MM_GreenPlasmaTrail1");
+		BEPS BBBBB 1 BRIGHT A_plasmatrail("MM_GreenPlasmaTrail2");
+		Loop;
+	Death:
+		BEPX A 6 BRIGHT;
+		BEPX BC 4 BRIGHT;
+		Stop;
+	}
+}
+
+class MM_GreenPlasmaTrail1 : MM_PlasmaTrail1
+{
+	States
+	{
+	Spawn:
+		TNT1 A 2 Bright;
+	Fadeaway:
+		BEPS AA 1 Bright A_fadeout(0.3);
+		Loop;
+	}
+}
+
+class MM_GreenPlasmaTrail2 : MM_PlasmaTrail1
+{
+	States
+	{
+	Spawn:
+		TNT1 A 2 Bright;
+	Fadeaway:
+		BEPS BB 1 Bright A_fadeout(0.3);
+		Loop;
+	}
+}

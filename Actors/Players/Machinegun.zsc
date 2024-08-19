@@ -1,0 +1,79 @@
+
+class MM_Machinegun : Slaughterweapon
+{
+	Default
+	{
+		Weapon.SelectionOrder 700;
+		Weapon.AmmoUse 1;
+		Weapon.AmmoGive 70;
+		Weapon.AmmoType "Clip";
+		Inventory.Pickupmessage "\cgYou got the Machine gun! Off to a good start!";
+		Obituary "$OB_MPCHAINGUN";
+		Tag "Machinegun";
+	}
+	
+		Action Void A_FireMGun()
+		{
+			A_GunFlash("Flash");
+			A_Startsound("weapons/chngun", CHAN_AUTO);
+			if (CountInv("PowerQuadDamage") == 1)
+			{
+				A_FireBullets(0.6, 0, 1, 9, "MM_TameBulletPuff", FBF_USEAMMO||FBF_NORANDOM);
+			}
+			else 
+			{
+				A_FireBullets(0.6, 0, 1, 9, "MM_ExtremeSSGPuff", FBF_USEAMMO||FBF_NORANDOM);
+			}
+		}
+		
+	States
+	{
+	Ready:
+		UACR A 1 A_WeaponReady;
+		Loop;
+	Deselect:
+		UACR A 0 A_Lower;
+		UACR A 1 A_Lower;
+		Loop;
+	Select:
+		UACR A 0 A_Raise;
+		UACR A 1 A_Raise;
+		Loop;
+	Fire:
+		UACR B 1 A_FireMGun();
+		UACR C 1;
+		UACR D 3;
+		UACR B 0 A_ReFire;
+		Goto Ready;
+	Flash:
+		//CHGF B 5 Bright A_Light2;
+		Goto LightDone;
+	Spawn:
+		MUAC A -1;
+		Stop;
+	}
+}
+
+Class MM_Machinegunpickup : CustomInventory 
+{
+Default
+{
+	INVENTORY.RESTRICTEDTO "ET_Player_Slaughter";
+	VISIBLETOPLAYERCLASS "ET_Player_Slaughter";
+	//Inventory.PickupSound "Weapons/PistolPickup";
+	Inventory.Pickupmessage "You got the Machine gun! Off to a good start!";
+}
+	States
+	{
+	Spawn:
+		TNT1 A 0 A_JumpIfInventory("MM_Machinegun", 1, "Taken");
+		MUAC A -1;
+		Stop;
+	Pickup:
+		TNT1 A 0 A_GiveInventory("MM_Machinegun", 1);
+		Stop;
+	Taken:
+		TNT1 A 0;
+		Fail;	
+	}
+}

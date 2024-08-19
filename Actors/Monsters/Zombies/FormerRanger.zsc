@@ -1,0 +1,78 @@
+
+class MM_Rangerdude : Actor
+{
+	Default
+	{
+		Health 50;
+		Radius 20;
+		Height 56;
+		Speed 8;
+		PainChance 170;
+		Monster;
+		+FLOORCLIP
+		+NOINFIGHTSPECIES
+		DropItem "none";
+		SeeSound "shotguy/sight";
+		AttackSound "Ranger/attack";
+		PainSound "shotguy/pain";
+		DeathSound "shotguy/death";
+		ActiveSound "shotguy/active";
+		Tag "Former Ranger";
+	}
+	States
+	{
+	Spawn:
+		BPOS AB 10 A_Look;
+		Loop;
+	See:
+		BPOS AABBCCDD 3 A_Chase;
+		Loop;
+	Missile:
+		BPOS EE 4 A_FaceTarget;
+		BPOS F 2 BRIGHT 
+		{
+			A_CustomBulletAttack(5.6, 0, 1, random(3,5), "BulletPuff", 0, CBAF_NORANDOM);
+			A_Facetarget();
+		}
+		BPOS E 3 A_CPosRefire;
+		Goto Missile+1;
+	Death.Ice:
+		BPOS G 5 A_GenericFreezeDeath;
+		TNT1 A 1 A_Freezedeathchunks;
+		wait;
+	Death.SSGGIBING:
+		TNT1 A 0 A_Jumpifcloser(128, "XDeath");
+		TNT1 A 0 A_Jump(256, "Death");
+		Goto Death;
+	Pain:
+		BPOS G 3;
+		BPOS G 3 A_Pain;
+		Goto See;
+	Death:
+		BPOS H 5;
+		BPOS I 5 A_Scream;
+		BPOS J 5
+		{
+			A_NoBlocking();
+			A_DropItem("MM_Magazine");
+		}
+		BPOS KLM 5;
+		BPOS N -1;
+		Stop;
+	XDeath:
+		BPOS O 5 ;
+		BPOS P 5 A_XScream;
+		BPOS Q 5
+		{
+			A_NoBlocking();
+			A_DropItem("MM_Magazine");
+		}
+		BPOS RSTUV 5;
+		BPOS W -1;
+		Stop;
+	Raise:
+		BPOS M 5;
+		BPOS LKJI 5;
+		Goto See ;
+	}
+}

@@ -1,0 +1,422 @@
+Class MM_MasterMindspawner : MM_Monsterspawners
+{	
+	void A_Spiderspawn()
+	{
+		A_NoBlocking();
+		if (CallACS("Udoombossscript")==3 || CallACS("Udoombossscript")==4)
+		{
+			A_SpawnItemEx("MM_Boss_Spidermastermind",0,0,0,0,0,0,0,SXF_NOCHECKPOSITION | SXF_TRANSFERAMBUSHFLAG | SXF_TRANSFERPOINTERS | 288,0,tid);
+		}
+		else if (CallACS("Gamespawntoggle")==4)
+		{
+			A_SpawnItemEx("MM_Boss_MotherDemon",0,0,0,0,0,0,0,SXF_NOCHECKPOSITION | SXF_TRANSFERAMBUSHFLAG | SXF_TRANSFERPOINTERS | 288,0,tid);
+		}
+		else if (CallACS("Gamespawntoggle")==6)
+		{
+			A_SpawnItemEx("MM_Cybruiser",0,0,0,0,0,0,0,SXF_NOCHECKPOSITION | SXF_TRANSFERAMBUSHFLAG | SXF_TRANSFERPOINTERS | 288,0,tid);
+		}
+		else if (CallACS("Gamespawntoggle")==12.0)
+		{
+			A_SpawnItemEx("MM_KDIKDIZD_Resurrector",0,0,0,0,0,0,0,SXF_NOCHECKPOSITION | SXF_TRANSFERAMBUSHFLAG | SXF_TRANSFERPOINTERS | 288,0,tid);
+		}
+		else
+		{
+			A_SpawnItemEx("MM_SpiderMasterMind",0,0,0,0,0,0,0,SXF_NOCHECKPOSITION | SXF_TRANSFERAMBUSHFLAG | SXF_TRANSFERPOINTERS | 288,0,tid);
+		}
+	}
+	
+	States
+	{
+	Spawn:
+		MSTM G 0;
+		TNT1 A 0 A_Spiderspawn();
+		Stop;
+	}
+}
+
+class MM_SpiderMasterMind : Spidermastermind Replaces Spidermastermind
+{
+	Default
+	{
+		Radius 77;
+		Height 100;
+		Mass 2000;
+		PainChance 40;
+		+DOHARMSPECIES
+		Health 3200;
+		+NOFEAR
+		Scale 1.1;
+		Monster;
+		Tag "Spider Mastermind";
+		Obituary "%o stood in awe of the Spider Mastermind.";
+	}
+	
+	void A_Mastermindwalk()
+	{
+		A_StartSound("Mastermind/walk", CHAN_BODY, CHANF_DEFAULT, 1, ATTN_IDLE);
+		A_Chase();
+	}
+	
+	void A_Mastermindwalk2()
+	{
+		A_StartSound("Mastermind/walk2", CHAN_AUTO, CHANF_DEFAULT, 1, ATTN_IDLE);
+		A_Chase();
+	}
+	
+	Void A_Spiderattack1()
+	{
+		A_FaceTarget();
+		A_CustomBulletAttack(22.5, 7.1, 7, 6, "BulletPuff", 0, CBAF_NORANDOM);
+	}
+	
+	Void A_Spiderattack2()
+	{
+		A_Startsound("Weapons/NailMGFire");
+		A_FaceTarget();
+		A_Spawnprojectile("MGNail",45,0,0,CMF_OFFSETPITCH,frandom(-0.5,0.5));
+		//A_Spawnprojectile("MGNail",45,0,-10,CMF_OFFSETPITCH,frandom(-0.5,0.5));
+		//A_Spawnprojectile("MGNail",45,0,10,CMF_OFFSETPITCH,frandom(-0.5,0.5));
+	}
+	
+	Void A_Spiderattack3()
+	{
+		A_Startsound("Weapons/GrenadeFire");
+		A_FaceTarget();
+		A_Spawnprojectile("SpiderGrenadeThrust",45,0,0);
+	}
+	
+	Void A_Spiderexplode()
+	{
+		if (CallACS("Projtoggle")==1)
+		{
+			A_SpawnProjectile("BossExplosion2",FRandom(10,60),FRandom(30,-30),FRandom(0,360),2,FRandom(0,360));
+		}
+	}
+	
+	States
+	{
+	Spawn:
+		MSTM AB 10 A_Look;
+		Loop;
+	See:
+		MSTM A 3 A_Mastermindwalk();
+		MSTM ABB 3 A_Chase;
+		MSTM C 3 A_Mastermindwalk2();
+		MSTM C 3 A_Chase;
+		MSTM D 3 A_Mastermindwalk();
+		MSTM DEE 3 A_Chase;
+		MSTM F 3 A_Mastermindwalk2();
+		MSTM F 3 A_Chase;
+		Loop;
+	Missile:
+		MSTM A 0 A_JumpIfCloser(300,"Missile3");
+		MSTM A 21 A_FaceTarget;
+		MSTM A 0 A_JumpIfCloser(700,"Missile2");
+		MSTM G 2 BRIGHT;
+		MSTM H 2 BRIGHT A_Spiderattack2();
+		MSTM T 1 BRIGHT;
+		MSTM H 0 BRIGHT A_SpidRefire;
+		Goto Missile+2;
+	Missile2:
+		MSTM G 2 BRIGHT;
+		MSTM H 2 BRIGHT A_Spiderattack1();
+		MSTM H 0 BRIGHT A_SpidRefire;
+		Goto Missile+2;
+	Missile3:
+		MSTM T 8 A_FaceTarget;
+		MSTM H 6 Bright A_Spiderattack3();
+		MSTM U 8 A_FaceTarget;
+		MSTM T 8 A_FaceTarget;
+		MSTM H 6 Bright A_Spiderattack3();
+		MSTM U 8 A_FaceTarget;
+		MSTM T 13 A_SpidRefire;
+		Goto Missile+2;
+	Pain:
+		MSTM I 3;
+		MSTM I 3 A_Pain;
+		Goto See;
+	Death:
+		MSTM I 1 Bright;
+		MSTM J 19 Bright A_Scream;
+		MSTM J 0 Bright A_NoBlocking;
+		MSTM KL 10 Bright A_Spiderexplode();
+		MSTM M 8 Bright A_Spiderexplode();
+		MSTM M 2 Bright A_Spiderexplode();
+		MSTM NNOOPPQQ 5 Bright A_Spiderexplode();
+		MSTM R 10 Bright;
+		MSTM S 30;
+		MSTM S -1 A_BossDeath;
+		Stop;
+	Crush:
+		SPIG A 0;
+		SPIG A 0 A_Startsound("Bloody/crush");
+		SPIG A -1;
+		stop;
+	}
+}
+
+class MM_AAMasterMind : MM_SpiderMasterMind Replaces Spidermastermind
+{
+	States
+	{
+	Spawn:
+		DIRE AB 10 A_Look;
+		Loop;
+	See:
+		DIRE A 3 A_Mastermindwalk();
+		DIRE ABB 3 A_Chase;
+		DIRE C 3 A_Mastermindwalk2();
+		DIRE C 3 A_Chase;
+		DIRE D 3 A_Mastermindwalk();
+		DIRE DEE 3 A_Chase;
+		DIRE F 3 A_Mastermindwalk2();
+		DIRE F 3 A_Chase;
+		Loop;
+	Missile:
+		DIRE A 0 A_JumpIfCloser(300,"Missile3");
+		DIRE A 21 A_FaceTarget;
+		DIRE A 0 A_JumpIfCloser(700,"Missile2");
+		DIRE G 2 BRIGHT;
+		DIRE H 2 BRIGHT A_Spiderattack2();
+		DIRE G 1 BRIGHT;
+		DIRE H 0 BRIGHT A_SpidRefire;
+		Goto Missile+2;
+	Missile2:
+		DIRE G 2 BRIGHT;
+		DIRE H 2 BRIGHT A_Spiderattack1();
+		DIRE H 0 BRIGHT A_SpidRefire;
+		Goto Missile+2;
+	Missile3:
+		DIRE G 8 A_FaceTarget;
+		DIRE H 6 Bright A_Spiderattack3();
+		DIRE U 8 A_FaceTarget;
+		DIRE G 8 A_FaceTarget;
+		DIRE H 6 Bright A_Spiderattack3();
+		DIRE U 8 A_FaceTarget;
+		DIRE G 13 A_SpidRefire;
+		Goto Missile+2;
+	Pain:
+		DIRE I 3;
+		DIRE I 3 A_Pain;
+		Goto See;
+	Death:
+		DIRE I 1 Bright;
+		DIRE J 19 Bright A_Scream;
+		DIRE J 0 Bright A_NoBlocking;
+		DIRE KL 10 Bright A_Spiderexplode();
+		DIRE M 8 Bright A_Spiderexplode();
+		DIRE M 2 Bright A_Spiderexplode();
+		DIRE NNOOPPQQ 5 Bright A_Spiderexplode();
+		DIRE R 10 Bright;
+		DIRE S 30;
+		DIRE S -1 A_BossDeath;
+		Stop;
+	Crush:
+		SPIG A 0;
+		SPIG A 0 A_Startsound("Bloody/crush");
+		SPIG A -1;
+		stop;
+	}
+}
+
+class MM_SpiderBrainlet : MM_SpiderMasterMind
+{
+	Default
+	{
+		Health 1500;
+		-BOSS
+		SeeSound "Widow/sight";
+		ActiveSound "Widow/active";
+		PainSound "Widow/pain";
+		DeathSound "Widow/death";
+		-NORADIUSDMG
+		-BOSSDEATH
+		
+		Scale 0.9;
+		Tag "Dread Widow";
+		Obituary "%o got in the way of a Dread widow.";
+	}
+	States
+	{
+	Missile:
+		MSTM A 20 A_FaceTarget;
+		MSTM G 2 BRIGHT A_FaceTarget;
+		MSTM H 2 BRIGHT A_SposAttackUseAtkSound;
+		MSTM H 1 BRIGHT A_SpidRefire;
+		Goto Missile+1;
+	Death:
+		MSTM J 1;
+		MSTM J 19 A_Scream;
+		MSTM K 8 A_NoBlocking;
+		MSTM LMNOPQR 8 bright;
+		MSTM S -1;
+		Stop;
+	}
+}
+
+Class MM_KDIKDIZD_Resurrector : actor
+{
+	Default
+	{
+		Speed 40;
+		Radius 16;
+		Height 16;
+		painchance 1;
+		mass 100;
+		+DROPOFF
+		+NoGravity
+		+NOSECTOR
+		+FLOAT
+	}
+	States
+	{
+		Spawn:
+			TNT1 A 1 A_Look;
+			Loop;
+		See:
+			TNT1 A 1 A_vilechase;	
+			Loop;		
+		Heal:
+			TNT1 A 10;
+			Stop;
+	}
+}
+
+Class MGNail : actor
+{
+  Default
+  {
+  Projectile ;
+  Radius 3;
+  Height 3;
+  Speed 44;
+  DamageFunction 16;
+  Scale 0.5;
+  +BloodSplatter
+  SeeSound "";
+  DeathSound "";
+  Decal "BulletChip";
+  }
+  States
+  {
+  Spawn:
+    NLPJ A 1 Bright A_SpawnItemEx("NailBlur", 0, 0, 0, 1, 0, 0, 180, 128);
+    NLPJ A 0 A_Startsound("Weapons/NailFlight");
+    Loop;
+  Crash:
+  Death:
+    NLPJ B 0 A_Startsound("Weapons/NailHit");
+    NLPJ BCDEFG 2 Bright;
+    Stop;
+  XDeath:
+    NLPJ B 0 A_Startsound("Weapons/NailHitBleed");
+    NLPJ BCDEFG 2 Bright;
+    Stop;
+  }
+}
+
+
+Class NailBlur : actor   
+{
+  Default
+  {
+  Height 8;
+  Radius 1;
+  Damage 0;
+  Scale 0.6;
+  Speed 0.2;
+  RenderStyle "Translucent";
+  Alpha 0.5;
+  +NoGravity
+  +DropOff
+  +NoTeleport
+  }
+  States
+  {
+  Spawn:
+    NLPJ A 1 Bright A_FadeOut(0.4);
+    Loop;
+  }
+}
+
+Class SpiderGrenadeThrust : MM_Grenade
+{
+	States {
+		Spawn:
+			TNT1 AA 0 ThrustThingZ(0, 16, 0, 0);
+		Goto Super::Spawn;
+	}
+}
+
+Class BounceingGrenade : Actor
+{
+  Default
+  {
+    Radius 11;
+    Height 8;
+    Speed 25;
+    DamageFunction 25;
+    BounceFactor 0.8;
+    BounceCount 6;
+    ReactionTime 139;
+	Gravity 0.67;
+    Seesound "Weapons/GrenadeBounce";
+    Deathsound "Weapons/RockLX";
+    PROJECTILE;
+    +HEXENBOUNCE
+    -NOGRAVITY
+    +EXPLODEONWATER
+  }
+
+  States
+  {
+  Spawn:
+    PGRN A 1 A_SpawnProjectile("SmokePuff", 3, 0, 0, CMF_AIMOFFSET);
+    Loop;
+  Death:
+    MISL B 0 Bright A_NoGravity();
+    MISL B 0 Bright A_SetTranslucent(0.5, 1);
+    MISL B 8 Bright A_Explode(80, 70, 1);
+    MISL C 6 Bright;
+    MISL D 4 BRIGHT;
+    Stop;
+  }
+}
+
+Class BossExplosion2 : BossExplosion
+{
+	Default
+	{
+	scale 1.0;
+	}
+	states
+	{
+	Spawn:
+		MISL B 0 bright;
+		MISL B 6 bright A_Startsound("Epic/Expolsions", CHAN_BODY);
+		MISL C 4 bright A_FadeOut (0.12);
+		MISL D 3 bright A_FadeOut (0.12);
+		Stop;
+	}
+}
+
+Class MM_Nightmaremastermind : MM_Spidermastermind
+{
+	Default
+	{
+		Health 6000;
+		RenderStyle "subtract";
+		BloodColor "Black";
+	}
+	States
+	{
+	Death:
+		SPID J 1;
+		SPID J 19 A_Scream;
+		SPID K 10 A_NoBlocking;
+		SPID LMNOPQR 10;
+		SPID S 30;
+		SPID S -1 A_BossDeath;
+		Stop;
+	}
+}

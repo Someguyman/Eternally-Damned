@@ -1,0 +1,333 @@
+Class MM_Knightspawner : MM_Monsterspawners
+{	
+	States
+	{
+	Spawn:
+		BO2O G 0;
+		Goto spawncheck;
+	Goingdownspawn:
+	DoomZerospawn:
+	D64D2spawner:
+	Eviternityspawn:
+	Scythe2spawn:
+	AAilenspawn:
+	TNTRevoSpawn:
+	JenesisSpawner:
+	Epic2spawner:
+	KDIKDIZDSpawn:
+	Alternatespawn:
+	Normalspawn:
+		TNT1 A 0 A_Knightspawn();
+		Stop;
+	Ultimatedoomspawn:
+		TNT1 A 0;
+		TNT1 A 0 A_JumpIf(CallACS("UdoomBaronscript")==2, "Knightspawn");
+		TNT1 A 0 A_JumpIf(CallACS("UdoomBaronscript")==3, "Knightspawn");
+		TNT1 A 0 A_JumpIf(CallACS("UdoomBaronscript")==4, "Vilespawn");
+	UDoomspawncontinued:
+		TNT1 A 0 A_NoBlocking;
+        TNT1 A 0 {bCOUNTKILL = 0; }
+        TNT1 A 0 {bTHRUACTORS = 1; }
+		TNT1 A 0 A_JumpIf(CallACS("UdoomBaronscript")==5, "UDoomspawncontinued2");
+		TNT1 A 0 A_Jump(30, "Vilespawn");
+	UDoomspawncontinued2:
+		TNT1 A 0 A_Jump(130, "Knightspawn");
+		TNT1 A 0 A_SpawnItemEx("MM_D1_Baronofhell",0,0,0,0,0,0,0,SXF_NOCHECKPOSITION | SXF_TRANSFERAMBUSHFLAG | SXF_TRANSFERPOINTERS | 288,0,tid);
+		Stop;
+	Vilespawn:
+		TNT1 A 0 A_SpawnItemEx("MM_D1_Archvile",0,0,0,0,0,0,0,SXF_NOCHECKPOSITION | SXF_TRANSFERAMBUSHFLAG | SXF_TRANSFERPOINTERS | 288,0,tid);
+		Stop;
+	Valiantspawn:
+		TNT1 A 0 A_NoBlocking;
+        TNT1 A 0 {bCOUNTKILL = 0; }
+        TNT1 A 0 {bTHRUACTORS = 1; }
+		TNT1 A 0 A_SpawnItemEx("MM_PyroKnight",0,0,0,0,0,0,0,SXF_NOCHECKPOSITION | SXF_TRANSFERAMBUSHFLAG | SXF_TRANSFERPOINTERS | 288,0,tid);
+		Stop;
+	}
+}
+
+class MM_HellKnight : HellKnight
+{
+	Default
+	{
+		Gibhealth 40;
+		Speed 10;
+		Scale 1.05;
+		+NOFEAR
+		PainSound "hellknight/pain";
+		ActiveSound "hellknight/active";
+		BloodColor "red";
+		+NOINFIGHTSPECIES
+		Tag "Hell knight";
+	}
+	
+	Void A_Noblewalk()
+	{
+		A_Chase();
+		A_StartSound("Baronofhell/Walk", CHAN_BODY, CHANF_DEFAULT, 1, ATTN_IDLE);
+		if (CheckIfCloser(target, 80))
+		{
+			bMISSILEEVENMORE = true;
+		}
+		else
+		{
+			bMISSILEEVENMORE = false;
+		}
+	}
+	
+	Void A_Nobleattack()
+	{
+	
+		A_CustomComboAttack("MM_KnightBall", 28, 40, "baron/melee");
+		A_Facetarget();
+	
+	}
+	
+	States
+	{
+	Spawn:
+		knit AB 10 A_Look;
+		Loop;
+	See:
+		"####" A 3 A_Noblewalk();
+		"####" ABB 3 A_Chase;
+		"####" C 3 A_Noblewalk();
+		"####" CDD 3 A_Chase;
+		Loop;
+	Melee:
+		"####" EF 6 A_FaceTarget();
+		"####" G 6 A_CustomMeleeAttack(8*Random(1, 8), "Baron/Melee");
+		"####" PQ 5 A_FaceTarget();
+		"####" R 6 A_Nobleattack;
+		Goto See;
+	Missile:
+		"####" A 0 A_JUMP(70,"Missile2");
+		"####" EF 8 A_FaceTarget;
+		"####" G 8 A_Nobleattack;
+		"####" PQ 4 A_FaceTarget;
+		"####" R 8 A_Nobleattack;
+		Goto See;
+	Missile2:
+		"####" F 5 A_FaceTarget;
+		"####" E 7 A_FaceTarget;
+		"####" F 2 A_FaceTarget;
+		"####" G 6 A_Nobleattack;
+		"####" PQ 3 A_FaceTarget;
+		"####" R 6 A_Nobleattack;
+		"####" EF 3 A_FaceTarget;
+		"####" G 6 A_Nobleattack;
+		Goto See;
+	Pain:
+		knit H  2;
+		knit H  2 A_Pain;
+		Goto See;
+	Death.Ice:
+		knit H 5 A_GenericFreezeDeath;
+		TNT1 A 1 A_Freezedeathchunks;
+		WAIT;
+	Death.SSGGIBING:
+		TNT1 A 0 A_Jump(60, "Death");
+		TNT1 A 0 A_Jumpifcloser(128, "XDeath");
+		TNT1 A 0 A_Jump(256, "Death");
+		Goto Death;
+	Death:
+		knit I 5;
+		knit J 5 A_Scream();
+		knit K 6;
+		knit L 7 A_Fall();
+		knit M 4;
+		knit N 4;
+		knit O -1 A_BossDeath;
+		Stop;
+	Raise:
+		knit N 6;
+		knit MLKJI  6;
+		Goto See;
+	XDeath:
+		kntX A 5;
+		kntX B 5 A_XScream;
+		kntX C 5;
+		kntX D 5 A_NoBlocking();
+		kntX EFGH 5;
+		kntX I -1 A_BossDeath;
+		Stop;
+	Crush:
+		kntG A 0;
+		kntG A 0 A_Startsound("Bloody/crush");
+		kntG A -1;
+		stop;
+	}
+}
+
+class MM_Classic_HellKnight : MM_Hellknight
+{
+	States
+	{
+	Spawn:
+		BO2O AB 10 A_Look;
+		Loop;
+	Pain:
+		BO2O H  2;
+		BO2O H  2 A_Pain;
+		Goto See;
+	Death.Ice:
+		BO2O H 5 A_GenericFreezeDeath;
+		TNT1 A 1 A_Freezedeathchunks;
+		WAIT;
+	Death.SSGGIBING:
+		TNT1 A 0 A_Jump(60, "Death");
+		TNT1 A 0 A_Jumpifcloser(128, "XDeath");
+		TNT1 A 0 A_Jump(256, "Death");
+		Goto Death;
+	Death:
+		BO2O I  8;
+		BO2O J  8 A_Scream;
+		BO2O K  8;
+		BO2O L  8 A_NoBlocking;
+		BO2O MN 8;
+		BO2O O -1 A_BossDeath;
+		Stop;
+	Raise:
+		BO2O M 8;
+		BO2O LKJI  8;
+		Goto See;
+	XDeath:
+		B2XO A 5;
+		B2XO B 5 A_XScream;
+		B2XO C 5;
+		B2XO D 5 A_NoBlocking();
+		B2XO EFGH 5;
+		B2XO I -1 A_BossDeath;
+		Stop;
+	Crush:
+		kntG A 0;
+		kntG A 0 A_Startsound("Bloody/crush");
+		kntG A -1;
+		stop;
+	}
+}
+
+Class MM_D1_Hellknight : MM_Hellknight Replaces Baronofhell
+{
+	Default
+	{
+		+BOSSDEATH;
+		+E1M8BOSS
+	}
+}
+
+Class MM_D1_Classic_Hellknight : MM_Classic_HellKnight Replaces Baronofhell
+{
+	Default
+	{
+		+BOSSDEATH;
+		+E1M8BOSS
+	}
+}
+
+Class MM_D1_Hellknight2 : MM_Hellknight
+{
+	States
+	{
+	Spawn:
+		Tnt1 A 0;
+		TNT1 A 0 A_SpawnItem("MM_Stimpack", 15, 0);
+		TNT1 A 0 A_SpawnItem("MM_Shell", -15, 0);
+		Goto Idle;
+	IDLE:
+		knit AB 10 A_Look;
+		Loop;
+	}
+}
+
+Class MM_D1_Classic_Hellknight2 : MM_Classic_HellKnight
+{
+	States
+	{
+	Spawn:
+		Tnt1 A 0;
+		TNT1 A 0 A_SpawnItem("MM_Stimpack", 15, 0);
+		TNT1 A 0 A_SpawnItem("MM_Shell", -15, 0);
+		Goto Idle;
+	IDLE:
+		BO2O AB 10 A_Look;
+		Loop;
+	}
+}
+
+class MM_KDIKDIZD_HellKnight : MM_Hellknight
+{
+	States
+	{
+	Spawn:
+		KDHN AB 10 A_Look;
+		Loop;
+	Pain:
+		KDHN H  2;
+		KDHN H  2 A_Pain;
+		Goto See;
+	Death.Ice:
+		KDHN H 5 A_GenericFreezeDeath;
+		TNT1 A 1 A_Freezedeathchunks;
+		WAIT;
+	Death.SSGGIBING:
+		TNT1 A 0 A_Jump(60, "Death");
+		TNT1 A 0 A_Jumpifcloser(128, "XDeath");
+		TNT1 A 0 A_Jump(256, "Death");
+		Goto Death;
+	Death:
+		KDHN I  8;
+		KDHN J  8 A_Scream;
+		KDHN K  8;
+		KDHN L  8 A_NoBlocking;
+		KDHN MN 8;
+		KDHN O -1 A_BossDeath;
+		Stop;
+	Raise:
+		KDHN M 8;
+		KDHN LKJI  8;
+		Goto See;
+	XDeath:
+		KHNX A 5;
+		KHNX B 5 A_XScream;
+		KHNX C 5;
+		KHNX D 5 A_NoBlocking();
+		KHNX EFGH 5;
+		KHNX I -1 A_BossDeath;
+		Stop;
+	Crush:
+		kntG A 0;
+		kntG A 0 A_Startsound("Bloody/crush");
+		kntG A -1;
+		stop;
+	}
+}
+
+class MM_KnightBall : MM_BaronBall
+{
+	States
+	{
+	Spawn:
+		KNBL A 0 nodelay A_JumpIf(CallACS("Projtoggle")==1, "AltSpawn");
+		KNBL AB 4 BRIGHT;
+		KNBL A 0 Bright A_JumpIf(CallACS("Projtoggle")==1, "AltSpawn");
+		Loop;
+	AltSpawn:
+		KNB2 AAAABBBB 1 BRIGHT A_SpawnItemEx("MM_Knightballtrail", 0, 0, 0, 0, 0, 0, 0, 128);
+		Goto Spawn;
+	Death:
+		KNBL CDE 6 BRIGHT;
+		Stop;
+	}
+}
+
+class MM_Knightballtrail : MM_Baronballtrail
+{
+	States
+	{
+	Spawn:
+		tnt1 A 2; 
+		KNBT AABBCCDD 1 Bright A_Fadeout;
+		Stop;
+	}
+}

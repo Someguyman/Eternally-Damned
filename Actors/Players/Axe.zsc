@@ -1,0 +1,112 @@
+
+class MM_Fireaxe : Alternateweapon
+{
+	Default
+	{
+		Weapon.SelectionOrder 2200;
+		//Weapon.Kickback 100;
+		Inventory.Icon "AXEPA0";
+		Obituary "$OB_MPFIST";
+		Inventory.PickupMessage "\cgYou got the fire axe!";
+		Tag "Fire axe";
+		+WEAPON.NOALERT
+		+WEAPON.MELEEWEAPON
+		+WEAPON.NOAUTOSWITCHTO
+		Weapon.Kickback 100;
+	}
+		Action Void A_Axewing()
+		{
+			if (CountInv("PowerStrength")==1)
+			{ 
+				A_Startsound("Weapons/Axepowerswing", CHAN_AUTO);
+			}
+			else 
+			{ 
+				A_Startsound("Weapons/Axeswing", CHAN_AUTO);
+			}
+		}
+	
+		Action Void A_Axehit()
+		{
+			if ((CountInv("PowerStrength")==1) || (CountInv("PowerStrength")==1))
+			{ 
+				A_CustomPunch(320,CPF_NOTURN, 0, "MM_ExetremeAxeBulletPuff", 96);
+			}
+			else 
+			{ 
+				A_CustomPunch(80,CPF_NOTURN, 1, "MM_AxeBulletPuff", 96);
+			}
+		}
+		
+	States
+	{
+	Ready:
+		AXEG A 1 A_WeaponReady;
+		Loop;
+	Deselect:
+		AXEG J 1 A_Lower;
+		Loop;
+	Select:
+		AXEG J 1 A_Raise;
+		Loop;
+	Fire:
+		AXEG ABCD 3;
+		AXEG E 2;
+		AXEG E 2 A_Axewing();
+		AXEG F 1;
+		AXEG G 1;
+		AXEG H 1 A_Axehit();
+		AXEG I 1;
+		TNT1 A 4;
+		AXEG DCB 2;
+		AXEG A 2 A_ReFire;
+		Goto Ready;
+	Altfire:
+		AXEG ABCD 3;
+		AXEG E 4;
+	Althold:
+		AXEG E 2;
+		TNT1 A 0 A_Refire();
+		AXEG E 2 A_Axewing();
+		AXEG F 1;
+		AXEG G 1;
+		AXEG H 1 A_Axehit();
+		AXEG I 1;
+		TNT1 A 4;
+		AXEG DCB 2;
+		AXEG A 2 A_ReFire("Altfire");
+		Goto ready;
+	Spawn:
+		AXEP A -1;
+		Stop;
+	}
+}
+
+class MM_AxeBulletPuff : BulletPuff
+{
+	Default
+	{
+		+NOEXTREMEDEATH
+		+PUFFONACTORS
+		SeeSound "Weapons/Axehit";
+		Attacksound "Weapons/Axeclink";
+		ActiveSound "";
+	}
+	States
+	{
+	Spawn:
+		PUFF A 4 Bright;
+		PUFF BCD 4;
+		Stop;
+	}
+}
+
+class MM_ExetremeAxeBulletPuff : MM_AxeBulletPuff
+{
+	Default
+	{
+		DamageType "CHAINSAWGIBING";
+		+EXTREMEDEATH
+		-NOEXTREMEDEATH
+	}
+}

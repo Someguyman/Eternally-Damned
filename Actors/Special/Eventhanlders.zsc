@@ -1,0 +1,16 @@
+
+Class wolf3dammoreplacement : eventhandler
+{
+	override void CheckReplacement(ReplaceEvent event)
+	{
+		let pclass = players[consoleplayer].mo.GetClassName();
+		if(pclass == 'ET_Player_wolf')
+		{
+			if (event.Replacee == 'MM_REALclip' || event.Replacee == 'MM_clipbox' || event.Replacee == 'MM_shell' || event.Replacee == 'MM_shellbox' || event.Replacee == 'MM_rocketammo' || event.Replacee == 'MM_RocketBox' || event.Replacee == 'MM_cell' || event.Replacee == 'MM_cellpack')
+			{
+				event.Replacement = 'Wolf3dMag';
+			}
+		}
+	}
+}
+

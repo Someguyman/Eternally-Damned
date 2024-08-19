@@ -1,0 +1,529 @@
+
+Class MM_Arachvilespawner : MM_Monsterspawners
+{
+	States
+	{
+	Spawn:
+		VILE G 0;
+		Goto spawncheck;
+	Goingdownspawn:
+	DoomZerospawn:
+	D64D2spawner:
+	Eviternityspawn:
+	Valiantspawn:
+	Scythe2spawn:
+	AAilenspawn:
+	TNTRevoSpawn:
+	JenesisSpawner:
+	Epic2spawner:
+	Alternatespawn:
+	Normalspawn:
+		TNT1 A 0 A_NoBlocking;
+		TNT1 A 0 A_SpawnItemEx("MM_Archvile",0,0,0,0,0,0,0,SXF_NOCHECKPOSITION | SXF_TRANSFERAMBUSHFLAG | SXF_TRANSFERPOINTERS | 288,0,tid);
+		Stop;
+	Ultimatedoomspawn:
+		TNT1 A 0;
+		TNT1 A 0 A_JumpIf(CallACS("UdoomBaronscript")==4, "Vilespawn");
+	UDoomspawncontinued:
+		TNT1 A 0 A_NoBlocking;
+        TNT1 A 0 {bCOUNTKILL = 0; }
+        TNT1 A 0 {bTHRUACTORS = 1; }
+		TNT1 A 0 A_JumpIf(CallACS("UdoomBaronscript")==5, "UDoomspawncontinued2");
+		TNT1 A 0 A_Jump(80, "Vilespawn");
+	UDoomspawncontinued2:
+		TNT1 A 0 A_SpawnItemEx("MM_D1_Baronofhell",0,0,0,0,0,0,0,SXF_NOCHECKPOSITION | SXF_TRANSFERAMBUSHFLAG | SXF_TRANSFERPOINTERS | 288,0,tid);
+		Stop;
+	Vilespawn:
+		TNT1 A 0 A_SpawnItemEx("MM_Archvile",0,0,0,0,0,0,0,SXF_NOCHECKPOSITION | SXF_TRANSFERAMBUSHFLAG | SXF_TRANSFERPOINTERS | 288,0,tid);
+		Stop;
+	KDIKDIZDSpawn:
+		TNT1 A 0 A_NoBlocking;
+		TNT1 A 0 A_SpawnItemEx("MM_Hellwarrior",0,0,0,0,0,0,0,SXF_NOCHECKPOSITION | SXF_TRANSFERAMBUSHFLAG | SXF_TRANSFERPOINTERS | 288,0,tid);
+		Stop;
+	}
+}
+
+Class MM_Archiesinnerrage : Inventory 
+{ 
+Default
+{
+Inventory.MaxAmount 2;
+}
+}
+
+class MM_Archvile : Archvile
+{
+	Default
+	{
+		Health 700;
+		Radius 20;
+		Height 64;
+		Mass 500;
+		Speed 15;
+		PainChance 10;
+		PainChance "Zap", 15;
+		Monster;
+		MaxTargetRange 896;
+		Gibhealth 40;
+		+QUICKTORETALIATE 
+		+FLOORCLIP 
+		+NOTARGET
+		+SEEINVISIBLE
+		+DONTHARMCLASS
+		DamageFactor "Fire", 0;
+		Scale 1.15;
+		SeeSound "vile/sight";
+		PainSound "vile/pain";
+		DeathSound "vile/death";
+		ActiveSound "vile/active";
+		MeleeSound "vile/stop";
+		Obituary "$OB_VILE";
+		Tag "$FN_ARCH";
+	}
+	
+	Void A_Vilewalk()
+	{
+		A_VileChase();
+		A_StartSound("vile/walk", CHAN_BODY, CHANF_DEFAULT, 1, ATTN_IDLE);
+	}
+	
+	Void A_VileTracer()
+	
+	{
+		A_FaceTarget();
+		A_SpawnProjectile("MM_ArchvileTracer",40,0,0,0);
+	}
+	
+	Void A_Vilecheck()
+	
+	{
+		A_MonsterRefire(0, "See");
+		A_FaceTarget();
+	}
+	
+	States
+	{
+	Spawn:
+		TNT1 A 0;
+		TNT1 A 0 A_CheckCeiling("Strink");
+		Goto Idle;
+	Idle:
+		VILE AB 10 A_Look;
+		Loop;
+	See:
+		VILE A 0 BRIGHT A_TakeInventory("MM_Archiesinnerrage",2);
+		VILE A 2 A_Vilewalk();
+		VILE ABBCC 2 A_VileChase;
+		VILE D 2 A_Vilewalk();
+		VILE DEEFF 2 A_VileChase;
+		Goto see+1;
+	Missile:
+		VILE G 0 BRIGHT A_Startsound("vile/start", CHAN_AUTO);
+		VILE G 0 BRIGHT A_JumpIfCloser(120,"Meleefire");
+		VILE G 0 BRIGHT A_JumpIfInventory("MM_Archiesinnerrage", 2, "Rage"); // When the archie is at max anger, it will go to the rage state
+	Normalattack:		
+		VILE G 10 BRIGHT A_FaceTarget;
+		VILE H 8 BRIGHT A_VileTarget;
+		VILE IJKLMN 8 BRIGHT A_FaceTarget;
+		VILE O 8 BRIGHT A_VileAttack;
+		VILE P 20 BRIGHT;
+		Goto See+1;
+	Rage:
+		VILE G 0 BRIGHT {bMissileevenmore = true;}
+		VILE G 0 BRIGHT A_JumpIfCloser(260,"Missile2");	//you have to be very close for the archie to attack
+		Goto Normalattack;
+	Missile2:
+		VILE G 4 BRIGHT A_CPosRefire;
+		VILE H 4 BRIGHT A_CPosRefire;
+		VILE IJ 5 BRIGHT A_CPosRefire;
+		VILE K 5 BRIGHT A_CPosRefire;
+		VILE L 4 BRIGHT A_CPosRefire;
+		VILE M 6 BRIGHT A_CPosRefire;
+		VILE N 2 BRIGHT A_VileTracer();
+		VILE OP 2 BRIGHT A_CPosRefire;
+		VILE N 2 BRIGHT A_VileTracer();
+		VILE OP 2 BRIGHT A_CPosRefire;
+		VILE N 2 BRIGHT A_VileTracer();
+		VILE OP 2 BRIGHT A_CPosRefire;
+		VILE N 2 BRIGHT A_VileTracer();
+		VILE O 4 BRIGHT;
+		VILE P 5 BRIGHT { A_TakeInventory("MM_Archiesinnerrage",2); bMissileevenmore = false; }//after attacking, the archie calms down a little
+		Goto See+1;
+	Meleefire:
+		VILE LM 5 Bright A_FaceTarget();
+		VILE KJ 3 Bright A_FaceTarget();
+		VILE I 3 A_SpawnProjectile("MM_VileHellFire", 32, 0, 0);
+		VILE HGHIHGHIHGHIGHI 3 Bright A_FaceTarget();
+		VILE G 1 A_CPosRefire;
+		VILE G 0 BRIGHT A_Startsound("vile/start", CHAN_AUTO);
+		Goto Normalattack;
+	Heal:
+		VILR ABCABC 5 BRIGHT;
+		Goto See;
+	Pain:
+		VILE Q 5; //A_GiveInventory("MM_Archiesinnerrage", 1); //Ever time an archvile is pained, it will increace it's rage meter
+		VILE Q 5 A_Pain;
+		Goto See+1;
+	Strink:
+		TNT1 A 0
+		{
+			Height = 56;
+		}
+		goto Idle;
+	Death.Ice:
+		VILE Q 5 A_GenericFreezeDeath;
+		TNT1 A 1 A_Freezedeathchunks;
+		WAIT;
+	Death.SSGGIBING:
+		//TNT1 A 0 A_Jumpifcloser(128, "XDeath");
+		TNT1 A 0 A_Jump(256, "Death");
+		Goto Death;
+	Death:
+		VILP A 7;
+		VILE R 7 { A_Scream(); A_KillTracer("Missilekiller1", KILS_KILLMISSILES, "MM_VileHellFire"); }
+		VILE S 7 A_NoBlocking;
+		VILE TUVWXY 7;
+		VILE Z -1 A_BossDeath;
+		Stop;
+	XDeath:
+		VILX A 1 A_TakeInventory("MM_Archiesinnerrage",2);
+		VILX A 4;
+		VILX B 5 A_XScream;
+		VILX C 5;
+		VILX D 5 A_NoBlocking();
+		VILX EFGH 5;
+		VILX I -1;
+		Stop;
+	Crush:
+		POL5 A 0;
+		POL5 A 0 A_Startsound("Bloody/crush");
+		POL5 A -1;
+		stop;
+	}
+}
+
+Class MM_D1_Archvile : MM_Archvile Replaces Baronofhell
+{
+	Default
+	{
+		+BOSSDEATH
+		+E1M8BOSS
+	}
+	States
+	{
+		Spawn:
+			Tnt1 A 0;
+			TNT1 A 0 A_SpawnItem("MM_Medikit", 10, 0);
+			TNT1 A 0 A_SpawnItem("MM_Cellpack", -10, 0);
+			Goto Idle;
+		Idle:
+			VILE AB 10 A_Look;
+			Loop;
+	}
+}
+
+class MM_ArchvileFire : ArchvileFire replaces ArchvileFire
+{
+	void A_Vilefirestart()
+	{
+		A_Fire();
+		A_Startsound("vile/Firestart");
+	}
+	States
+	{
+	Spawn:
+		AVFR A 1 BRIGHT;
+		AVFR A 1 BRIGHT  A_Vilefirestart();
+		AVFR BAB 2 BRIGHT  A_Fire;
+		AVFR C 2 BRIGHT  A_FireCrackle;
+		AVFR BCBCDCDCDEDED 2 BRIGHT  A_Fire;
+		AVFR E 2 BRIGHT  A_FireCrackle;
+		AVFR FEFEFGHGHGH 2 BRIGHT  A_Fire;
+		Stop;
+	}
+}
+
+Class SoulBallTrail : Actor
+{
+  Default
+  {
+    Radius 1;
+    Height 1;
+    Speed 0;
+    RENDERSTYLE "ADD";
+    ALPHA 0.5;
+    PROJECTILE;
+    +NOCLIP
+  }
+
+  States
+  {
+  Spawn:
+  Death:
+    SBTR H 6;
+    SBTR ABCDEFG 4 Bright;
+    Stop;
+  }
+}
+
+class MM_ArchvileTracer : MM_RevenantTracer
+{
+	Default
+	{
+		Renderstyle "Add";
+		SeeSound "harvester/scream";
+		Alpha 0.7;
+		Scale 0.6;
+		ReactionTime 300;
+		-HITOWNER
+	}
+	States
+	{
+	Spawn:
+		SHBA AB 3 BRIGHT 
+		{ 
+		A_Tracer2(); 
+		A_Weave(6, 0, 1.8, 0.0); 
+		A_SpawnItemEx("MM_Archvilemissiletrail", 0, 0, 0, 0, 0, 0, 0, 128); 
+		}
+		SHBA A 0 Bright A_GiveInventory("Hommingincrements", 1);
+		SHBA A 0 Bright A_JumpIfInventory("Hommingincrements", 70, "Spawn2");
+		Loop;
+	Spawn2:
+		SHBA AB 3 BRIGHT { A_Weave(6, 0, 1.8, 0.0); A_SpawnItemEx("MM_Archvilemissiletrail", 0, 0, 0, 0, 0, 0, 0, 128);}
+		Loop;
+	Death:
+		SHBA CDEFGHIJKL 4 Bright;
+		Stop;
+	}
+}
+
+Class MM_VileHellFire : Actor
+{
+  Default
+  {
+    Obituary "%o was set ablaze by a Diabloist.";
+    Radius 0;
+    Height 1;
+    Speed 0;
+    RenderStyle "Add";
+    DamageType "Fire";
+    Alpha 1.00;
+    +NoGravity
+    +SeekerMissile
+    +NoTarget
+    +NoDamageThrust
+  }
+
+  States
+  {
+  Spawn:
+    HLFR A 2 Bright A_StartFire;
+    HLFR BAB 2 Bright DiabolistFire(4);
+    HLFR C 2 Bright DiabolistCrackle(4);
+    HLFR B 2 Bright DiabolistFire(4);
+    HLFR CBCDCDCDEDED 2 Bright DiabolistFire(5);
+    HLFR E 2 Bright DiabolistCrackle(4);
+    HLFR F 2 Bright DiabolistFire(4);
+    HLFR EFE 2 Bright DiabolistFire(3);
+    HLFR FGH 2 Bright DiabolistFire(2);
+    HLFR GHGH 2 Bright DiabolistFire(1);
+    Stop;
+  Death.Missilekiller1:
+  Death:
+	Stop;
+  }
+
+  void DiabolistFire(int damage)
+  {
+    A_Explode(damage, 25);
+    A_Fire();
+  }
+
+  void DiabolistCrackle(int damage)
+  {
+    A_Explode(damage, 25);
+    A_FireCrackle();
+  }
+}
+
+
+class MM_Archvilemissiletrail : MM_Revenantmissiletrail
+{
+	Default
+	{
+	+NOINTERACTION;
+	+ROLLSPRITE;
+	Renderstyle "Add";
+	}
+	States
+	{
+	Spawn:
+		tnt1 A 2 Bright;
+		VIMT AB 2 Bright;
+		VIMT AABBCCDD 1 Bright A_Fadeout;
+		Stop;
+	}
+}
+
+Class Hommingincrements : Inventory 
+{ 
+Default
+{
+Inventory.MaxAmount 100;
+}
+}
+
+
+class MM_GhostArchvile : MM_Archvile
+{
+	Default
+	{
+		+SHADOW
+		+NOBLOODDECALS
+		RenderStyle "OptFuzzy";
+		BloodColor "black";
+		Alpha 0.25;
+		Health 300;
+	}
+	States
+	{
+	Spawn:
+		VLEG AB 10 A_Look;
+		Loop;
+	See:
+		VLEG AABBCCDDEEFF 2 A_Chase;
+		Loop;
+	Missile:
+		VLEG G 0 BRIGHT A_VileStart;
+		VLEG G 10 BRIGHT A_FaceTarget;
+		VLEG H 8 BRIGHT A_VileTarget;
+		VLEG IJKLMN 8 BRIGHT A_FaceTarget;
+		VLEG O 8 BRIGHT A_VileAttack;
+		VLEG P 20 BRIGHT;
+		Goto See;
+	Heal:
+		Stop;
+	Pain:
+		VLEG Q 5;
+		VLEG Q 5 A_Pain;
+		Goto See;
+	Death.Ice:
+		VLEG Q 5 A_GenericFreezeDeath;
+		TNT1 A 1 A_Freezedeathchunks;
+		WAIT;
+	Death.SSGGIBING:
+		//TNT1 A 0 A_Jumpifcloser(128, "XDeath");
+		TNT1 A 0 A_Jump(256, "Death");
+		Goto Death;
+	Death:
+		VLEG Q 7;
+		VLEG R 7 A_Scream;
+		VLEG S 7 A_NoBlocking;
+		VLEG TUVWXY 7;
+		VLEG Z -1;
+		Stop;
+	XDeath:
+		VLGX A 1;
+		VLGX A 4 A_Scream;
+		VLGX B 5 A_XScream;
+		VLGX C 5;
+		VLGX D 5 A_NoBlocking();
+		VLGX EFGH 5;
+		VLGX I -1;
+		Stop;
+	}
+}
+
+class MM_Exiler : MM_Archvile
+{	
+	States
+	{
+	Spawn:
+		EXIR AB 10 A_Look;
+		Loop;
+	See:
+		EXIR A 0 BRIGHT A_TakeInventory("MM_Archiesinnerrage",2);
+		EXIR A 2 A_Vilewalk();
+		EXIR ABBCC 2 A_VileChase;
+		EXIR D 2 A_Vilewalk();
+		EXIR DEEFF 2 A_VileChase;
+		Goto see+1;
+	Missile:
+		EXIR G 0 BRIGHT A_Startsound("vile/start", CHAN_AUTO);
+		EXIR G 0 BRIGHT A_JumpIfCloser(120,"Meleefire");
+		EXIR G 0 BRIGHT A_JumpIfInventory("MM_Archiesinnerrage", 2, "Rage"); // When the archie is at max anger, it will go to the rage state
+	Normalattack:		
+		EXIR G 10 BRIGHT A_FaceTarget;
+		EXIR H 8 BRIGHT A_VileTarget;
+		EXIR IJKLMN 8 BRIGHT A_FaceTarget;
+		EXIR O 8 BRIGHT A_VileAttack;
+		EXIR P 20 BRIGHT;
+		Goto See+1;
+	Rage:
+		EXIR G 0 BRIGHT {bMissileevenmore = true;}
+		EXIR G 0 BRIGHT A_JumpIfCloser(260,"Missile2");	//you have to be very close for the archie to attack
+		Goto Normalattack;
+	Missile2:
+		EXIR G 4 BRIGHT A_CPosRefire;
+		EXIR H 4 BRIGHT A_CPosRefire;
+		EXIR IJ 5 BRIGHT A_CPosRefire;
+		EXIR K 5 BRIGHT A_CPosRefire;
+		EXIR L 4 BRIGHT A_CPosRefire;
+		EXIR M 6 BRIGHT A_CPosRefire;
+		EXIR N 2 BRIGHT A_VileTracer();
+		EXIR OP 2 BRIGHT A_CPosRefire;
+		EXIR N 2 BRIGHT A_VileTracer();
+		EXIR OP 2 BRIGHT A_CPosRefire;
+		EXIR N 2 BRIGHT A_VileTracer();
+		EXIR OP 2 BRIGHT A_CPosRefire;
+		EXIR N 2 BRIGHT A_VileTracer();
+		EXIR O 4 BRIGHT;
+		EXIR P 5 BRIGHT { A_TakeInventory("MM_Archiesinnerrage",2); bMissileevenmore = false; }//after attacking, the archie calms down a little
+		Goto See+1;
+	Meleefire:
+		EXIR LM 5 Bright A_FaceTarget();
+		EXIR KJ 3 Bright A_FaceTarget();
+		EXIR I 3 A_SpawnProjectile("MM_VileHellFire", 32, 0, 0);
+		EXIR HGHIHGHIHGHIGHI 3 Bright A_FaceTarget();
+		EXIR G 1 A_CPosRefire;
+		EXIR G 0 BRIGHT A_Startsound("vile/start", CHAN_AUTO);
+		Goto Normalattack;
+	Heal:
+		EXI2 ABCABC 5 BRIGHT;
+		Goto See;
+	Pain:
+		EXIR Q 5; //A_GiveInventory("MM_Archiesinnerrage", 1); //Ever time an archvile is pained, it will increace it's rage meter
+		EXIR Q 5 A_Pain;
+		Goto See+1;
+	Death.Ice:
+		EXIR Q 5 A_GenericFreezeDeath;
+		TNT1 A 1 A_Freezedeathchunks;
+		WAIT;
+	Death.SSGGIBING:
+		//TNT1 A 0 A_Jumpifcloser(128, "XDeath");
+		TNT1 A 0 A_Jump(256, "Death");
+		Goto Death;
+	Death:
+		EXIP A 7;
+		EXIR R 7 { A_Scream(); A_KillTracer("Missilekiller1", KILS_KILLMISSILES, "MM_VileHellFire"); }
+		EXIR S 7 A_NoBlocking;
+		EXIR TUVWXY 7;
+		EXIR Z -1 A_BossDeath;
+		Stop;
+	XDeath:
+		EXIX A 1 A_TakeInventory("MM_Archiesinnerrage",2);
+		EXIX A 4;
+		EXIX B 5 A_XScream;
+		EXIX C 5;
+		EXIX D 5 A_NoBlocking();
+		EXIX EFGH 5;
+		EXIX I -1;
+		Stop;
+	Crush:
+		POL5 A 0;
+		POL5 A 0 A_Startsound("Bloody/crush");
+		POL5 A -1;
+		stop;
+	}
+}

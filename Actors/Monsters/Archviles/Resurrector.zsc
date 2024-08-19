@@ -1,0 +1,40 @@
+
+class MM_Resurrector : mm_Archvile
+{
+	Default
+	{
+		Health 1500;
+		scale 0.90;
+		Speed 20;
+		-QUICKTORETALIATE
+		+AVOIDHAZARDS
+		+NOINFIGHTING
+	}
+	States
+	{
+	Spawn:
+		RESS AB 10 A_Look;
+		Loop;
+	See:
+		RESS AABBCCDDEEFF 2 A_VileChase;
+		Loop;
+	Missile:
+		Stop;
+	Heal:
+		RESS GHI 6 BRIGHT;
+		Goto See;
+	Pain:
+		RESS Q 5;
+		RESS Q 5 A_Pain;
+		Goto See;
+	Death:
+		RESS R 7;
+		RESS S 7 A_Scream;
+		RESS T 7 A_NoBlocking;
+		RESS UVWXY 7;
+		RESS Z -1;
+		Stop;
+	XDeath:
+		Stop;
+	}
+}

@@ -1,0 +1,120 @@
+
+class MM_Alphasoul : Actor Replaces Betaskull
+{
+	Default
+	{
+		Health 100;
+		Radius 16;
+		Height 56;
+		Speed 8;
+		PainChance 40;
+		Monster;
+		+DONTGIB
+		mass 100;
+		SeeSound "Phantom/see";
+		PainSound "Phantom/pain";
+		DeathSound "Phantom/death";
+		AttackSound "Phantom/attack";
+		ActiveSound "skull/active";
+		BloodColor "green";
+		BloodType "MM_Brightblood";
+		Alpha 0.752941;
+		RenderStyle "Translucent";
+		FloatBobStrength 0.5;
+		+FLOATBOB +FLOAT +NOGRAVITY +MISSILEMORE +DONTFALL +NOICEDEATH +NOSPRITESHADOW -COUNTKILL
+		+NOICEDEATH
+		Tag "Alpha soul";
+	}
+	
+		override void PostBeginPlay()
+		{
+			A_Startsound("Torch/crackle", CHAN_AUTO, CHANF_LOOPING, 1, ATTN_NORM);
+		}
+		
+	States
+	{
+	Spawn:
+		ASKL AB 10 Bright A_Look;
+		Loop;
+	See:
+		ASKL AABB 3 Bright A_Chase;
+		Loop;
+	Missile:
+		ASKL CD 5 Bright A_FaceTarget;
+		ASKL E 4 Bright A_FaceTarget;
+		ASKL F 4 BRIGHT 
+		{
+			A_SpawnProjectile("MM_Phantomball",22,0,0,0);
+			A_FaceTarget();
+		}
+		ASKL E 4 Bright A_FaceTarget;
+		ASKL CCDD 3 Bright;
+		ASKL C 1 Bright A_CPosRefire;
+		Goto Missile+2;
+	Pain:
+		ASKL G 3 Bright;
+		ASKL G 3 Bright A_Pain;
+		Goto See;
+	Death:
+		ASKL H 0 Bright A_Stopsound(CHAN_AUTO);
+		ASKL H 6 Bright {bFLOATBOB = False;}
+		ASKL I 6 Bright A_Scream;
+		ASKL J 6 Bright A_NoBlocking();
+		ASKL K 6 Bright A_SetRenderStyle(1.0, STYLE_Add);
+		ASKL L 6 Bright;
+		ASKL MN 6 Bright;
+		Stop;
+	 Crush:
+		Stop;
+	}
+}
+
+class MM_Phantomball : Actor
+{
+	Default
+	{
+		Radius 6;
+		Height 8;
+		Speed 10;
+		FastSpeed 20;
+		DamageFunction 24;
+		Scale 0.7;
+		Projectile;
+		+RANDOMIZE
+		+ZDOOMTRANS
+		+ZDOOMTRANS
+		RenderStyle "Add";
+		Alpha 1;
+		SeeSound "caco/attack";
+		DeathSound "caco/shotx";
+	}
+	States
+	{
+	Spawn:
+		DKB2 AAAABBBB 1 BRIGHT A_SpawnItemEx("MM_PhantomballTrail", 0, 0, 0, 0, 0, 0, 0, 128);
+		Loop;
+	Death:
+		DKB2 CDE 6 BRIGHT;
+		Stop;
+	}
+}
+
+class MM_PhantomballTrail : Actor
+{
+	Default
+	{
+		Scale 1.1;
+		PROJECTILE;
+		RENDERSTYLE "ADD";
+		+NOCLIP
+		Alpha 0.5;
+		Scale 0.7;
+	}
+	States
+	{
+	Spawn:
+		TNT1 A 2 Bright;
+		DKB2 AB 3 Bright A_fadeout(0.2);
+		Loop;
+	}
+}

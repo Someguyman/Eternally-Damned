@@ -1,0 +1,70 @@
+
+class MM_Knife : Weapon
+{
+	Default
+	{
+		Weapon.SelectionOrder 3700;
+		Weapon.Kickback 100;
+		Obituary "$OB_MPFIST";
+		Tag "$TAG_FIST";
+		//Attacksound "Weapons/Knifestab";
+		Attacksound "";
+		+WEAPON.NOALERT
+		+WEAPON.NOAUTOFIRE
+		+WEAPON.WIMPY_WEAPON
+		+WEAPON.MELEEWEAPON
+		+WEAPON.NOAUTOSWITCHTO
+	}
+	
+			Action Void A_Knifeattack()
+		{
+			//A_Startsound("skeleton/swing", CHAN_AUTO);
+			if (CountInv("PowerStrength")==1)
+			{ 
+			A_CustomPunch(150 ,CPF_NOTURN, 0, "MM_KnifePuff"); 
+			}
+			else 
+			{ 
+			A_CustomPunch(30 ,CPF_NOTURN, 0, "MM_KnifePuff"); 
+			}
+		}
+		
+	States
+	{
+	Ready:
+		KNIF A 1 A_WeaponReady;
+		Loop;
+	Deselect:
+		KNIF A 1 A_Lower;
+		Loop;
+	Select:
+		KNIF A 1 A_Raise;
+		Loop;
+	Fire:
+		KNIF B 2;
+		KNIF C 2 A_Knifeattack();
+		KNIF D 3;
+		KNIF C 3;
+		//KNIF B 2 A_ReFire;
+		Goto Ready;
+	}
+}
+
+class MM_KnifePuff : BulletPuff
+{
+	Default
+	{
+		+NOEXTREMEDEATH
+		+PUFFONACTORS
+		SeeSound "Weapons/Knifestab";
+		Attacksound "Weapons/Axeclink";
+		ActiveSound "";
+	}
+	States
+	{
+		Spawn:
+		PUFF A 4 Bright;
+		PUFF BCD 4;
+		Stop;
+	}
+}

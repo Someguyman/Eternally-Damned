@@ -1,0 +1,256 @@
+
+class MM_Wroaringgun2704 : Alternateweapon
+{
+	Default
+	{
+		Height 20;
+		Weapon.SelectionOrder 2800;
+		Weapon.AmmoUse 1;
+		Weapon.AmmoGive 40;
+		Weapon.AmmoType "Cell";
+		+WEAPON.NOAUTOFIRE;
+		Inventory.PickupMessage "\cgYou got the Devastator!";
+		Tag "Devastator";
+	}
+	
+		Action void A_Bfgcharge()
+		{
+			if (CountInv("PowerQuadDamage") == 1 || CountInv("MM_Bfgsequence") == 1)
+			{
+				A_StartSound("Weapons/Poweredbfgfire", CHAN_WEAPON); 
+			}
+			else
+			{
+				A_StartSound("weapons/bfgf", CHAN_WEAPON); 
+			}
+		}
+		
+		//bfg fire
+			Action Void A_FireBigfuckingballs()
+		{
+			A_FireProjectile("MM_Devastatorball",0,1,0,0,0); 
+		}
+		
+	States
+	{
+	Ready:
+		DEVA A 1 A_WeaponReady;
+		Loop;
+	Deselect:
+		DEVA A 1 A_Lower;
+		Loop;
+	Select:
+		DEVA A 1 A_Raise;
+		Loop;
+	Fire:
+		DEVA A 0 Bright A_Bfgcharge();
+		DEVA ABCDEFGHIJ 3 Bright;
+		DEVA K 0 Bright;
+		DEVA K 3 Bright A_FireBigfuckingballs();
+		DEVA LMN 3 Bright;
+		DEVA P 11;
+		Goto Ready;
+	Flash:
+		Goto LightDone;
+	Spawn:
+		CDEV A -1;
+		Stop;
+	}
+}
+
+Class MM_Devastatorball : actor
+{
+	Default
+	{
+		Radius 12;
+		Height 8;
+		Speed 30;
+		Damage 256;
+		PROJECTILE;
+		ExplosionRadius 256;
+		ExplosionDamage 320;
+		RenderStyle "Add";
+		DamageType "Bigfrickindamage";
+		Obituary "%o was disintergrated by %k's Devastator.";
+	}
+	int user_i;
+	
+	Void A_BFGBalltrail(Class<Actor> p)
+	{
+		if (CallACS("Projtoggle")==1)
+		{
+			A_SpawnItemEx(p, 0, 0, 0, 0, 0, 0, 0, 128);
+		}
+	}
+	
+	void A_DevBallAttack(Class<Actor> p)
+	{
+		A_Explode(128,128,0); A_SpawnItemEx("MM_DevShooter",16,0,0,0,0,0,random(0,359),SXF_TRANSFERPOINTERS);
+		if (CallACS("Projtoggle")==1)
+		{
+			A_SpawnItemEx(p, 0, 0, 0, 0, 0, 0, 0, 128);
+		}
+	}
+	
+	States
+	{
+		Spawn:
+			BGR2 AABB 1 Bright A_BFGBalltrail("MM_RedBFGBallTrail");
+			BGR2 A 0 Bright A_Startsound("Weapons/PoweredRedbfgIdle", CHAN_BODY, CHANF_LOOPING, 1, ATTN_NORM);
+			BGR2 A 1 Bright A_DevBallAttack("MM_RedBFGBallTrail");
+			BGR2 A 1 Bright A_BFGBalltrail("MM_RedBFGBallTrail");
+			BGR2 A 1 Bright A_DevBallAttack("MM_RedBFGBallTrail");
+			BGR2 A 1 Bright A_BFGBalltrail("MM_RedBFGBallTrail");
+			BGR2 B 1 Bright A_DevBallAttack("MM_RedBFGBallTrail");
+			BGR2 B 1 Bright A_BFGBalltrail("MM_RedBFGBallTrail");
+			BGR2 B 1 Bright A_DevBallAttack("MM_RedBFGBallTrail");
+			BGR2 B 1 Bright A_BFGBalltrail("MM_RedBFGBallTrail");
+			Goto spawn+4;
+		Death:
+			BFR2 C 5 Bright A_Stopsound(CHAN_BODY);
+			BFR2 D 5 Bright;
+			BFR2 E 5 Bright { A_SpawnProjectile("MM_DevastatorBall2",0,0,user_i,CMF_AIMDIRECTION|CMF_TRACKOWNER); A_Explode(360,256); }
+			//{
+			//for(A_SetUserVar(user_i,0); user_i<343; A_SetUserVar(user_i,user_i+18))
+				//{
+				//A_SpawnProjectile("DevastatorBall2",0,0,user_i,CMF_AIMDIRECTION|CMF_TRACKOWNER);
+				//}
+			//A_Explode(360,256);
+			//}
+			DBAL FG 5 Bright A_Explode(360,256);
+			DBAL HI 3 Bright;
+			stop;
+	}
+}
+
+Class MM_DevastatorBall2 : actor
+{
+	Default
+	{
+	Projectile;
+	Radius 8;
+	Height 8;
+	Speed 10;
+	Damage 10;
+	Renderstyle "Add";
+	Alpha 0.90;
+	SeeSound "weapons/devbal";
+	DeathSound "weapons/devex2";
+	+FORCEXYBILLBOARD
+	}
+States
+	{
+	Spawn:
+		DBA2 AB 4 Bright;
+		Loop;
+	Death:
+		DBA2 C 4 Bright A_Explode(64,64,0);
+		DBA2 DE 4 Bright;
+		Stop;
+	}
+}
+
+Class MM_DevShooter : actor
+{
+	Default
+	{
+		Projectile;
+		Radius 8;
+		Height 8;
+		Speed 0;
+		+LOOKALLAROUND
+		+NOCLIP
+		+SEEKERMISSILE
+	}
+	States
+	{
+		Spawn:
+		Missile:
+			TNT1 A 1 NoDelay { A_SeekerMissile(0,0,SMF_LOOK,256); A_SpawnProjectile("LiteShot",0,0,0,CMF_TRACKOWNER|CMF_CHECKTARGETDEAD,0,AAPTR_TRACER); }
+			Stop;
+		See:
+			TNT1 A 1;
+			Stop;
+	}
+}
+
+Class LiteShot : FastProjectile
+{
+	Default
+	{
+		Radius 8;
+		Height 12;
+		Speed 32;
+		Damage 8;
+		RenderStyle "Add";
+		Alpha 0.85;
+		MissileType "LiteTrail";
+		MissileHeight 8;
+		SeeSound "weapons/devlit";
+		DeathSound "weapons/devzap";
+		Scale 0.5;
+		+RIPPER
+		+BLOODLESSIMPACT
+	}
+States
+	{
+	Spawn:
+		DLIT AABBCC 1 Bright;
+		Loop;
+	Death:
+		TNT1 A 0 A_SetScale(1.0);
+		DLIT DEFGHIJKLMN 1 Bright;
+		Stop;
+	}
+}
+
+Class LiteTrail : actor
+{
+	Default
+	{
+		+NOINTERACTION
+		RenderStyle "Add";
+		Scale 0.5;
+		Alpha 0.85;
+	}
+States
+	{
+	Spawn:
+		TNT1 A 0 Nodelay A_Jump(256,"s1","s2","s3");
+	s1:
+		DLIT ABCA 2 Bright A_SetScale(scale.x-0.1,scale.y-0.1);
+		Stop;
+	s2:
+		DLIT BCAB 2 Bright A_SetScale(scale.x-0.1,scale.y-0.1);
+		Stop;
+	s3:
+		DLIT CABC 2 Bright A_SetScale(scale.x-0.1,scale.y-0.1);
+		Stop;
+	}
+}
+
+Class DevPuff : actor
+{
+	Default
+	{
+		Radius 3;
+		Height 3;
+		RenderStyle "Add";
+		Alpha 0.75;
+		Seesound "weapons/devbuzz";
+		+ALWAYSPUFF
+		+PUFFONACTORS
+		+NOGRAVITY
+		+FORCEXYBILLBOARD
+		+PAINLESS
+	}
+	States
+	{
+	Spawn:
+		DLIT IJKLMN 3 Bright;
+		Stop;
+	Crash:
+		TNT1 A 1;
+		Stop;
+	}
+}

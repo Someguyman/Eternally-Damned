@@ -1,0 +1,138 @@
+
+class MM_RocketLauncher : Originalweapon Replaces RocketLauncher
+{
+	Default
+	{
+		Weapon.SelectionOrder 2500;
+		Weapon.AmmoUse 1;
+		Weapon.AmmoGive 4;
+		Weapon.AmmoType "RocketAmmo";
+		+WEAPON.NOAUTOFIRE
+		Inventory.PickupMessage "\cgYou got the Rocket launcher!";
+		Tag "$TAG_ROCKETLAUNCHER";
+		Weapon.UpSound "Weapons/RLauncherup";
+		Inventory.PickupSound "Weapons/RLauncherPickup";
+		Weapon.Kickback 600;
+	}
+	
+	Action Void A_FireRLaunch()
+		{
+			//A_TakeInventory("RocketAmmo", 1);
+			A_GunFlash("Flash");
+			A_FireProjectile("MM_Playerrocket",0,1); 
+			A_Startsound("weapons/rocketlauncher", CHAN_AUTO);
+		}
+		
+	States
+	{
+	Ready:
+		RKLR A 1 A_WeaponReady;
+		Loop;
+	Deselect:
+		RKLR A 1 A_Lower;
+		Loop;
+	Select:
+		RKLR A 1 A_Raise;
+		Loop;
+	Fire:
+		RKLR A 2 A_FireRLaunch();
+		RKLR B 14 Offset(0,38);
+		RKLR B 1 Offset(0,34);
+		RKLR A 1 Offset(0,34);
+		RKLR A 2 Offset(0,32);
+		RKLR B 0 A_ReFire;
+		Goto Ready;
+	Flash:
+		RKLF A 2 Bright A_Light2;
+		RKLF B 4 Bright A_Light2;
+		RKLF C 4 Bright A_Light1;
+		RKLF D 2 Bright A_Light1;
+		Goto LightDone;
+	Spawn:
+		RKLP A -1;
+		Stop;
+	}
+}
+
+class MM_PlayerRocket : Rocket
+{
+	Default
+	{
+		Radius 9;
+		Height 6;
+		Speed 25;
+		DamageFunction 80;
+		Projectile;
+		+RANDOMIZE
+		+DEHEXPLOSION
+		-ROCKETTRAIL
+		+ZDOOMTRANS
+		+SKYEXPLODE
+		+FOILINVUL
+		ProjectileKickback 100;
+		SeeSound "";
+		RenderStyle "Normal";
+		DamageType "Explosive";
+		DeathSound "weapons/rocklx";
+		Obituary "$OB_MPROCKET";
+	}
+	
+	void A_rocketexplode()
+	{
+		A_SetRenderStyle(1.0, STYLE_Add);
+		A_Explode();
+	}
+	
+	Void A_PRockettrail()
+	{
+		if (CallACS("Projtoggle")==1)
+		{
+			A_SpawnItemEx("RedPuff",0,0,6,0,0,0,0,128);
+			A_SpawnItemEx("Ball1Trail",0,0,6,0,0,0,0,128);
+			bROCKETTRAIL = false;
+		}
+		else
+		{
+			bROCKETTRAIL = true;
+		}
+	}
+	
+	States
+	{
+	Spawn:
+		MISL A 2 Bright A_PRockettrail();
+		Loop;
+	Death:
+		MISL B 8 Bright A_rocketexplode();
+		MISL C 6 Bright;
+		MISL D 4 Bright;
+		Stop;
+	BrainExplode:
+		MISL BC 10 Bright;
+		MISL D 10 A_BrainExplode;
+		Stop;
+	}
+}
+
+Class MM_Rocketlauncherpickup : CustomInventory 
+{
+Default
+{
+	INVENTORY.RESTRICTEDTO "ET_Player";
+	VISIBLETOPLAYERCLASS "ET_Player";
+	Inventory.PickupSound "Weapons/RLauncherPickup";
+	Inventory.PickupMessage "\cgYou got the Rocket launcher!";
+}
+	States
+	{
+	Spawn:
+		RKLP A -1;
+		Stop;
+	Pickup:
+		TNT1 A 0 A_GiveInventory("MM_RocketLauncher", 1);
+		Stop;
+	Taken:
+		TNT1 A 0;
+		Fail;	
+	}
+}

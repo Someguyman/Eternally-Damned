@@ -1,0 +1,52 @@
+
+class MM_Ubersaw : Slaughterweapon
+{
+	Default
+	{
+		Weapon.Kickback 0;
+		Weapon.SelectionOrder 2200;
+		Weapon.UpSound "weapons/sawup";
+		Weapon.ReadySound "weapons/sawidle";
+		Inventory.PickupSound "Weapons/Sawpickup";
+		Inventory.PickupMessage "\cgYou got the Ubersaw! They will fear you!";
+		Obituary "$OB_MPCHAINSAW";
+		Tag "$TAG_CHAINSAW";
+		+WEAPON.MELEEWEAPON		
+		+WEAPON.NOAUTOSWITCHTO
+		
+	}
+	
+			Action Void A_Ubermelee()
+		{
+			A_Startsound("weapons/sawfull", CHAN_WEAPON, CHANF_LOOPING, 1, ATTN_NORM);
+			A_Saw("","weapons/sawhit",12,"MM_ExtremeBulletPuff",SF_NORANDOM, 80 + 1);
+		}
+			Action Void A_Ubermelee2()
+		{
+			A_Startsound("weapons/sawfull", CHAN_WEAPON, CHANF_LOOPING, 1, ATTN_NORM);
+			A_Saw("","weapons/sawhit",12,"MM_ExtremeBulletPuff",SF_NORANDOM, 80 + 1, 0, 0, 1, 100);
+		}
+		
+	States
+	{
+	Ready:
+		UBSW AB 3 A_WeaponReady;
+		Loop;
+	Deselect:
+		UBSW C 0 A_Lower;
+		UBSW C 1 A_Lower;
+		Loop;
+	Select:
+		UBSW A 0 A_Raise;
+		UBSW A 1 A_Raise;
+		Loop;
+	Fire:
+		UBSW C 1 Offset(0,32) A_Ubermelee();
+		UBSW D 1 Offset(0,35) A_Ubermelee2();
+		UBSW D 0 A_ReFire;
+		Goto Ready;
+	Spawn:
+		UBRP A -1;
+		Stop;
+	}
+}

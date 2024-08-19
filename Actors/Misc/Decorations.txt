@@ -1,0 +1,90 @@
+
+Actor ED_PlayerCorpses : RandomSpawner Replaces DeadMarine
+{
+	DropItem "MM_Deadmarine1", 256, 50
+	DropItem "MM_Deadmarine2", 256, 50
+	DropItem "MM_Deadmarine3", 256, 50
+	DropItem "MM_Deadmarine4", 256, 50
+	DropItem "MM_Deadmarine5", 256, 50
+	DropItem "MM_Deadmarine6", 256, 50
+	DropItem "MM_Deadmarine7", 256, 50
+	DropItem "MM_Deadmarine8", 256, 50
+	DropItem "MM_Deadmarine9", 256, 20
+	DropItem "MM_Deadmarine10", 256, 20
+	DropItem "MM_Deadmarine11", 256, 20
+	DropItem "MM_Deadmarine12", 256, 20
+}
+
+Actor ED_Gibbed_PlayerCorpses : RandomSpawner Replaces GibbedMarine
+{
+	DropItem "MM_GibbedMarine1", 256, 50
+	DropItem "MM_GibbedMarine2", 256, 50
+	DropItem "MM_GibbedMarine3", 256, 50
+	DropItem "MM_GibbedMarine4", 256, 50
+	DropItem "MM_GibbedMarine5", 256, 50
+	DropItem "MM_GibbedMarine6", 256, 50
+	DropItem "MM_GibbedMarine7", 256, 50
+	DropItem "MM_GibbedMarine8", 256, 50
+	DropItem "MM_GibbedMarine9", 256, 20
+	DropItem "MM_GibbedMarine10", 256, 20
+	DropItem "MM_GibbedMarine11", 256, 20
+	DropItem "MM_GibbedMarine12", 256, 20
+}
+
+Actor ED_Extragibbedstuff : MM_Extragibbedthingspawner Replaces GibbedMarineExtra {}
+
+Actor ED_Pinkycorpses : RandomSpawner Replaces DeadDemon
+{
+	DropItem "MM_DeadPinky", 256, 50
+	DropItem "MM_DeadSpectre", 256, 20
+}
+
+Actor ED_Deadlostsoul : MM_Deadlostsoulspawner Replaces Deadlostsoul {}
+
+Actor ED_RedTorch : MM_RedTorch Replaces RedTorch {}
+
+Actor ED_GreenTorch : MM_GreenTorch Replaces GreenTorch {}
+
+Actor ED_BlueTorch : MM_BlueTorch Replaces BlueTorch {}
+
+Actor ED_Burningbarrel : MM_BurningBarrel Replaces BurningBarrel {}
+
+Actor ED_SmallRedTorch : MM_ShortRedTorch Replaces ShortRedTorch {}
+
+Actor ED_SmallGreenTorch : MM_ShortGreenTorch Replaces ShortGreenTorch {}
+
+Actor ED_SmallBlueTorch : MM_ShortBlueTorch Replaces ShortBlueTorch {}
+
+Actor ED_Techlamp : MM_Techlamp_spawner Replaces TechLamp {}
+
+Actor ED_Techlamp2 : MM_Techlamp2_spawner Replaces TechLamp2 {}
+
+Actor ED_Shortlamp : MM_Shortlamp Replaces Column {}
+
+Actor ED_Candle : MM_Candlestick Replaces Candlestick {}
+
+Actor ED_Candelabra : MM_Candelabra Replaces Candelabra {}
+
+Actor ED_HeartColumn : MM_HeartColumn Replaces HeartColumn {}
+
+Actor ED_AspywhoshapeshiftedintoaDeadguy : MM_DeadStick Replaces DeadStick {}
+
+Actor ED_Almostdeadbutnotquite : MM_LiveStick Replaces LiveStick {}
+
+Actor ED_Aneyehitwithlemonjuice : MM_EvilEyeCandle Replaces EvilEye {}
+
+Actor ED_Buringskulls : MM_FloatingSkull Replaces FloatingSkull {}
+
+Actor ED_BigTree : MM_BigTree Replaces BigTree {}
+
+Actor Ed_TorchTree : MM_TorchTree Replaces TorchTree {}
+
+Actor ED_Bloodytwitch : MM_Bloodytwitch_spawner Replaces Bloodytwitch {}
+
+Actor ED_Brain_Stem : MM_Brainstem_spawner Replaces Brainstem {}
+
+Actor ED_HangTLookingDown : MM_HangTLookingDown_spawner Replaces HangTLookingDown {}
+
+Actor ED_HangTSkull : MM_HangTSkull_spawner Replaces HangTSkull {}
+
+Actor Ed_SmallBloodPool : MM_SmallBloodPool_spawner Replaces SmallBloodPool {}

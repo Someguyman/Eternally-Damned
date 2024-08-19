@@ -1,0 +1,122 @@
+
+class MM_Pistol : Originalweapon Replaces Pistol
+{
+	Default
+	{
+		Weapon.SelectionOrder 1900;
+		Weapon.AmmoUse 1;
+		Weapon.AmmoGive 30;
+		Weapon.AmmoType "Clip";
+		Tag "Pistol";
+		+WEAPON.WIMPY_WEAPON
+		//Attacksound "weapons/pistol";
+		Weapon.UpSound "Weapons/Pistolup";
+		Inventory.PickupSound "Weapons/PistolPickup";
+		+WEAPON.NOAUTOFIRE
+		Inventory.Pickupmessage "\cjyou got the pistol";
+	}
+	
+		Action Void A_FireGlock()
+		{
+			if (CallACS("Gamespawntoggle")==6)
+			{
+				A_gunflash("SuperPFlash");
+				A_Startsound("weapons/chngun", CHAN_WEAPON);
+			}
+			else
+			{
+				A_gunflash("Flash");
+				A_Startsound("weapons/pistol", CHAN_AUTO);
+			}
+			if (CountInv("PowerQuadDamage") == 1)
+			{
+				A_Firebullets(0.2, 0, 1, 5, "MM_ExtremeSSGPuff", FBF_USEAMMO);
+			}
+			else 
+			{
+				A_Firebullets(0.2, 0, 1, 5, "MM_TameBulletPuff", FBF_USEAMMO);
+			}
+		}
+		
+	States
+	{
+	Ready:
+		TNT1 A 0 A_JumpIf(CallACS("Gamespawntoggle")==6, "SuperPReady");
+		PSTL A 1 A_WeaponReady;
+		Loop;
+	Deselect:
+		TNT1 A 0 A_JumpIf(CallACS("Gamespawntoggle")==6, "SuperPDeselect");
+		PSTL A 1 A_Lower;
+		Loop;
+	Select:
+		TNT1 A 0 A_JumpIf(CallACS("Gamespawntoggle")==6, "SuperPselect");
+		PSTL A 1 A_Raise;
+		Loop;
+	Fire:
+		TNT1 A 0 A_JumpIf(CallACS("Gamespawntoggle")==6, "SuperPFire");
+		PSTL B 1 A_FireGlock();
+		PSTL C 2;
+		PSTL D 3;
+		PSTL B 1;
+		PSTL A 0 A_Refire("Hold");
+		Goto Ready;
+	Hold:
+		PSTL A 8;
+		PSTL B 1 A_FireGlock();
+		PSTL C 2;
+		PSTL D 3;
+		PSTL B 1;
+		PSTL A 0 A_Refire("Hold");
+		Goto Ready;
+	Flash:
+		PSTF A 1 Bright A_Light1;
+		Goto LightDone;
+	Spawn:
+		PSTP A -1;
+		Stop;
+	
+	SuperPReady:
+		SPIS A 1 A_WeaponReady;
+		Loop;
+	SuperPDeselect:
+		SPIS A 1 A_Lower;
+		Loop;
+	SuperPSelect:
+		SPIS A 1 A_Raise;
+		Loop;
+	SuperPFire:
+		SPIS B 1 A_FireGlock();
+		SPIS C 2;
+		SPIS D 3;
+		SPIS B 1;
+		SPIS A 0 A_Refire("SuperPFire");
+		Goto Ready;
+	SuperPFlash:
+		SPIF A 1 Bright A_Light1;
+		Goto LightDone;
+	}
+}
+
+Class MM_Pistolpickup : CustomInventory 
+{
+Default
+{
+	INVENTORY.RESTRICTEDTO "ET_Player";
+	VISIBLETOPLAYERCLASS "ET_Player";
+	Inventory.PickupSound "Weapons/PistolPickup";
+	Inventory.Pickupmessage "\cjyou got the pistol";
+}
+	States
+	{
+	Spawn:
+		TNT1 A 0 A_JumpIfInventory("MM_Pistol", 1, "Taken");
+		PSTP A -1;
+		Stop;
+	Pickup:
+		TNT1 A 0 A_GiveInventory("MM_Pistol", 1);
+		Stop;
+	Taken:
+		TNT1 A 0;
+		Fail;	
+	}
+}

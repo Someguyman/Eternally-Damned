@@ -1,0 +1,242 @@
+
+Class MM_Zombiemanspawner : MM_Monsterspawners
+{
+	States
+	{
+	Spawn:
+		POSP E 0;
+		Goto spawncheck;
+	Ultimatedoomspawn:
+	Goingdownspawn:
+	DoomZerospawn:
+	D64D2spawner:
+	Eviternityspawn:
+	Valiantspawn:
+	Scythe2spawn:
+	AAilenspawn:
+	TNTRevoSpawn:
+	JenesisSpawner:
+	Epic2spawner:
+	KDIKDIZDSpawn:
+	Alternatespawn:
+	Normalspawn:
+		TNT1 A 0 A_NoBlocking;
+		TNT1 A 0 A_SpawnItemEx("MM_ZombieMan",0,0,0,0,0,0,0,SXF_NOCHECKPOSITION | SXF_TRANSFERAMBUSHFLAG | SXF_TRANSFERPOINTERS | 288,0,tid);
+		Stop;
+	}
+}
+
+class MM_ZombieMan : ZombieMan
+{
+	Default
+	{
+		AttackSound "grunt/attack";
+		DropItem "";
+		Tag "Former Tropper";
+	}
+	
+			void A_Weapondrop()
+	{
+			A_NoBlocking();
+			let pclass = players[consoleplayer].mo.GetClassName();
+			if(pclass == 'ET_Player_wolf')
+			{
+				A_DropItem("Wolf3dMag");
+			}
+			else
+			{
+				A_DropItem("MM_Magazine");
+			}
+	}
+	
+ 	States
+	{
+	Spawn:
+		POSP AB 10 A_Look;
+		Loop;
+	See:
+		POSP AABBCCDD 3 A_Chase;
+		Loop;
+	Missile:
+		POSP E 10 A_FaceTarget;
+		POSP F 4 Bright A_CustomBulletAttack(5.2, 0, 1, random(1,4)*3, "BulletPuff", 0, CBAF_NORANDOM);
+		POSP E 12 A_FaceTarget;
+		Goto See;
+	Pain:
+		POSP G 3;
+		POSP G 3 A_Pain;
+		Goto See;
+	Death.Ice:
+		POSP G 5 A_GenericFreezeDeath;
+		TNT1 A 1 A_Freezedeathchunks;
+		wait;
+	Death.SSGGIBING:
+		TNT1 A 0 A_Jumpifcloser(128, "XDeath");
+		TNT1 A 0 A_Jump(256, "Death");
+		Goto Death;
+	Death:
+		POSP H 5;
+		POSP I 5 A_Scream;
+		POSP J 5 A_Weapondrop();
+		POSP K 5;
+		POSP L -1;
+		Stop;
+	XDeath:
+		POSP M 5;
+		POSP N 5 A_XScream;
+		POSP O 5 A_Weapondrop();
+		POSP PQRST 5;
+		POSP U -1;
+		Stop;
+	Raise:
+		POSP K 5;
+		POSP JI 5;
+		POSP H 5;
+		Goto See;
+	Crush:
+		POL5 A 0;
+		POL5 A 0 A_Startsound("Bloody/crush");
+		POL5 A -1;
+		stop;
+	}
+}
+
+class MM_Plasmazombie : MM_ZombieMan
+{
+	Default
+	{
+		AttackSound "grunt/attack";
+		DropItem "";
+		Tag "Former Tropper";
+	}
+	 
+	void A_Plasmazombiefire()
+	{
+		A_FaceTarget();
+		A_SpawnProjectile("PlasmaBall", 32);
+	}
+	
+		void A_Weapondrop()
+	{
+			A_NoBlocking();
+			let pclass = players[consoleplayer].mo.GetClassName();
+			if(pclass == 'ET_Player_wolf')
+			{
+				A_DropItem("Wolf3dMag");
+			}
+			else
+			{
+				A_DropItem("MM_cell");
+			}
+	}
+	
+ 	States
+	{
+	Spawn:
+		PPOS AB 10 A_Look;
+		Loop;
+	See:
+		PPOS AABBCCDD 3 A_Chase;
+		Loop;
+	Missile:
+		PPOS E 10 A_FaceTarget;
+		PPOS F 4 Bright A_Plasmazombiefire();
+		PPOS E 4 A_FaceTarget;
+		PPOS F 4 Bright A_Plasmazombiefire();
+		PPOS E 4 A_FaceTarget;
+		PPOS F 4 Bright A_Plasmazombiefire();
+		PPOS E 4 A_FaceTarget;
+		PPOS F 4 Bright A_Plasmazombiefire();
+		PPOS E 10 A_FaceTarget;
+		Goto See;
+	Pain:
+		PPOS G 3;
+		PPOS G 3 A_Pain;
+		Goto See;
+	Death.Ice:
+		PPOS G 5 A_GenericFreezeDeath;
+		TNT1 A 1 A_Freezedeathchunks;
+		wait;
+	Death.SSGGIBING:
+		TNT1 A 0 A_Jumpifcloser(128, "XDeath");
+		TNT1 A 0 A_Jump(256, "Death");
+		Goto Death;
+	Death:
+		PPOS H 5;
+		PPOS I 5 A_Scream;
+		PPOS J 5 A_Weapondrop();
+		PPOS K 5;
+		PPOS L -1;
+		Stop;
+	XDeath:
+		PPOS M 5; //{Gibbed = true;}
+		PPOS N 5 A_XScream;
+		PPOS O 5 A_Weapondrop();
+		PPOS PQRST 5;
+		PPOS U -1;
+		Stop;
+	Raise:
+		PPOS K 5;
+		PPOS JI 5;
+		PPOS H 5;
+		Goto See;
+	Crush:
+		POL5 A 0;
+		POL5 A 0 A_Startsound("Bloody/crush");
+		POL5 A -1;
+		stop;
+	}
+}
+
+class MM_KDIKDIZD_Zombieman : MM_ZombieMan
+{
+	Default
+	{
+		-COUNTKILL
+		DropItem "None";
+	}
+}
+
+Class MM_Deadzombieman : MM_ZombieMan Replaces DeadZombieMan
+{
+	Default
+	{
+		-COUNTKILL
+		DropItem "None";
+	}
+	States
+	{
+		Spawn:
+			TNT1 A 0;
+			TNT1 A 0 A_Die("spawndeath");
+			Stop;
+		Idle:
+			POSP AB 10 A_Look;
+			Loop;
+		Death.Spawndeath:
+			POSP J 0 A_NoBlocking;
+			Goto Death+4;
+	}
+}
+
+Class MM_DeadPlasmazombie : MM_Plasmazombie
+{
+	Default
+	{
+		-COUNTKILL
+		DropItem "None";
+	}
+	States
+	{
+		Spawn:
+			TNT1 A 0;
+			TNT1 A 0 A_Die("spawndeath");
+			Stop;
+		Idle:
+			PPOS AB 10 A_Look;
+			Loop;
+		Death.Spawndeath:
+			PPOS J 0 A_NoBlocking;
+			Goto Death+4;
+	}
+}

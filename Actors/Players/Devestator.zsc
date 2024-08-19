@@ -1,0 +1,74 @@
+
+class MM_Devestator : Slaughterweapon
+{
+	Default
+	{
+		Weapon.SelectionOrder 2500;
+		Weapon.AmmoUse 1;
+		Weapon.AmmoGive 4;
+		Weapon.AmmoType "RocketAmmo";
+		+WEAPON.NOAUTOFIRE
+		Inventory.PickupMessage "\cgYou got the devestator!";
+		Tag "$TAG_ROCKETLAUNCHER";
+		Weapon.UpSound "Weapons/RLauncherup";
+		Inventory.PickupSound "Weapons/RLauncherPickup";
+		Weapon.Kickback 600;
+	}
+	Action Void A_FireRLaunch()
+		{
+			A_GunFlash("Flash");
+			A_FireProjectile("MM_Playerrocket");
+			A_Startsound("weapons/rocketlauncher", CHAN_AUTO);
+		}
+	States
+	{
+	Ready:
+		RLNC A 1 A_WeaponReady;
+		Loop;
+	Deselect:
+		RLNC A 0 A_Lower;
+		RLNC A 1 A_Lower;
+		Loop;
+	Select:
+		RLNC A 0 A_Raise;
+		RLNC A 1 A_Raise;
+		Loop;
+	Fire:
+		RLNF A 2 Bright A_FireRLaunch();
+		RLNF B 3 Bright Offset(0,38);
+		RLNF C 3 Bright Offset(0,34);
+		RLNF D 3 Offset(0,34);
+		RLNC A 2 Offset(0,32);
+		RLNF B 0 A_ReFire;
+		Goto Ready;
+	Flash:
+		stop;
+	Spawn:
+		LAUN A -1;
+		Stop;
+	}
+}
+
+Class MM_Devestatorpickup : CustomInventory 
+{
+Default
+{
+	INVENTORY.RESTRICTEDTO "ET_Player_Slaughter";
+	VISIBLETOPLAYERCLASS "ET_Player_Slaughter";
+	//Inventory.PickupSound "Weapons/PistolPickup";
+	Inventory.PickupMessage "\cgYou got the devestator!";
+}
+	States
+	{
+	Spawn:
+		TNT1 A 0 A_JumpIfInventory("MM_Devestator", 1, "Taken");
+		LAUN A -1;
+		Stop;
+	Pickup:
+		TNT1 A 0 A_GiveInventory("MM_Devestator", 1);
+		Stop;
+	Taken:
+		TNT1 A 0;
+		Fail;	
+	}
+}

@@ -1,0 +1,164 @@
+Class MM_GiantExplostion : Bossexplosion
+{
+	Default
+	{
+	scale 1.0;
+	+ZDOOMTRANS
+	+FULLVOLDEATH
+	RenderStyle "Add";
+	}
+	States
+	{
+	Spawn:
+		NKE1 A 0 bright;
+		NKE1 A 4 Bright A_Startsound("Grand/Expolsion", CHAN_BODY);
+		//NKE1 B 4 Bright A_Explode(512, 384);
+		NKE1 B 4 Bright;
+		NKE1 CDEFGHIJKLMNOPQRSTU 4 Bright;
+		Stop;
+	}
+}
+
+Class Comet : Actor
+{
+  Default
+  {
+    Radius 6;
+    Height 8;
+    Speed 20;
+    Damage 7;
+    Scale 0.55;
+    SeeSound "Afrit/CometFire";
+    DeathSound "Afrit/CometHit";
+    Decal "Scorch";
+    Projectile;
+  }
+
+  States
+  {
+  Spawn:
+    COMT AAAABBBBCCCC 1 Bright A_SpawnItemEx("CometTail", 0, 0, 0, 0, 0, 0, 0, 128);
+    Loop;
+  Death:
+    COMT D 3 Bright A_SpawnItemEx("CometDeathGlow", 0, 0, 0, 0, 0, 0, 0, 128);
+    COMT E 3 Bright A_Explode(80, 80, 0);
+    TNT1 A 0 A_SpawnItemEx("CometDeath", 0, 0, 0, 0, 0, 0, 0, 128);
+    Stop;
+  }
+}
+
+Class CometTail : Actor
+{
+  Default
+  {
+    RenderStyle "Add";
+    Alpha 0.4;
+    Projectile;
+    +NoClip
+  }
+  States
+  {
+  Spawn:
+    FRTB ABCDEFGHI 1 Bright;
+    Stop;
+  }
+}
+
+Class CometDeathGlow : CometTail
+{
+  Default
+  {
+    Scale 2.0;
+    Alpha 0.6;
+  }
+
+  States
+  {
+  Spawn:
+    FRTB ABCDEFGHI 3 Bright;
+    Stop;
+  }
+}
+
+Class CometDeath : Actor
+{
+  Default
+  {
+    RenderStyle "Add";
+    Alpha 0.7;
+    Projectile;
+    +NoClip
+  }
+
+  States
+  {
+  Spawn:
+    COMT FGHI 3 Bright;
+    Stop;
+  }
+}
+
+Class Lavaball : Actor
+{
+  Default
+  {
+    Radius 8;
+    Height 8;
+    Speed 15;
+    Damage 6;
+    DamageType "Fire";
+    RenderStyle "Add";
+    Alpha 0.95;
+    SeeSound "weapons/firmfi";
+    DeathSound "weapons/firex3";
+    PROJECTILE;
+    +THRUGHOST
+  }
+
+  States
+  {
+  Spawn:
+    BAL3 AB 4 Bright A_SpawnItemEX("RedPuff", 0,0,0, 0,0,0, 0, SXF_CLIENTSIDE);
+    loop;
+  Death:
+    BAL3 C 5 Bright A_Explode(32, 96, 0);
+    BAL3 DE 5 Bright;
+    stop;
+  }
+}
+
+Class RedPuff : Actor
+{
+  Default
+  {
+    Radius 0;
+    Height 1;
+    Speed 0;
+    RenderStyle "Add";
+    ALPHA 0.85;
+    PROJECTILE;
+  }
+
+  States
+  {
+  Spawn:
+    TNT1 A 3 Bright;
+    RPUF ABCDE 3 Bright;
+    Stop;
+  }
+}
+
+Class SmokePuff : BulletPuff
+{
+  Default
+  {
+    +ClientSideOnly
+  }
+
+  States
+  {
+  Spawn:
+    PUFF ABCD 4;
+    Stop;
+  }
+}

@@ -1,0 +1,61 @@
+
+class MM_ExplosiveBarrel : ExplosiveBarrel Replaces ExplosiveBarrel
+{
+	Default
+	{
+		Health 20;
+		Radius 10;
+		Height 42;
+		PainChance 256;
+		+SOLID
+		+SHOOTABLE
+		+NOBLOOD
+		+ACTIVATEMCROSS
+		+DONTGIB
+		+NOICEDEATH
+		+OLDRADIUSDMG
+		+NOBLOODDECALS
+		+ZDOOMTRANS
+		PainSound "Barrel/Pain";
+		DeathSound "world/barrelx";
+		DamageType "Barrelexplosion";
+		Obituary "$OB_BARREL";
+	}
+	States
+	{
+	Spawn:
+		BREL AB 6;
+		Loop;
+	Pain:
+		BREL A 3;
+		BREL B 3 A_Pain;
+		Goto spawn;
+	Death:
+		BRLX A 5 BRIGHT;
+		BRLX B 5 BRIGHT A_Scream;
+		BRLX C 5 BRIGHT;
+		BRLX D 8 BRIGHT
+		{
+			A_Explode();
+			A_SetRenderStyle(1.0, STYLE_Add);
+		}
+		BRLX E 7 BRIGHT A_FadeOut(0.247059); 
+		BRLX F 6 BRIGHT;
+		TNT1 A 1050 BRIGHT A_BarrelDestroy;
+		TNT1 A 5 A_Respawn;
+		Wait;
+	}
+}
+
+Class MM_Blankactor : Actor
+{
+	Default
+	{
+		-NOBLOCKMAP
+	}
+	States
+	{
+		Spawn:
+		Stop;
+	}
+}

@@ -1,0 +1,127 @@
+
+class MM_Mutantimp : MM_Imp
+{
+	Default
+	{
+		SeeSound "Superimp/Sight";
+		PainSound "Superimp/Pain";
+		DeathSound "Superimp/death";
+		ActiveSound "Superimp/Active";
+		Obituary "%o was scorched by a super imp.";
+		HitObituary "%o got scratched by a super imp.";
+		Tag "Super imp";
+	}
+	
+		void A_MutantImpAtk()
+	{
+		A_FaceTarget();
+		A_CustomComboAttack("MM_Fastimpball", 32, 3 * random(1, 8), "imp/melee");
+	}
+	
+	States
+	{
+	Spawn:
+		MTRO AB 10 A_Look;
+		Loop;
+	See:
+		MTRO AABBCCDD 3 A_Chase;
+		Loop;
+	Melee:
+	Missile:
+		MTRO EF 8 A_FaceTarget;
+		MTRO G 6 A_MutantImpAtk();
+		MTRO VW 8 A_FaceTarget;
+		MTRO X 6 A_MutantImpAtk();
+		Goto See;
+	Pain:
+		MTRO H 2;
+		MTRO H 2 A_Pain;
+		Goto See;
+	Death:
+		MTRO I 8;
+		MTRO J 8 A_Scream;
+		MTRO K 6;
+		MTRO L 6 A_NoBlocking;
+		MTRO M -1;
+		Stop;
+	XDeath:
+		MTRO N 5;
+		MTRO O 5 A_XScream;
+		MTRO P 5;
+		MTRO Q 5 A_NoBlocking;
+		MTRO RST 5;
+		MTRO U -1;
+		Stop;
+	Raise:
+		MTRO L 8;
+		MTRO KJI 6;
+		Goto See;
+	}
+}
+
+class MM_Fastimpball : MM_DoomImpBall
+{
+	Default
+	{
+		//Scale 0.5;
+		SPEED 16; 
+		FastSpeed 20;
+		+ZDOOMTRANS
+	}
+	Void A_Trail()
+	{
+		A_SpawnItemEx("MM_Fasttrail", 0, 0, 0, 0, 0, 0, 0, 128);
+		A_SpawnItemEx("Ball1Trail2", 0, 0, 0, 0, 0, 0, 0, 128);
+	}
+	States
+	{
+	 Spawn:
+		FX12 A 0 nodelay A_JumpIf(CallACS("Projtoggle")==1, "AltSpawn");
+		FX12 AB 4 BRIGHT;
+		FX12 A 0 A_JumpIf(CallACS("Projtoggle")==1, "AltSpawn");
+		Loop;
+	Altspawn:
+		BL1M A 0 A_SetScale(0.5);
+		BL1M AA 1 BRIGHT A_SpawnItemEx("MM_Fasttrail", 0, 0, 0, 0, 0, 0, 0, 128);
+		BL1M A 1 BRIGHT A_Trail();
+		BL1M BB 1 BRIGHT A_SpawnItemEx("MM_Fasttrail", 0, 0, 0, 0, 0, 0, 0, 128);
+		BL1M B 1 BRIGHT A_Trail();
+		Goto spawn;
+	Death:
+		BL1M C 3 BRIGHT A_SetScale(1.0);
+		BL1M DEFG 3 BRIGHT;
+		Stop;
+	}
+}
+
+Class MM_Fasttrail : Redpuff
+{
+  Default
+  {
+	Scale 0.5;
+	+ZDOOMTRANS
+  }
+  States
+  {
+  Spawn:
+    TNT1 A 2 Bright;
+    B1MT ABCDEF 1 Bright;
+    Stop;
+  }
+}
+
+Class Ball1Trail2 : Ball1Trail
+{
+	Default
+	{
+		Scale 0.2;
+		//+ZDOOMTRANS
+	}
+	States
+	{
+	Spawn:
+		SMK1 J 4;
+		SMK1 ABCDEFGHI 4 Bright A_FadeTo (0.3, 0.05, false);
+		Stop;
+	}
+}

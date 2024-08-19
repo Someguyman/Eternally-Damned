@@ -1,0 +1,134 @@
+Class Demonkeycount : Inventory 
+{
+Default
+{
+	Inventory.MaxAmount 3;
+}
+}
+
+Class MM_Demonkey1 : CustomInventory 
+{
+Default
+{
+	+FLOATBOB
+	+DONTGIB;
+	FloatBobStrength 0.2;
+	Inventory.PickupMessage "";
+	+INVENTORY.UNDROPPABLE
+	Inventory.Amount 1;
+	Inventory.MaxAmount 1;
+	Inventory.InterHubAmount 1;
+	Inventory.Icon "DMKOA0";
+	Inventory.PickupSound "Pickup/Demonkey";
+}
+	States
+	{
+	Spawn:
+		DMKO A -1 Bright;
+		Loop;
+	Pickup:
+		TNT1 A 0 A_JumpIfInventory("MM_Orangekeyicon", 1, "Taken");
+		TNT1 A 0 A_GiveInventory("Demonkeycount", 1);
+		TNT1 A 0 A_GiveInventory("MM_Orangekeyicon", 1);
+		TNT1 A 0 A_Print("You have the feeling that it wasn't to be touched...");
+		Stop;
+	Taken:
+		TNT1 A 0;
+		Fail;
+	}
+}
+
+Class MM_Orangekeyicon : Inventory
+{
+	Default
+	{
+	  +INVENTORY.UNDROPPABLE;
+	}	
+}
+
+Class MM_Demonkey2 : CustomInventory 
+{
+Default
+{
+	+FLOATBOB
+	+DONTGIB;
+	FloatBobStrength 0.2;
+	Inventory.Amount 1;
+	Inventory.MaxAmount 1;
+	Inventory.PickupMessage "";
+	Inventory.InterHubAmount 1;
+	Inventory.PickupSound "Pickup/Demonkey";
+}
+	States
+	{
+	Spawn:
+		DMKP A -1 Bright;
+		Loop;
+	Pickup:
+		TNT1 A 0 A_JumpIfInventory("MM_Purplekeyicon", 1, "Taken");
+		TNT1 A 0 A_GiveInventory("Demonkeycount", 1);
+		TNT1 A 0 A_GiveInventory("MM_Purplekeyicon", 1);
+		TNT1 A 0 A_Print("Whatever it is, it doesn't belong in this world...");
+		Stop;
+	Taken:
+		TNT1 A 0;
+		Fail;
+	}
+}
+
+Class MM_Purplekeyicon : Inventory
+{
+	Default
+	{
+	  +INVENTORY.UNDROPPABLE;
+	}	
+}
+
+Class MM_Demonkey3 : CustomInventory 
+{
+Default
+{
+	+FLOATBOB
+	+DONTGIB;
+	FloatBobStrength 0.2;
+	Inventory.Amount 1;
+	Inventory.MaxAmount 1;
+	Inventory.PickupMessage "";
+	Inventory.InterHubAmount 1;
+	Inventory.PickupSound "Pickup/Demonkey";
+}
+	States
+	{
+	Spawn:
+		DMKC A -1 Bright;
+		Loop;
+	Pickup:
+		TNT1 A 0 A_JumpIfInventory("MM_Cyankeyicon", 1, "Taken");
+		TNT1 A 0 A_GiveInventory("Demonkeycount", 1);
+		TNT1 A 0 A_GiveInventory("MM_Cyankeyicon", 1);
+		TNT1 A 0 A_Print("It must do something...");
+		Stop;
+	Taken:
+		TNT1 A 0;
+		Fail;
+	}
+}
+
+Class MM_Cyankeyicon : Inventory
+{
+	Default
+	{
+	  +INVENTORY.UNDROPPABLE;
+	}	
+}
+
+class MM_Demonkeyspawner : custominventory
+{
+	Default
+	{
+	}
+	States
+	{
+	
+	}
+}

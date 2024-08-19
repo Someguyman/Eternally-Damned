@@ -1,0 +1,79 @@
+
+class MM_Tacticalssg : Slaughterweapon
+{
+	Default
+	{
+		Weapon.SelectionOrder 1300;
+		Weapon.AmmoUse 2;
+		Weapon.AmmoGive 10;
+		Weapon.AmmoType "Shell";
+		Weapon.UpSound "Weapons/Shotgunup";
+		Inventory.PickupSound "Weapons/SsgPickup";
+		Inventory.PickupMessage "You got a Tactical super shotgun! No reloading nessecary!";
+		Obituary "$OB_MPSHOTGUN";
+		Tag "$TAG_SHOTGUN";
+	}
+	
+		Action Void A_FireTSSG()
+		{
+			A_Startsound("Weapons/Tacticalssgfire", CHAN_WEAPON);
+			A_gunflash("Flash");
+			A_Firebullets(11.2, 7.1, 20, 5, "MM_ExtremeSSGPuff", FBF_USEAMMO);
+		}
+	States
+	{
+	Ready:
+		TSSG A 1 A_WeaponReady;
+		Loop;
+	Deselect:
+		TSSG A 0 A_Lower;
+		TSSG A 1 A_Lower;
+		Loop;
+	Select:
+		TSSG A 0 A_Raise;
+		TSSG A 1 A_Raise;
+		Loop;
+	Fire:
+		TSSG F 2 Bright { A_FireTSSG(); A_Light2(); }
+		TSSG F 2 Bright A_Light1;
+		TSSG A 5;
+		TSSG C 3;
+		TSSG D 6;
+		TSSG E 6;
+		TSSG D 4;
+		TSSG CB 2;
+		TSSG A 0 A_ReFire;
+		Goto Ready;
+	Flash:
+		TSSG I 2 Bright A_Light2;
+		TSSG J 2 Bright A_Light1;
+		Goto LightDone;
+	Spawn:
+		TSGP A -1;
+		Stop;
+	}
+}
+
+Class MM_Tacticalssgpickup : CustomInventory 
+{
+Default
+{
+	INVENTORY.RESTRICTEDTO "ET_Player_Slaughter";
+	VISIBLETOPLAYERCLASS "ET_Player_Slaughter";
+	//Inventory.PickupSound "Weapons/PistolPickup";
+	Inventory.PickupMessage "You got a Tactical super shotgun! No reloading nessecary!";
+}
+	States
+	{
+	Spawn:
+		TNT1 A 0 A_JumpIfInventory("MM_Tacticalssg", 1, "Taken");
+		TSGP A -1;
+		Stop;
+	Pickup:
+		TNT1 A 0 A_GiveInventory("MM_Tacticalssg", 1);
+		Stop;
+	Taken:
+		TNT1 A 0;
+		Fail;	
+	}
+}

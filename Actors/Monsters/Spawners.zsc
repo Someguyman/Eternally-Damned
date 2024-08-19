@@ -1,0 +1,194 @@
+
+Class MM_Monsterspawners : Actor
+{
+	Default
+	{
+		+Noblockmap
+		-COUNTKILL 
+		+THRUACTORS
+		+ISMONSTER
+		//+NOSECTOR
+		//+NOTIMEFREEZE
+	}
+	
+	void A_Arachnidspawn()
+	{
+		A_NoBlocking();
+		if (CallACS("Udoomcacoscript")==2)
+		{
+			A_SpawnItemEx("MM_Cacodemon",0,0,0,0,0,0,0,SXF_NOCHECKPOSITION | SXF_TRANSFERAMBUSHFLAG | SXF_TRANSFERPOINTERS | 288,0,tid);
+		}
+		else
+		{
+			if (CallACS("Doom2spawntoggle")==1)
+			{
+				if (CallACS("Udoomcacoscript")==6)
+				{
+					A_SpawnItemEx("MM_D1_Mancubus",0,0,0,0,0,0,0,SXF_NOCHECKPOSITION | SXF_TRANSFERAMBUSHFLAG | SXF_TRANSFERPOINTERS | 288,0,tid);
+				}
+				else
+				{
+					A_SpawnItemEx("MM_D1_Arachnotron",0,0,0,0,0,0,0,SXF_NOCHECKPOSITION | SXF_TRANSFERAMBUSHFLAG | SXF_TRANSFERPOINTERS | 288,0,tid);
+				}
+			}
+			else
+			{
+				A_SpawnItemEx("MM_D1_Mancubus",0,0,0,0,0,0,0,SXF_NOCHECKPOSITION | SXF_TRANSFERAMBUSHFLAG | SXF_TRANSFERPOINTERS | 288,0,tid);
+			}
+		}
+	}
+	
+	void A_Fatsospawn()
+	{
+		A_NoBlocking();
+		if (CallACS("Udoomcacoscript")==2 || CallACS("Udoomcacoscript")==7)
+		{
+			A_SpawnItemEx("MM_Cacodemon",0,0,0,0,0,0,0,SXF_NOCHECKPOSITION | SXF_TRANSFERAMBUSHFLAG | SXF_TRANSFERPOINTERS | 288,0,tid);
+		}
+		else
+		{
+			A_SpawnItemEx("MM_D1_Mancubus",0,0,0,0,0,0,0,SXF_NOCHECKPOSITION | SXF_TRANSFERAMBUSHFLAG | SXF_TRANSFERPOINTERS | 288,0,tid);
+		}
+	}
+	
+	void A_Painspawn()
+	{
+		A_NoBlocking();
+		if (CallACS("Udoomcacoscript")==2)
+		{
+			A_SpawnItemEx("MM_Cacodemon",0,0,0,0,0,0,0,SXF_NOCHECKPOSITION | SXF_TRANSFERAMBUSHFLAG | SXF_TRANSFERPOINTERS | 288,0,tid);
+		}
+		else
+		{
+			if (CallACS("Doom2spawntoggle")==1)
+			{
+				if (CallACS("Udoomcacoscript")==6)
+				{
+					A_SpawnItemEx("MM_Cacodemon",0,0,0,0,0,0,0,SXF_NOCHECKPOSITION | SXF_TRANSFERAMBUSHFLAG | SXF_TRANSFERPOINTERS | 288,0,tid);
+				}
+				else
+				{
+					A_SpawnItemEx("MM_D1_Painelemental",0,0,0,0,0,0,0,SXF_NOCHECKPOSITION | SXF_TRANSFERAMBUSHFLAG | SXF_TRANSFERPOINTERS | 288,0,tid);
+				}
+			}
+			else
+			{
+				A_SpawnItemEx("MM_Cacodemon",0,0,0,0,0,0,0,SXF_NOCHECKPOSITION | SXF_TRANSFERAMBUSHFLAG | SXF_TRANSFERPOINTERS | 288,0,tid);
+			}
+		}
+	}
+	
+	void A_Knightspawn()
+	{
+		A_NoBlocking();
+		if (CallACS("Gamespawntoggle")==1)
+		{
+			If (CallACS("Knightskintoggle")==1)
+			{
+				A_SpawnItemEx("MM_D1_Classic_Hellknight",0,0,0,0,0,0,0,SXF_NOCHECKPOSITION | SXF_TRANSFERAMBUSHFLAG | SXF_TRANSFERPOINTERS | 288,0,tid);
+			}
+			Else
+			{
+				A_SpawnItemEx("MM_D1_Hellknight",0,0,0,0,0,0,0,SXF_NOCHECKPOSITION | SXF_TRANSFERAMBUSHFLAG | SXF_TRANSFERPOINTERS | 288,0,tid);
+			}
+		}
+		else
+		{
+			If (CallACS("Knightskintoggle")==1)
+			{
+				If (CallACS("Gamespawntoggle")==12.0)
+				{
+					A_SpawnItemEx("MM_KDIKDIZD_Hellknight",0,0,0,0,0,0,0,SXF_NOCHECKPOSITION | SXF_TRANSFERAMBUSHFLAG | SXF_TRANSFERPOINTERS | 288,0,tid);
+				}
+				Else
+				{
+					A_SpawnItemEx("MM_Classic_Hellknight",0,0,0,0,0,0,0,SXF_NOCHECKPOSITION | SXF_TRANSFERAMBUSHFLAG | SXF_TRANSFERPOINTERS | 288,0,tid);
+				}
+				
+				}
+			Else
+			{
+				A_SpawnItemEx("MM_Hellknight",0,0,0,0,0,0,0,SXF_NOCHECKPOSITION | SXF_TRANSFERAMBUSHFLAG | SXF_TRANSFERPOINTERS | 288,0,tid);
+			}
+		}
+	}
+	
+	void A_Knightspawn2()
+	{
+		A_NoBlocking();
+		If (CallACS("Knightskintoggle")==1)
+		{
+			A_SpawnItemEx("MM_D1_Classic_Hellknight2",0,0,0,0,0,0,0,SXF_NOCHECKPOSITION | SXF_TRANSFERAMBUSHFLAG | SXF_TRANSFERPOINTERS | 288,0,tid);
+		}
+		Else
+		{
+			A_SpawnItemEx("MM_D1_Hellknight2",0,0,0,0,0,0,0,SXF_NOCHECKPOSITION | SXF_TRANSFERAMBUSHFLAG | SXF_TRANSFERPOINTERS | 288,0,tid);
+		}
+	}
+	
+		void A_Spiderspawn()
+	{
+		A_NoBlocking();
+		if (CallACS("Udoombossscript")==3 || CallACS("Udoombossscript")==4)
+		{
+			A_SpawnItemEx("MM_Boss_Spidermastermind",0,0,0,0,0,0,0,SXF_NOCHECKPOSITION | SXF_TRANSFERAMBUSHFLAG | SXF_TRANSFERPOINTERS | 288,0,tid);
+		}
+		else if (CallACS("Gamespawntoggle")==4)
+		{
+			A_SpawnItemEx("MM_Boss_MotherDemon",0,0,0,0,0,0,0,SXF_NOCHECKPOSITION | SXF_TRANSFERAMBUSHFLAG | SXF_TRANSFERPOINTERS | 288,0,tid);
+		}
+		else if (CallACS("Gamespawntoggle")==6)
+		{
+			A_SpawnItemEx("MM_Cybruiser",0,0,0,0,0,0,0,SXF_NOCHECKPOSITION | SXF_TRANSFERAMBUSHFLAG | SXF_TRANSFERPOINTERS | 288,0,tid);
+		}
+		else if (CallACS("Gamespawntoggle")==12.0)
+		{
+			A_SpawnItemEx("MM_KDIKDIZD_Resurrector",0,0,0,0,0,0,0,SXF_NOCHECKPOSITION | SXF_TRANSFERAMBUSHFLAG | SXF_TRANSFERPOINTERS | 288,0,tid);
+		}
+		else
+		{
+			A_SpawnItemEx("MM_SpiderMasterMind",0,0,0,0,0,0,0,SXF_NOCHECKPOSITION | SXF_TRANSFERAMBUSHFLAG | SXF_TRANSFERPOINTERS | 288,0,tid);
+		}
+	}
+	
+	States
+	{
+	Spawn:
+		TNT1 A 0;
+		Goto spawncheck;
+	Spawncheck:
+		TNT1 A 0;
+		TNT1 A 0 A_JumpIf(CallACS("Gamespawntoggle")==0.0, "Normalspawn");
+		TNT1 A 0 A_JumpIf(CallACS("Gamespawntoggle")==1.0, "Ultimatedoomspawn");
+		TNT1 A 0 A_JumpIf(CallACS("Gamespawntoggle")==2.0, "Goingdownspawn");
+		TNT1 A 0 A_JumpIf(CallACS("Gamespawntoggle")==3.0, "DoomZerospawn");
+		TNT1 A 0 A_JumpIf(CallACS("Gamespawntoggle")==4.0, "D64D2spawner");
+		TNT1 A 0 A_JumpIf(CallACS("Gamespawntoggle")==5.0, "Eviternityspawn");
+		TNT1 A 0 A_JumpIf(CallACS("Gamespawntoggle")==6.0, "Valiantspawn");
+		TNT1 A 0 A_JumpIf(CallACS("Gamespawntoggle")==7.0, "Scythe2spawn");
+		TNT1 A 0 A_JumpIf(CallACS("Gamespawntoggle")==8.0, "AAilenspawn");
+		TNT1 A 0 A_JumpIf(CallACS("Gamespawntoggle")==9.0, "TNTRevoSpawn");
+		TNT1 A 0 A_JumpIf(CallACS("Gamespawntoggle")==10.0, "JenesisSpawner");
+		TNT1 A 0 A_JumpIf(CallACS("Gamespawntoggle")==11.0, "Epic2spawner");
+		TNT1 A 0 A_JumpIf(CallACS("Gamespawntoggle")==12.0, "KDIKDIZDSpawn");
+		TNT1 A 0 A_JumpIf(CallACS("Gamespawntoggle")==13.0, "Alternatespawn");
+		loop;
+	Ultimatedoomspawn:
+	Goingdownspawn:
+	DoomZerospawn:
+	D64D2spawner:
+	Eviternityspawn:
+	Valiantspawn:
+	Scythe2spawn:
+	AAilenspawn:
+	TNTRevoSpawn:
+	JenesisSpawner:
+	Epic2spawner:
+	KDIKDIZDSpawn:
+	Alternatespawn:
+	Normalspawn:
+		TNT1 A 0 A_NoBlocking();
+		TNT1 A 0 A_SpawnItemEx("MM_Impgantic",0,0,0,0,0,0,0,SXF_NOCHECKPOSITION | SXF_TRANSFERAMBUSHFLAG | SXF_TRANSFERPOINTERS | 288,0,tid);
+		Stop;
+	}
+}

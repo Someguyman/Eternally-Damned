@@ -1,0 +1,57 @@
+brightmap sprite PSTFA0
+{
+	map "brightmaps/Weapons/pisfa0.png"
+	disablefullbright
+}
+
+brightmap sprite RKLFA0
+{
+	map "brightmaps/Weapons/misfA0.png"
+	disablefullbright
+}
+
+brightmap sprite RKLFB0
+{
+	map "brightmaps/Weapons/misfB0.png"
+	disablefullbright
+}
+
+brightmap sprite RKLFC0
+{
+	map "brightmaps/Weapons/misfC0.png"
+	disablefullbright
+}
+
+brightmap sprite RKLFD0
+{
+	disablefullbright
+}
+
+brightmap sprite PLGNA0
+{
+	disablefullbright
+}
+
+brightmap sprite PLGND0
+{
+	map "brightmaps/Weapons/PLGND0.png"
+	disablefullbright
+}
+
+brightmap sprite PLGNE0
+{
+	map "brightmaps/Weapons/PLGNE0.png"
+	disablefullbright
+}
+
+brightmap sprite PGNGA0
+{
+	map "brightmaps/Weapons/PLGND0.png"
+	disablefullbright
+}
+
+brightmap sprite PGNGB0
+{
+	map "brightmaps/Weapons/PLGNE0.png"
+	disablefullbright
+}

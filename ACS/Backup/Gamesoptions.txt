@@ -1,0 +1,53 @@
+#library "Gamespawns"
+#include "zcommon.acs"
+
+script "Killelecballs" (Void)
+{
+		Thing_Destroy(0);
+}
+
+script "Changeelecid" (void)
+{
+		Thing_ChangeTID(0, 36);
+}
+
+script "Gamespawntoggle" (void)
+{
+    SetResultValue(GetCVar("Megawadspawns"));
+}
+
+script "Doom2spawntoggle" (void)
+{
+    SetResultValue(GetCVar("D2spawns"));
+}
+
+script "Ssgmapscript" (void)
+{
+	str mapName = StrParam(n:PRINTNAME_LEVEL);
+	str episode = StrMid(mapName, 1, 1);
+	str mission = StrMid(mapName, 3, 1);
+	if (StrICmp(episode, "4") == 0 || StrICmp(episode, "5") == 0 || StrICmp(episode, "6") == 0)
+	{
+		if (StrICmp(mapName, "E4M1") == 0 || StrICmp(mapName, "E4M2") == 0 || StrICmp(mapName, "E5M1") == 0 || StrICmp(mapName, "E5M2") == 0 || StrICmp(mapName, "E6M1") == 0 || StrICmp(mapName, "E6M2") == 0)
+		{
+			SetResultValue(1);
+			terminate;
+		}
+		SetResultValue(2);
+		terminate;
+		
+	}
+
+	SetResultValue(1);
+	terminate;
+}
+
+script "Bonusspawntoggle" (void)
+{
+    SetResultValue(GetCVar("Bspawns"));
+}
+
+script "Multiplayerspawns" (void)
+{
+    SetResultValue(GetCVar("Mppawns"));
+}

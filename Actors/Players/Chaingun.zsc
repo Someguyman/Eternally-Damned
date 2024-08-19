@@ -1,0 +1,176 @@
+
+class MM_Chaingun : Originalweapon Replaces Chaingun
+{
+	Default
+	{
+		Weapon.SelectionOrder 700;
+		Weapon.AmmoUse 2;
+		Weapon.AmmoGive 0;
+		Weapon.AmmoType "Clip";
+		//Weapon.UpSound "Weapons/Chaingunup";
+		Inventory.PickupSound "Weapons/Chaingunpickup";
+		Inventory.PickupMessage "\cgYou got the chaingun!";
+		Obituary "$OB_MPCHAINGUN";
+		Tag "$TAG_CHAINGUN";
+	}
+	
+		Action Void A_FireGGun()
+		{
+			A_GunFlash("Flash");
+			A_Startsound("weapons/chngun", CHAN_AUTO);
+			if (CountInv("PowerQuadDamage") == 1)
+			{
+				A_FireBullets(5.6, 0, 2, 5, "MM_ExtremeSSGPuff", FBF_USEAMMO);
+			}
+			else 
+			{
+				A_FireBullets(5.6, 0, 2, 5, "MM_TameBulletPuff", FBF_USEAMMO);
+			}
+		}
+		
+		Action Void A_FireSGGun()
+		{
+			A_GunFlash("SuperCGFlash");
+			A_Startsound("Weapons/suprchngun", CHAN_WEAPON);
+			A_FireBullets(5.6, 0, 2, 5, "MM_ExtremeSSGPuff", FBF_USEAMMO);
+		}
+		
+	States
+	{
+	Ready:
+		TNT1 A 0 A_JumpIf(CallACS("Gamespawntoggle")==6, "SuperCGReady");
+		CHNG A 1 A_WeaponReady;
+		Loop;
+	Deselect:
+		TNT1 A 0 A_JumpIf(CallACS("Gamespawntoggle")==6, "SuperCGDeselect");
+		CHNG A 1 A_Lower;
+		Loop;
+	Select:
+		TNT1 A 0 A_JumpIf(CallACS("Gamespawntoggle")==6, "SuperCGselect");
+		CHNG A 0 A_Startsound("Weapons/Chaingunup", CHAN_WEAPON);
+	Selectloop:
+		CHNG A 1 A_Raise;
+		Loop;
+	Fire:
+		TNT1 A 0 A_JumpIf(CallACS("Gamespawntoggle")==6, "SuperCGFire");
+		CHNG A 2 A_FireGGun();
+		CHNG B 2 A_Light0;
+		CHNG B 0 A_ReFire("Fire");
+	Spindown:
+		CHNG A 2 A_WeaponReady;
+		CHNG BA 4 A_WeaponReady;
+		CHNG B 0 A_Startsound("weapons/chngun2", CHAN_WEAPON);
+		CHNG B 6 A_WeaponReady;
+		Goto Ready;
+	Flash:
+		CHNF A 2 Bright A_Light1;
+		CHNF B 1 Bright A_Light0;
+		Goto LightDone;
+	Spawn:
+		TNT1 A 0 A_JumpIf(CallACS("Gamespawntoggle")==6, "SuperCGSpawn");
+		CHNP A 1;
+		Loop;
+	
+	SuperCGSpawn:
+		SCGP A 1;
+		Goto spawn;
+	SuperCGReady:
+		SCHG A 1 A_WeaponReady;
+		Loop;
+	SuperCGDeselect:
+		SCHG A 1 A_Lower;
+		Loop;
+	SuperCGSelect:
+		SCHG A 0 A_Startsound("Weapons/SuperCup", CHAN_WEAPON);
+	SuperCGSelectloop:
+		SCHG A 1 A_Raise;
+		Loop;
+	SuperCGFire:
+		SCHG B 0 A_Stopsound(CHAN_AUTO);
+	SuperCGContinueFire:
+		SCHG A 1 A_FireSGGun();
+		SCHG B 1 A_Light0;
+		SCHG B 0 A_ReFire("ContinueFire");
+	SuperCGSpindown:
+		SCHG A 0 A_Startsound("Weapons/suprchngun2", CHAN_AUTO);
+		SCHG AB 3 A_Refire;
+		SCHG AB 6 A_Refire;
+		Goto SuperCGready;
+	SuperCGFlash:
+		SCGF A 1 Bright A_Light1;
+		SCGF B 1 Bright A_Light0;
+		Goto LightDone;
+	}
+}
+
+Class MM_Chaingunpickup : CustomInventory 
+{
+Default
+{
+	INVENTORY.RESTRICTEDTO "ET_Player";
+	VISIBLETOPLAYERCLASS "ET_Player";
+	Inventory.PickupSound "";
+	Inventory.PickupMessage "";
+}
+	
+	States
+	{
+	Spawn:
+		TNT1 A 0;
+		TNT1 A 0 A_JumpIf(CallACS("Gamespawntoggle")==6, "SuperCGSpawn");
+		CHNP A -1;
+		Loop;
+	SupercgSpawn:
+		SCGP A -1;
+		Loop;
+	Pickup:
+		TNT1 A 0 A_GiveInventory("MM_Chaingun", 1);
+		TNT1 A 0 A_GiveInventory("Clip", 30);
+		Tnt1 A 0
+		{
+			if (CallACS("Gamespawntoggle")==6)
+			{
+				A_Log("\cgYou got the \cfSuper \cgchaingun! Tear through \cafleash!");
+				A_Startsound("Weapons/SuperCPickup", CHAN_BODY);
+			}
+			else
+			{
+				A_Log("\cgYou got the chaingun!");
+				A_Startsound("Weapons/Chaingunpickup", CHAN_BODY);
+			}
+		}
+		Stop;
+	Taken:
+		TNT1 A 0;
+		Fail;	
+	}
+}
+
+Class MM_Chaingunpickup2 : MM_Chaingunpickup
+{
+	States
+	{
+	Spawn:
+		TNT1 A 0 A_JumpIf(CallACS("Gamespawntoggle")==6, "SuperCGSpawn");
+		TNT1 A 0 A_JumpIfInventory("MM_Chaingun", 1, "Taken");
+		CHNP A 1;
+		Loop;
+	Pickup:
+		TNT1 A 0 A_GiveInventory("MM_Chaingun", 1);
+		TNT1 A 0 A_GiveInventory("Clip", 15);
+		Tnt1 A 0
+		{
+		if (CallACS("Gamespawntoggle")==6)
+		{
+			A_Log("\cgYou got the \cfSuper \cgchaingun! Tear through \cafleash!");
+			A_Startsound("Weapons/SuperCPickup", CHAN_BODY);
+		}
+		else
+		{
+			A_Log("\cgYou got the chaingun!");
+			A_Startsound("Weapons/Chaingunpickup", CHAN_BODY);
+		}
+		}
+		Stop;
+	}
+}

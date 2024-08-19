@@ -1,0 +1,75 @@
+
+class MM_Rifle : Alternateweapon
+{
+	Default
+	{
+		Weapon.SelectionOrder 1900;
+		Weapon.AmmoUse 1;
+		Weapon.AmmoGive 30;
+		Weapon.AmmoType "Clip";
+		+WEAPON.WIMPY_WEAPON
+		Attacksound "weapons/pistol";
+		Weapon.UpSound "Weapons/SuperPup";
+		Inventory.PickupSound "Weapons/SuperPPickup";
+		+WEAPON.NOAUTOFIRE
+		Inventory.Pickupmessage "\cjYou got the rifle";
+	}
+	
+		Action Void A_FireGlock()
+		{
+			A_gunflash("Flash");
+			A_Firebullets(4.6, 0, 1, 7, "MM_TameBulletPuff", FBF_USEAMMO||FBF_NORANDOM);
+		}
+		
+	States
+	{
+	Ready:
+		RIF2 A 1 A_WeaponReady;
+		Loop;
+	Deselect:
+		RIF2 A 1 A_Lower;
+		Loop;
+	Select:
+		RIF2 A 1 A_Raise;
+		Loop;
+	Fire:
+		RIF2 B 2 Bright A_FireGlock();
+		RIF2 C 1;
+		RIF2 B 2 Bright A_FireGlock();
+		RIF2 C 3;
+		RIF2 D 4;
+		RIF2 A 4;
+		RIF2 A 0 A_Refire;
+		Goto Ready;
+	Flash:
+		//PSTF A 1 Bright A_Light1;
+		Goto LightDone;
+	Spawn:
+		RIFL A -1;
+		Stop;
+	}
+}
+
+Class MM_Riflepickup : CustomInventory 
+{
+Default
+{
+	INVENTORY.RESTRICTEDTO "ET_Player_Alt";
+	VISIBLETOPLAYERCLASS "ET_Player_Alt";
+	Inventory.PickupSound "Weapons/PistolPickup";
+	Inventory.Pickupmessage "\cjYou got the rifle";
+}
+	States
+	{
+	Spawn:
+		TNT1 A 0 A_JumpIfInventory("MM_Rifle", 1, "Taken");
+		RIFL A -1;
+		Stop;
+	Pickup:
+		TNT1 A 0 A_GiveInventory("MM_Rifle", 1);
+		Stop;
+	Taken:
+		TNT1 A 0;
+		Fail;	
+	}
+}

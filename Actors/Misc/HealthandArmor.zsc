@@ -1,0 +1,133 @@
+
+class MM_HealthBonus : HealthBonus replaces HealthBonus 
+{
+	Default
+	{
+		Inventory.PickupSound "Health/Bonusup";
+		Inventory.Amount 2;
+		Health.LowMessage 25, "\ccPicked up a health vile that will do for now.";
+		Inventory.PickupMessage "\ccPicked up a health vile.";
+	}
+	States
+	{
+	Spawn:
+		BON1 ABCDCB 6;
+		Loop;
+	}
+}
+
+class MM_MegaHealthBonus : HealthBonus
+{
+	Default
+	{
+		Inventory.Amount 8;
+		Inventory.PickupSound "Health/Bonusup";
+		Health.LowMessage 25, "\ccPicked up a health bottle that will do for now.";
+		Inventory.PickupMessage "\ccPicked up a health bottle.";
+		Scale 0.9;
+	}
+	States
+	{
+	Spawn:
+		BON3 ABCDCB 6 Bright;
+		Loop;
+	}
+}
+
+class MM_Stimpack : Health Replaces Stimpack
+{
+	Default
+	{
+		Inventory.Amount 15;
+		Inventory.PickupSound "Health/Pickup2";
+		Health.LowMessage 25, "\ccPicked up a stimpack that you needed.";
+		Inventory.PickupMessage "\ccPicked up a stimpack.";
+	}
+	States
+	{
+	Spawn:
+		//STIM A 0 NODELAY; //A_JumpIf(CallACS("")==1, "OriginalSpawn");
+		STIM A -1;
+		Stop;
+	Spawn2:
+		STM2 A -1;
+		Stop;
+	Spawn3:
+		STM3 A -1;
+		Stop;
+	}
+}
+
+class MM_Medikit : Medikit Replaces Medikit 
+{
+	Default
+	{
+		Inventory.Amount 30;
+		Health.LowMessage 25, "\ccPicked up a medikit that you \cgREALLY \ccneed!";
+		Inventory.PickupMessage "\ccPicked up a medikit.";
+		Inventory.PickupSound "Health/Pickup";
+	}
+	States
+	{
+	Spawn:
+		MEDI A -1;
+		Stop;
+	}
+}
+
+class MM_ArmorBonus : ArmorBonus replaces ArmorBonus
+{
+	Default
+	{
+		Inventory.Icon "ARM1A0";
+		Armor.Saveamount 2;
+		Inventory.Pickupmessage "\ccPicked up an armor shard.";
+		Inventory.PickupSound "Armor/Bonusup";
+	}
+	States
+	{
+	Spawn:
+		BON2 ABCDCB 6;
+		loop;
+	}
+}
+
+class MM_MegaArmorBonus : ArmorBonus
+{
+	Default
+	{
+		Armor.SavePercent 33.335;
+		Inventory.Icon "ARM1A0";
+		Armor.Saveamount 50;
+		Inventory.Pickupmessage "\ccPicked up an armor fragment.";
+		Inventory.PickupSound "Armor/Bonusup";
+		Scale 0.9;
+	}
+	States
+	{
+	Spawn:
+		BON4 ABCDCB 6 Bright;
+		loop;
+	}
+}
+
+class MM_GreenArmor : GreenArmor Replaces Greenarmor
+{
+	Default
+	{
+		Inventory.Icon "ARM1A0";
+		Armor.SaveAmount 100;
+		Inventory.Pickupmessage "\ccPicked up the \cdcombat armor\cc.";
+		Inventory.PickupSound "Armor/Pickup2";
+	}
+}
+
+class MM_BlueArmor : BlueArmor Replaces BlueArmor
+{
+	Default
+	{
+		Inventory.Icon "ARM2A0";
+		Inventory.Pickupmessage "\ccPicked up the \chMEGA armor\cc!";
+		Inventory.PickupSound "Armor/Pickup";
+	}
+}

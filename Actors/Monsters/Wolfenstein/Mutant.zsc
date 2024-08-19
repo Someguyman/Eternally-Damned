@@ -1,0 +1,71 @@
+
+class MM_Mutant : MM_WolfensteinSS
+{
+	Default
+	{
+		Health 65;
+		Speed 6;
+		PainChance 200;
+		Obituary "%o was killed by a Nazi Mutant.";
+		BloodColor "Purple";
+		AttackSound "";
+		SeeSound "Mutant/Sight";
+		ActiveSound "Mutant/Active";
+		PainSound "Mutant/Pain";
+		DeathSound "Mutant/Death";
+		scale 1.2;
+		+FLOORCLIP
+		+NOINFIGHTSPECIES
+		Tag "Nazi Mutant";
+	}
+	States
+	{
+	Spawn:
+		MTNT A 10 A_Look;
+		Loop;
+	See:
+		MTNT BBCCDDEE 3 A_Chase;
+		Loop;
+	Melee:
+		Goto missile;
+	Missile:
+		MTNT F 10 A_FaceTarget;
+		MTNT G 10 BRIGHT
+		{
+		A_CustomBulletAttack(0.2, 0, 1, random(1,5)*3, "BulletPuff", 0, CBAF_NORANDOM);
+		A_Startsound("chainguy/attack");
+		}
+		MTNT H 5 A_FaceTarget;
+		MTNT I 10 BRIGHT
+		{
+		A_CustomBulletAttack(0.2, 0, 1, random(1,5)*3, "BulletPuff", 0, CBAF_NORANDOM);
+		A_Startsound("chainguy/attack");
+		}
+		MTNT H 5 A_FaceTarget;
+		Goto See;
+	Pain:
+		MTNT J 6 A_Pain;
+		Goto See;
+	Death.Ice:
+		MTNT J 5 A_GenericFreezeDeath;
+		TNT1 A 1 A_Freezedeathchunks;
+		wait;
+	Death:
+		MTNT J 2;
+		MTNT J 1 A_ScreamAndUnblock;
+		MTNT KLMNO 4;
+		MTNT P -1;
+		stop;
+	XDeath:
+		MTNT Q 5 A_SetScale(1.0);
+		MTNT R 5 A_XScream;
+		MTNT S 5 A_NoBlocking;
+		MTNT TUVWX 5;
+		MTNT Y -1;
+		Stop;
+	Raise:
+		MTNT O 5 A_SetScale(1.2);
+		MTNT NMLKJ 5;
+		Goto See ;
+	}
+}

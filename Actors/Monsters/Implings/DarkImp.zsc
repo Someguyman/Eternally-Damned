@@ -1,0 +1,82 @@
+
+class MM_DarkImp : Actor
+{
+	Default
+	{
+		Health 160;
+		Radius 20;
+		Height 56;
+		Mass 200;
+		Speed 7;
+		PainChance 180;
+		Monster;
+		+FLOORCLIP
+		SeeSound "darkimp/sight";
+		PainSound "Superimp/Pain";
+		DeathSound "darkimp/death";
+		ActiveSound "darkimp/active";
+		Obituary "%o was cursed by a dark imp.";
+		HitObituary "%o was touched by a dark imp.";
+		Tag "Dark imp";
+	}
+	States
+	{
+	Spawn:
+		DRKV AB 10 A_Look;
+		Loop;
+	See:
+		DRKV AABBCCDD 3 A_Chase;
+		Loop;
+	Melee:
+		DRKV EF 6 Bright A_FaceTarget;
+		DRKV G 6 Bright A_CustomMeleeAttack(random(1, 10) * 4, "Imp/melee");
+		Goto see;
+	Missile:
+		DRKV EF 6 Bright A_FaceTarget;
+		DRKV G 6 Bright
+		{
+			A_SpawnProjectile("MM_Phantomball",32,0,0,0);
+			A_FaceTarget();
+		}
+		DRKV EF 6 Bright A_CPosRefire;
+		DRKV G 6 Bright
+		{
+			A_SpawnProjectile("MM_Phantomball",32,0,0,0);
+			A_FaceTarget();
+		}
+		DRKV EF 6 Bright A_CPosRefire;
+		DRKV G 6 Bright
+		{
+			A_SpawnProjectile("MM_Phantomball",32,0,0,0);
+			A_FaceTarget();
+		}
+		Goto See;
+	Death.SSGGIBING:
+		TNT1 A 0 A_Jumpifcloser(128, "XDeath");
+		TNT1 A 0 A_Jump(256, "Death");
+		Goto Death;
+	Pain:
+		DRKV H 2;
+		DRKV H 2 A_Pain;
+		Goto See;
+	Death:
+		DRKV I 8;
+		DRKV J 8 A_Scream;
+		DRKV K 6;
+		DRKV L 6 A_NoBlocking;
+		DRKV M -1;
+		Stop;
+	XDeath:
+		DRKV N 5;
+		DRKV O 5 A_XScream;
+		DRKV P 5;
+		DRKV Q 5 A_NoBlocking;
+		DRKV RST 5;
+		DRKV U -1;
+		Stop;
+	Raise:
+		DRKV ML 8;
+		DRKV KJI 6;
+		Goto See;
+	}
+}

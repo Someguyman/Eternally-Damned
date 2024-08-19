@@ -1,0 +1,92 @@
+Class LostSoulSpawned : Inventory 
+{ 
+Default
+{
+Inventory.MaxAmount 1;
+}
+}
+
+class MM_ForgottenSoul : MM_LostSoul
+{
+	Default
+	{
+		Health 60;
+		Speed 10;
+		DamageFunction 18;
+		Mass 600;
+		PainChance 200;
+		+MISSILEMORE
+		+MISSILEEVENMORE
+		+NOICEDEATH
+		-COUNTKILL
+		+NODAMAGETHRUST
+		DamageFactor "LostSoulExplosion", 0;
+		AttackSound "Forgotten/Melee";
+		DeathSound "Forgotten/death";
+		Alpha 0.752941;
+		RenderStyle "Translucent";
+		Tag "Forgotten one";
+	}
+		Void A_ForgSoulDeath()
+		{
+			A_Startsound("Clockwork/Expolsion");
+			A_Explode(128, 128, XF_NOTMISSILE | XF_EXPLICITDAMAGETYPE, 0, 0, 0, 0, "BulletPuff", "LostSoulExplosion");
+		}
+		
+		override void PostBeginPlay()
+		{
+			A_Startsound("Torch/crackle", CHAN_AUTO, CHANF_LOOPING, 1, ATTN_NORM);
+		}
+		
+	States
+	{
+	Spawn:
+		FRGO A 0 BRIGHT A_GiveInventory("LostSoulSpawned", 1);
+		FRGO ABAB 10 BRIGHT A_Look;
+		Loop;
+	See:
+		FRGO A 0 BRIGHT A_GiveInventory("LostSoulSpawned", 1);
+		FRGO ABAB 6 BRIGHT A_Chase;
+		Loop;
+	Missile:
+		FRGO C 6 BRIGHT A_FaceTarget;
+		FRGO D 4 BRIGHT A_SkullAttack(30);
+		FRGO CCCCDDDD 1 BRIGHT A_Soultrail();
+		Goto Missile+2;
+	Pain:
+		FRGO A 0 BRIGHT A_GiveInventory("LostSoulSpawned", 1);
+		FRGO E 3 BRIGHT;
+		FRGO E 3 BRIGHT A_Pain;
+		Goto See;
+	Death:
+		FRGO F 0 BRIGHT A_Stopsound(CHAN_AUTO);
+		FRGO F 0 BRIGHT {bFLOATBOB = False;}
+		FRGO F 0 BRIGHT A_JumpIf (health < -6000, "Deathexplode");
+		FRGO F 0 BRIGHT A_JumpIfInventory("LostSoulSpawned", 1, 1);
+		Goto DeathExplode;
+		FRGO F 6 BRIGHT;
+		FRGO G 6 BRIGHT A_Scream;
+		FRGO H 6 BRIGHT;
+		FRGO I 6 BRIGHT
+			{
+				A_NoBlocking();
+				A_SetRenderStyle(1.0, STYLE_Add);
+			}
+		FRGO JK 6 Bright A_FadeOut(0.247059); 
+		Stop;
+	DeathExplode:
+		FRGO G 6 BRIGHT
+		{
+		bFLOATBOB = False;
+		A_ForgSoulDeath();
+		}
+		FRGO H 6 BRIGHT;
+		FRGO I 6 BRIGHT
+			{
+				A_NoBlocking();
+				A_SetRenderStyle(1.0, STYLE_Add);
+			}
+		FRGO JK 6 A_FadeOut(0.247059); 
+		Stop;
+	}
+}

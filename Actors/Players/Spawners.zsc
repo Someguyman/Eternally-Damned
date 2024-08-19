@@ -1,0 +1,578 @@
+
+Class Originalweapon : DoomWeapon
+{
+	Default
+	{
+		INVENTORY.RESTRICTEDTO "ET_Player";
+		VISIBLETOPLAYERCLASS "ET_Player";
+	}
+}
+
+Class Alternateweapon : DoomWeapon
+{
+	Default
+	{
+		INVENTORY.RESTRICTEDTO "ET_Player_Alt";
+		VISIBLETOPLAYERCLASS "ET_Player_Alt";
+	}
+}
+
+Class Slaughterweapon : DoomWeapon
+{
+	Default
+	{
+		INVENTORY.RESTRICTEDTO "ET_Player_Slaughter";
+		VISIBLETOPLAYERCLASS "ET_Player_Slaughter";
+	}
+}
+
+Class Pacifistweapon : DoomWeapon
+{
+	Default
+	{
+		INVENTORY.RESTRICTEDTO "ET_Player_Pacifist";
+		VISIBLETOPLAYERCLASS "ET_Player_Pacifist";
+	}
+}
+
+Class Tysonweapon : DoomWeapon
+{
+	Default
+	{
+		INVENTORY.RESTRICTEDTO "ET_Player_Tyson";
+		VISIBLETOPLAYERCLASS "ET_Player_Tyson";
+	}
+}
+
+Class Wolfenteinweapon : DoomWeapon
+{
+	Default
+	{
+		INVENTORY.RESTRICTEDTO "ET_Player_Wolf";
+		VISIBLETOPLAYERCLASS "ET_Player_Wolf";
+		Inventory.PickupSound "Wold3dWeapon/pickup";
+		weapon.ammotype1 "Wolf3dMag";
+		weapon.ammouse1 1;
+		weapon.ammogive1 6;
+		//weapon.yadjust 19;
+		//+WEAPON.NOGRIN
+		+WEAPON.DONTBOB
+	}
+}
+
+Class TwoWeaponSpawner : Inventory     
+{
+    protected Class<Inventory> finalPickup;
+    
+    //fill this array with item class names: Specifically the BFG first, then the Unmaker second
+    static const Class<Inventory> Big_Weapons[] =
+    {
+			'MM_BFG9000',
+			'MM_Unmaker'
+    };
+	
+	 static const Class<Inventory> Demon_keys[] =
+    {
+        'MM_Orangekeyicon',
+        'MM_Purplekeyicon',
+		'MM_Cyankeyicon'
+    };
+    
+    override void PostBeginPlay() 
+    {
+        super.PostBeginPlay();
+        let p = players[consoleplayer].mo;
+        int j = 0;
+        if(p.countinv(Big_Weapons[0]) > 0 && p.countinv(Big_Weapons[1]) < 1)
+        {
+			if (CallACS("Gamespawntoggle")==1)
+			{
+				j = 0;
+			}
+			else
+			{
+				j = 1;
+			}
+        }
+		
+		if(p.countinv(Big_Weapons[1]) > 0)
+		{
+			if (CallACS("Gamespawntoggle")==1)
+			{
+			
+			}
+			else
+			{
+				if(p.countinv(Demon_keys[0]) < 1)		
+				{
+					A_SPAWNITEMEX("MM_Demonkey1");
+				}
+			
+				if(p.countinv(Demon_keys[0]) > 0 && p.countinv(Demon_keys[1]) < 1)	
+				{
+					A_SPAWNITEMEX("MM_Demonkey2");
+				}
+			
+				if(p.countinv(Demon_keys[1]) > 0 && p.countinv(Demon_keys[2]) < 1)
+				{
+					A_SPAWNITEMEX("MM_Demonkey3");
+				}
+			}
+		}
+        finalPickup = Big_Weapons[j];
+        sprite = GetDefaultByType(Big_Weapons[j]).SpawnState.sprite;
+        frame = GetDefaultByType(Big_Weapons[j]).SpawnState.frame;
+        scale = GetDefaultByType(Big_Weapons[j]).scale;
+        A_SetRenderstyle(GetDefaultByType(Big_Weapons[j]).alpha,GetDefaultByType(Big_Weapons[j]).GetRenderstyle());
+    }    
+    
+    override bool TryPickup (in out Actor toucher) 
+    {
+        if (!toucher || !(toucher is "PlayerPawn"))
+            return false;
+        Spawn(finalPickup,pos);
+        GoAwayAndDie();
+        return true;
+    }
+    
+    Default
+    {
+        +Inventory.QUIET;
+		INVENTORY.RESTRICTEDTO "ET_Player";
+		VISIBLETOPLAYERCLASS "ET_Player";
+    }
+    
+    states 
+        {
+        Spawn:
+        TNT1 A -1;
+        stop;
+    }
+}
+
+Class AltTwoWeaponSpawner :TwoWeaponSpawner    
+{	
+    static const Class<Inventory> Big_Weapons[] =
+    {
+        'MM_Wroaringgun2704',
+        'MM_Soulcube'
+    };
+	
+	override void PostBeginPlay() 
+    {
+        super.PostBeginPlay();
+        let p = players[consoleplayer].mo;
+        int j = 0;
+        if(p.countinv(Big_Weapons[0]) > 0 && p.countinv(Big_Weapons[1]) < 1)
+        {
+			if (CallACS("Gamespawntoggle")==1)
+			{
+				j = 0;
+			}
+			else
+			{
+				j = 1;
+			}
+        }
+		
+		if(p.countinv(Big_Weapons[1]) > 0)
+		{
+			if (CallACS("Gamespawntoggle")==1)
+			{
+			
+			}
+			else
+			{
+				if(p.countinv(Demon_keys[0]) < 1)		
+				{
+					A_SPAWNITEMEX("MM_Demonkey1");
+				}
+			
+				if(p.countinv(Demon_keys[0]) > 0 && p.countinv(Demon_keys[1]) < 1)	
+				{
+					A_SPAWNITEMEX("MM_Demonkey2");
+				}
+			
+				if(p.countinv(Demon_keys[1]) > 0 && p.countinv(Demon_keys[2]) < 1)
+				{
+					A_SPAWNITEMEX("MM_Demonkey3");
+				}
+			}
+		}
+        finalPickup = Big_Weapons[j];
+        sprite = GetDefaultByType(Big_Weapons[j]).SpawnState.sprite;
+        frame = GetDefaultByType(Big_Weapons[j]).SpawnState.frame;
+        scale = GetDefaultByType(Big_Weapons[j]).scale;
+        A_SetRenderstyle(GetDefaultByType(Big_Weapons[j]).alpha,GetDefaultByType(Big_Weapons[j]).GetRenderstyle());
+    }    
+    
+    override bool TryPickup (in out Actor toucher) 
+    {
+        if (!toucher || !(toucher is "PlayerPawn"))
+            return false;
+        Spawn(finalPickup,pos);
+        GoAwayAndDie();
+        return true;
+    }
+	
+	    Default
+    {
+        +Inventory.QUIET;
+		INVENTORY.RESTRICTEDTO "ET_Player_Alt";
+		VISIBLETOPLAYERCLASS "ET_Player_Alt";
+    }
+	 states 
+        {
+        Spawn:
+        TNT1 A -1;
+        stop;
+    }
+}
+
+//
+
+Class MM_Slot1spawner : CustomInventory
+{
+	Default
+	{
+		+Noblockmap
+		+NOGRAVITY
+	}
+	States
+	{
+	 Spawn:
+		TNT1 A 0;
+		TNT1 A 0
+		{
+			let pclass = players[consoleplayer].mo.GetClassName();
+			if(pclass == 'ET_Player_Alt')
+			{
+				A_SPAWNITEMEX("MM_Fireaxe");
+			}
+			else if(pclass == 'ET_Player_Slaughter')
+			{
+				A_SPAWNITEMEX("MM_Ubersaw");
+			}
+			else if(pclass == 'ET_Player')
+			{
+				A_SPAWNITEMEX("MM_Chainsawpickup");
+			}
+			else if(pclass == 'ET_Player_wolf')
+			{
+				A_SPAWNITEMEX("Wolf3dMag",0,0,0,0,0,0,0,SXF_NOCHECKPOSITION | SXF_TRANSFERAMBUSHFLAG ,0);
+			}
+			else
+			{
+			
+			}
+		}
+		STOP;
+	
+	}
+}
+
+Class MM_Slot2spawner : CustomInventory
+{
+	Default
+	{
+		+Noblockmap
+		+NOGRAVITY
+	}
+	States
+	{
+	 Spawn:
+		TNT1 A 0;
+		TNT1 A 0
+		{
+			let pclass = players[consoleplayer].mo.GetClassName();
+			if(pclass == 'ET_Player_Alt')
+			{
+				A_SPAWNITEMEX("MM_Riflepickup");
+			}
+			else if(pclass == 'ET_Player_Slaughter')
+			{
+				A_SPAWNITEMEX("MM_Machinegunpickup");
+			}
+			else if(pclass == 'ET_Player')
+			{
+				A_SPAWNITEMEX("MM_Pistolpickup");
+			}
+			else if(pclass == 'ET_Player_wolf')
+			{
+				A_SPAWNITEMEX("MM_Wolfentein3dPistol");
+			}
+			else
+			{
+			
+			}
+		}
+		STOP;
+	}
+}
+
+Class MM_Slot3_1spawner : CustomInventory
+{
+	Default
+	{
+		+Noblockmap
+		+NOGRAVITY
+	}
+	States
+	{
+	 Spawn:
+		TNT1 A 0;
+		TNT1 A 0
+		{
+			let pclass = players[consoleplayer].mo.GetClassName();
+			if(pclass == 'ET_Player_Alt')
+			{
+				A_SPAWNITEMEX("MM_Sawedoffpickup");
+			}
+			else if(pclass == 'ET_Player_Slaughter')
+			{
+				A_SPAWNITEMEX("MM_Shellblasterpickup");
+			}
+			else if(pclass == 'ET_Player')
+			{
+				A_SPAWNITEMEX("MM_Shotgunpickup");
+			}
+			else if(pclass == 'ET_Player_wolf')
+			{
+				A_SPAWNITEMEX("MM_Wolfentein3dmachinegun");
+			}
+			else
+			{
+			
+			}
+		}
+		STOP;
+	}
+}
+
+Class MM_Slot3_2spawner : CustomInventory
+{
+	Default
+	{
+		+Noblockmap
+		+NOGRAVITY
+	}
+	States
+	{
+	 Spawn:
+		TNT1 A 0;
+		TNT1 A 0
+		{
+			let pclass = players[consoleplayer].mo.GetClassName();
+			if(pclass == 'ET_Player_Alt')
+			{
+				A_SPAWNITEMEX("MM_Autoshotgun");
+			}
+			else if(pclass == 'ET_Player_Slaughter')
+			{
+				A_SPAWNITEMEX("MM_Tacticalssg");
+			}
+			else if(pclass == 'ET_Player')
+			{
+				A_SPAWNITEMEX("MM_SuperShotgun");
+			}
+			else if(pclass == 'ET_Player_wolf')
+			{
+				A_SPAWNITEMEX("MM_Wolfentein3dChaingun");
+			}
+			else
+			{
+			
+			}
+		}
+		STOP;
+	}
+}
+
+Class MM_Slot4spawner : CustomInventory
+{
+	Default
+	{
+		+Noblockmap
+		+NOGRAVITY
+	}
+	States
+	{
+	 Spawn:
+		TNT1 A 0;
+		TNT1 A 0
+		{
+			let pclass = players[consoleplayer].mo.GetClassName();
+			if(pclass == 'ET_Player_Alt')
+			{
+				A_SPAWNITEMEX("MM_Nailgunpickup");
+			}
+			else if(pclass == 'ET_Player_Slaughter')
+			{
+				A_SPAWNITEMEX("MM_Chainguncannonpickup");
+			}
+			else if(pclass == 'ET_Player')
+			{
+				A_SPAWNITEMEX("MM_Chaingunspawner");
+			}
+			else if(pclass == 'ET_Player_wolf')
+			{
+				A_SPAWNITEMEX("MM_Wolfentein3dChaingun");
+			}
+			else
+			{
+			
+			}
+		}
+		STOP;
+	}
+}
+
+Class MM_Chaingunspawner : CustomInventory 
+{
+	Default
+	{
+		
+	}
+	States
+	{
+	Spawn:
+		TNT1 A 0;
+		TNT1 A 0 A_JumpIf(CallACS("Gamespawntoggle")==1, "Ultimatedoomspawn");
+	Spawncontinued:
+		TNT1 A 0 A_SPAWNITEMEX("MM_Chaingunpickup");
+		Stop;
+	Ultimatedoomspawn:
+		TNT1 A 0 A_JumpIf(CallACS("Doom2spawntoggle")==1, "Udoomspawncontinued");
+		goto Spawncontinued;
+	Udoomspawncontinued:
+		TNT1 A 0 A_JumpIf(CallACS("Ssgmapscript")==1, "Spawncontinued");
+		TNT1 A 0 A_JumpIfInventory("MM_SuperShotgun", 1, "Spawncontinued");
+		TNT1 A 0 A_jump(150, "Spawncontinued");
+		TNT1 A 0 A_SPAWNITEMEX("MM_SuperShotgun");
+		Stop;
+	}
+}
+	 
+Class MM_Slot5spawner : CustomInventory
+{
+	Default
+	{
+		+Noblockmap
+		+NOGRAVITY
+	}
+	States
+	{
+	 Spawn:
+		TNT1 A 0;
+		TNT1 A 0
+		{
+			let pclass = players[consoleplayer].mo.GetClassName();
+			if(pclass == 'ET_Player_Alt')
+			{
+				A_SPAWNITEMEX("MM_GrenadeLauncherpickup");
+			}
+			else if(pclass == 'ET_Player_Slaughter')
+			{
+				A_SPAWNITEMEX("MM_Devestatorpickup");
+			}
+			else if(pclass == 'ET_Player')
+			{
+				A_SPAWNITEMEX("MM_Rocketlauncherpickup");
+			}
+			else if(pclass == 'ET_Player_wolf')
+			{
+				A_SPAWNITEMEX("MM_Wolfentein3dChaingun");
+			}
+			else
+			{
+			
+			}
+		}
+		STOP;
+	}
+}
+
+Class MM_Slot6spawner : CustomInventory
+{
+	Default
+	{
+		+Noblockmap
+		+NOGRAVITY
+	}
+	States
+	{
+	 Spawn:
+		TNT1 A 0;
+		TNT1 A 0
+		{
+			let pclass = players[consoleplayer].mo.GetClassName();
+			if(pclass == 'ET_Player_Alt')
+			{
+				A_SPAWNITEMEX("MM_Lightninggun");
+			}
+			else if(pclass == 'ET_Player_Slaughter')
+			{
+				A_SPAWNITEMEX("MM_PlasmagunmkII");
+			}
+			else if(pclass == 'ET_Player')
+			{
+				A_SPAWNITEMEX("MM_Plasmariflepickup");
+			}
+			else if(pclass == 'ET_Player_wolf')
+			{
+				A_SPAWNITEMEX("MM_Wolfentein3dChaingun");
+			}
+			else
+			{
+			
+			}
+		}
+		STOP;
+	}
+}
+
+Class MM_Slot7spawner : CustomInventory
+{
+	Default
+	{
+		+Noblockmap
+		+NOGRAVITY
+	}
+	States
+	{
+	 Spawn:
+		TNT1 A 0;
+		TNT1 A 0
+		{
+			let pclass = players[consoleplayer].mo.GetClassName();
+			if (CallACS("Gamespawntoggle")==12.0)
+				{
+					A_SPAWNITEMEX("MM_Slot2spawner");
+				}
+			else
+			{
+				if(pclass == 'ET_Player_Alt')
+				{
+					A_SPAWNITEMEX("AltTwoWeaponSpawner");
+				}
+				else if(pclass == 'ET_Player_Slaughter')
+				{
+					A_SPAWNITEMEX("MM_Bfg10Kpickup");
+				}
+				else if(pclass == 'ET_Player')
+				{
+					A_SPAWNITEMEX("TwoWeaponSpawner");
+				}
+				else if(pclass == 'ET_Player_wolf')
+				{
+					A_SPAWNITEMEX("MM_Wolfentein3dChaingun");
+				}
+				else
+				{
+			
+				}
+			}
+		}
+		STOP;
+	}
+}

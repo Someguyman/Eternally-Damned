@@ -1,0 +1,121 @@
+
+Class MM_Cybruiser : MM_HellKnight
+{
+  Default
+  {
+		PainChance 15;
+		Speed 8;
+		Obituary "%o was blown away by a Cybruiser.";
+		HitObituary "%o was smashed by a Cybruiser.";
+		SeeSound "Cybru/sight";
+		ActiveSound "Cybernoble/active";
+		PainSound "Cybernoble/pain";
+		DeathSound "Cybru/death";
+		Species "Baronofhell";
+		BloodColor "red";
+		Scale 1.05;
+		+BOSSDEATH;
+		+E1M8BOSS
+		+FloorClip
+		+MissileMore
+		+noradiusdmg
+		+NOINFIGHTSPECIES
+		Tag "Cybruiser";
+  }
+	
+	Void A_CybruAttack(Class<Actor> p)
+	{
+		A_FaceTarget();
+		A_SpawnProjectile(p,32,12);
+	}
+	
+	 void A_Cybrustomp()
+	{
+		A_StartSound("Cybernoble/walk", CHAN_BODY, CHANF_DEFAULT, 1, ATTN_IDLE);
+		A_Chase();
+	}
+	
+	States
+	{
+	Spawn:
+		CBRU AB 10 A_Look;
+		Loop;
+	See:
+		CBRU A 3 A_Cybrustomp();
+		CBRU ABB 3 A_Chase();
+		CBRU C 3 A_Cybrustomp();
+		CBRU CDD 3 A_Chase();
+		Loop;
+	Melee:
+		CBRU GH 8 A_FaceTarget();
+		CBRU I 8 A_CustomMeleeAttack(10 * random(1, 8),"baron/melee");
+		Goto See;
+	Missile:
+		CBRU E 0 A_Jump(100,"Missile2");
+		CBRU E 10 A_FaceTarget;
+		CBRU F 6 Bright A_CybruAttack("CyberDemonRocket");
+		CBRU E 8 A_FaceTarget;
+		Goto See;
+	Missile2:
+		CBRU E 6 A_FaceTarget;
+		CBRU F 6 Bright A_CybruAttack("Micromissile");
+		CBRU E 3 A_FaceTarget;
+		CBRU F 6 Bright A_CybruAttack("Micromissile");
+		CBRU E 3 A_FaceTarget;
+		CBRU F 6 Bright A_CybruAttack("Micromissile");
+		CBRU E 6 A_FaceTarget;
+		Goto See;
+	Pain:
+		CBRU J 2;
+		CBRU J 2 A_Pain;
+		Goto See;
+	Death.Ice:
+		CBRU J 5 A_GenericFreezeDeath;
+		TNT1 A 1 A_Freezedeathchunks;
+		WAIT;
+	XDeath:
+	Death:
+		CBRU K 1 Bright;
+		CBRU K 5 Bright A_Scream();
+		CBRU LMN 6 Bright;
+		CBRU O 6 Bright A_NoBlocking();
+		CBRU QR 6 Bright;
+		CBRU S 6;
+		CBRU T -1 A_BossDeath();
+		Stop;
+	Crush:
+		MANG A 0;
+		MANG A 0 A_Startsound("Bloody/crush");
+		MANG A -1;
+		stop;
+	Raise:
+	stop;
+	}
+}
+
+Class MM_CybruiserWeak : MM_Cybruiser
+{
+	default
+	{
+	+DONTHARMCLASS
+	-noradiusdmg
+	}
+}
+
+Class MM_Cybruiserstrong : MM_Cybruiser
+{
+  Default
+  {
+    Health 1000;
+	Scale 1.2;
+  }
+  States
+  {
+	Missile:
+		CBRU E 0 A_Jump(50,"Missile2");
+		CBRU E 12 A_FaceTarget;
+		CBRU F 6 Bright A_CybruAttack("CyberDemonRocket");
+		CBRU E 8 A_FaceTarget;
+		Goto See;
+  }
+}

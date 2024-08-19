@@ -1,0 +1,684 @@
+
+Class MM_Arachnotronspawner : MM_Monsterspawners
+{
+	States
+	{
+	Goingdownspawn:
+	DoomZerospawn:
+	D64D2spawner:
+	Eviternityspawn:
+	Scythe2spawn:
+	TNTRevoSpawn:
+	JenesisSpawner:
+	Epic2spawner:
+	Alternatespawn:
+	Spawn:
+		BSPI G 0;
+		BSPI A 0 A_JumpIf(CallACS("Gamespawntoggle")==1, "Ultimatedoomspawn");
+		BSPI A 0 A_JumpIf(CallACS("Gamespawntoggle")==6, "Valiantspawn");
+		BSPI A 0 A_JumpIf(CallACS("Gamespawntoggle")==8, "AAilenspawn");
+		BSPI A 0 A_JumpIf(CallACS("Gamespawntoggle")==12.0, "KDIKDIZDSpawn");
+		Goto Normalspawn;
+	Normalspawn:
+		TNT1 A 0 A_NoBlocking;
+		TNT1 A 0 A_SpawnItemEx("MM_Arachnotron",0,0,0,0,0,0,0,SXF_NOCHECKPOSITION | SXF_TRANSFERAMBUSHFLAG | SXF_TRANSFERPOINTERS | 288,0,tid);
+		Stop;
+	Ultimatedoomspawn:
+		TNT1 A 0 A_NoBlocking;
+		TNT1 A 0 A_JumpIf(CallACS("Udoomcacoscript")==2, "Cacospawn");
+	Udoomspawncontinued:
+		TNT1 A 0 A_JumpIf(CallACS("Doom2spawntoggle")==1, "Udoomspawnalt");
+		TNT1 A 0 A_Jump(120, "fatsospawn");
+		Goto Cacospawn;
+	Udoomspawnalt:
+		TNT1 A 0 A_JumpIf(CallACS("Udoomcacoscript")==4, "EThreeMEightspawner");
+		TNT1 A 0 A_JumpIf(CallACS("Udoomcacoscript")==7, "Udoomspawnalt2");
+		TNT1 A 0 A_Jump(120, "Arachnidspawn");
+		TNT1 A 0 A_Jump(20, "Painspawn");
+		Goto Cacospawn;
+	Udoomspawnalt2:
+		TNT1 A 0 A_Jump(15, "Painspawn");
+		Goto Cacospawn;
+	Cacospawn:
+		TNT1 A 0 A_SpawnItemEx("MM_Cacodemon",0,0,0,0,0,0,0,SXF_NOCHECKPOSITION | SXF_TRANSFERAMBUSHFLAG | SXF_TRANSFERPOINTERS | 288,0,tid);
+		Stop;
+	Fatsospawn:
+		TNT1 A 0 A_JumpIf(CallACS("Udoomcacoscript")==7, "Cacospawn");
+		TNT1 A 0 A_SpawnItemEx("MM_Mancubus",0,0,0,0,0,0,0,SXF_NOCHECKPOSITION | SXF_TRANSFERAMBUSHFLAG | SXF_TRANSFERPOINTERS | 288,0,tid);
+		Stop;
+	EThreeMEightspawner:
+		TNT1 A 0 A_JumpIf(CallACS("Doom2spawntoggle")==1, "Arachnidspawn");
+		goto Fatsospawn;
+	Arachnidspawn:
+		TNT1 A 0 A_JumpIf(CallACS("Doom2spawntoggle")==1, "ArachnidspawnContinued");
+		goto Fatsospawn;
+	ArachnidspawnContinued:
+		TNT1 A 0 A_JumpIf(CallACS("Udoomcacoscript")==6, "Fatsospawn");
+		TNT1 A 0 A_SpawnItemEx("MM_Arachnotron",0,0,0,0,0,0,0,SXF_NOCHECKPOSITION | SXF_TRANSFERAMBUSHFLAG | SXF_TRANSFERPOINTERS | 288,0,tid);
+		Stop;
+	Painspawn:
+		TNT1 A 0 A_SpawnItemEx("MM_D1_Painelemental",0,0,0,0,0,0,0,SXF_NOCHECKPOSITION | SXF_TRANSFERAMBUSHFLAG | SXF_TRANSFERPOINTERS | 288,0,tid);
+		Stop;
+	Valiantspawn:
+		TNT1 A 0 A_NoBlocking;
+		TNT1 A 0 A_SpawnItemEx("MM_ValiantSpider",0,0,0,0,0,0,0,SXF_NOCHECKPOSITION | SXF_TRANSFERAMBUSHFLAG | SXF_TRANSFERPOINTERS | 288,0,tid);
+		Stop;
+	AAilenspawn:
+		TNT1 A 0 A_NoBlocking;
+		TNT1 A 0 A_SpawnItemEx("MM_AAliens_Arachnotron",0,0,0,0,0,0,0,SXF_NOCHECKPOSITION | SXF_TRANSFERAMBUSHFLAG | SXF_TRANSFERPOINTERS | 288,0,tid);
+		Stop;
+	KDIKDIZDSpawn:
+		TNT1 A 0 A_NoBlocking;
+		TNT1 A 0 A_SpawnItemEx("MM_DarkCacodemon",0,0,0,0,0,0,0,SXF_NOCHECKPOSITION | SXF_TRANSFERAMBUSHFLAG | SXF_TRANSFERPOINTERS | 288,0,tid);
+		Stop;
+	}
+}
+
+class MM_Arachnotron : Arachnotron Replaces Arachnotron
+{
+	Default
+	{
+		Radius 50;
+		Height 64;
+		Gibhealth 40;
+		+NOINFIGHTSPECIES
+		+DONTHARMSPECIES
+		PainChance "Zap", 160;
+		Scale 1.1;
+		SeeSound "Arachnotron/sight";
+		ActiveSound "Arachnotron/Active";
+		PainSound "Arachnotron/pain";
+		DeathSound "Arachnotron/death";
+		ActiveSound "Arachnotron/active";
+		Tag "Arachnotron";
+	}
+	
+	Void A_Arachnotronattack()
+	{
+		A_FaceTarget();
+		if (CallACS("Arachtoggle")==1)
+		{
+			A_SpawnProjectile("MM_GreenArachnotronPlasma",20,4);
+		}
+		else
+		{
+			A_SpawnProjectile("MM_ArachnotronPlasma",20,4);
+		}
+	}
+	
+	Void A_Arachnotronwalk()
+	{
+		A_Chase();
+		A_StartSound("Arachnotron/walk", CHAN_BODY, CHANF_DEFAULT, 1, ATTN_IDLE);
+	}
+	
+	Void A_Arachnotronwalk2()
+	{
+		A_Chase();
+		A_StartSound("Arachnotron/walk2", CHAN_AUTO, CHANF_DEFAULT, 1, ATTN_IDLE);
+	}
+	
+	States
+	{
+	Spawn:
+		BSPI AB 10 A_Look;
+		Loop;
+	See:
+		BSPI A 20;
+		BSPI A 3 A_Arachnotronwalk();
+		BSPI ABB 3 A_Chase;
+		BSPI C 3 A_Arachnotronwalk2();
+		BSPI C 3 A_Chase;
+		BSPI D 3 A_Arachnotronwalk();
+		BSPI DEE 3 A_Chase;
+		BSPI F 3 A_Arachnotronwalk2();
+		BSPI F 3 A_Chase;
+		Goto see+1;
+	Missile:
+		BSPI A 0 BRIGHT A_jump(100, "Missile2");
+		BSPI A 20 A_FaceTarget;
+		BSPI G 4 BRIGHT A_Arachnotronattack();
+		BSPI H 4 BRIGHT A_FaceTarget();
+		BSPI H 1 BRIGHT A_SpidRefire;
+		Goto Missile+2;
+	Missile2:
+		BSPI Q 10 A_FaceTarget;
+	Attack:
+		BSPI G 2 BRIGHT A_Arachnotronattack();
+		BSPI H 1 BRIGHT A_SpidRefire;
+		BSPI G 2 BRIGHT A_Arachnotronattack();
+		BSPI H 1 BRIGHT A_SpidRefire;
+		BSPI G 2 BRIGHT A_Arachnotronattack();
+		BSPI H 1 BRIGHT A_SpidRefire;
+		BSPI G 2 BRIGHT A_Arachnotronattack();
+		BSPI H 1 BRIGHT A_SpidRefire;
+		BSPI G 2 BRIGHT  A_Arachnotronattack();
+		BSPI H 1 BRIGHT A_SpidRefire;
+		BSPI G 2 BRIGHT  A_Arachnotronattack();
+		BSPI H 1 BRIGHT A_SpidRefire;
+		BSPI G 2 BRIGHT  A_Arachnotronattack();
+		BSPI Q 20 BRIGHT A_SpidRefire;
+		BSPI Q 0 BRIGHT A_jump(20, "Attack");
+		Goto Missile+2;
+	Pain:
+		BSPI I 3;
+		BSPI I 3 A_Pain;
+		Goto See+1;
+	Death.Ice:
+		BSPI I 5 A_GenericFreezeDeath;
+		TNT1 A 1 A_Freezedeathchunks;
+		WAIT;
+	Death.SSGGIBING:
+		//TNT1 A 0 A_Jump(60, "Death");
+		//TNT1 A 0 A_Jumpifcloser(128, "XDeath");
+		TNT1 A 0 A_Jump(256, "Death");
+		Goto Death;
+	Death:
+		BSPI J 1;
+		BSPI J 19 A_Scream;
+		BSPI K 7 A_NoBlocking;
+		BSPI LMNO 7;
+		BSPI P -1 A_BossDeath;
+		Stop;
+	Death.CHAINSAWGIBING:
+	XDeath:
+		BSPX A 1;
+		BSPX A 5 A_XScream;
+		BSPX B 5 A_NoBlocking;
+		BSPX CDEF 5;
+		BSPX G -1 A_BossDeath;
+		Stop;
+	 Raise:
+		BSPI O 5;
+		BSPI NMLKJ 5;
+		Goto See+1;
+	Crush:
+		BSPI A 0;
+		BSPI A 0 A_Startsound("Bloody/crush");
+		BSPG A -1;
+	}
+}
+
+class MM_D1_Arachnotron: MM_Arachnotron
+{
+	Default
+	{
+		Radius 31;
+		Height 56;
+	}
+	States
+	{
+	Spawn:
+		TNT1 A 0;
+		TNT1 A 0 A_SpawnItem("MM_ClipBox", 10, 0);
+		TNT1 A 0 A_SpawnItem("MM_shell", 5, 0);
+		TNT1 A 0 A_SpawnItem("MM_RocketAmmo", -10, 0);
+		Goto Idle;
+	Idle:
+		BSPI AB 10 A_Look;
+		Loop;
+	}
+}
+
+class MM_Mindweaver : MM_Arachnotron Replaces Arachnotron
+{
+	Default
+	{
+		Speed 12;
+		PainChance 40;
+		SeeSound "Mindweaver/sight";
+		ActiveSound "Mindweaver/Active";
+		PainSound "Mindweaver/pain";
+		AttackSound "spider/attack";
+		DeathSound "Mindweaver/death";
+		ActiveSound "Mindweaver/active";
+		Tag "Mindweaver";
+	}
+	
+	Void A_MindWeaverWalk()
+	{
+		A_Chase();
+		A_StartSound("Mindweaver/walk", CHAN_BODY, CHANF_DEFAULT, 1, ATTN_IDLE);
+	}
+	
+	Void A_MindWeaverWalk2()
+	{
+		A_Chase();
+		A_StartSound("Arachnotron/walk2", CHAN_AUTO, CHANF_DEFAULT, 1, ATTN_IDLE);
+	}
+	
+	Void A_MindWeaverAttack()
+	{
+		A_FaceTarget();
+		A_Startsound("Weapons/NailMGFire");
+		A_SpawnProjectile("MGNail",20,4);
+	}
+	
+	Void A_Spiderattack1()
+	{
+		A_FaceTarget();
+		A_CustomBulletAttack(22.5, 7.1, 7, 6, "BulletPuff", 0, CBAF_NORANDOM);
+	}
+	
+	States
+	{
+	Spawn:
+		CSPI AB 10 A_Look;
+		Loop;
+	See:
+		CSPI A 20;
+		CSPI A 3 A_MindWeaverWalk();
+		CSPI ABB 3 A_Chase;
+		CSPI C 3 A_MindWeaverWalk2();
+		CSPI C 3 A_Chase;
+		CSPI D 3 A_MindWeaverWalk();
+		CSPI DEE 3 A_Chase;
+		CSPI F 3 A_MindWeaverWalk2();
+		CSPI F 3 A_Chase;
+		Goto see+1;
+	Missile:
+		CSPI A 0 BRIGHT A_jump(100, "Missile2");
+		CSPI A 20 A_FaceTarget;
+		CSPI G 2 BRIGHT A_FaceTarget;
+		CSPI H 2 BRIGHT A_Spiderattack1();
+		CSPI H 1 BRIGHT A_SpidRefire;
+		Goto Missile+2;
+	Missile2:
+		CSPI G 10 A_FaceTarget;
+	Attack:
+		CSPI G 2 BRIGHT A_SpidRefire;
+		CSPI H 2 BRIGHT A_MindWeaverAttack();
+		CSPI G 2 BRIGHT A_SpidRefire;
+		CSPI H 2 BRIGHT A_MindWeaverAttack();
+		CSPI G 2 BRIGHT A_SpidRefire;
+		CSPI H 2 BRIGHT A_MindWeaverAttack();
+		CSPI G 2 BRIGHT A_SpidRefire;
+		CSPI H 2 BRIGHT A_MindWeaverAttack();
+		CSPI G 2 BRIGHT A_SpidRefire;
+		CSPI H 2 BRIGHT A_MindWeaverAttack();
+		CSPI G 2 BRIGHT A_SpidRefire;
+		CSPI H 2 BRIGHT A_MindWeaverAttack();
+		CSPI G 20 A_SpidRefire;
+		CSPI G 0 BRIGHT A_jump(20, "Attack");
+		Goto Missile+2;
+	Pain:
+		CSPI I 3;
+		CSPI I 3 A_Pain;
+		Goto See+1;
+	Death.Ice:
+		CSPI I 5 A_GenericFreezeDeath;
+		TNT1 A 1 A_Freezedeathchunks;
+		WAIT;
+	Death.SSGGIBING:
+		//TNT1 A 0 A_Jump(60, "Death");
+		//TNT1 A 0 A_Jumpifcloser(128, "XDeath");
+		TNT1 A 0 A_Jump(256, "Death");
+		Goto Death;
+	Death.CHAINSAWGIBING:
+		stop;
+	XDeath:
+	Death:
+		CSPI J 20 A_Scream;
+		CSPI K 7 A_Fall;
+		CSPI LMNO 7 bright;
+		CSPI P -1 A_BossDeath;
+		stop;
+	 Raise:
+		CSPI O 5;
+		CSPI NMLKJ 5;
+		Goto See+1;
+	Crush:
+		CSPI A 0;
+		CSPI A 0 A_Startsound("Bloody/crush");
+		BSPG A -1;
+	}
+}
+
+Class MM_AAliens_Arachnotron : MM_Arachnotron Replaces Arachnotron
+{
+	Default
+	{
+		SeeSound "Aracknight/sight";
+		DeathSound "Aracknight/death";
+		ActiveSound "Aracknight/active";
+		Painsound "Aracknight/pain";
+		Obituary "An Aracknight wasted %o.";
+	}
+	
+		Void A_Arachnotronattack()
+	{
+		A_FaceTarget();
+		A_SpawnProjectile("MM_ArachnotronPlasma",20,0);
+	}
+	
+		Void A_Arachnotronwalk()
+	{
+		A_Chase();
+		A_StartSound("Aracknight/walk", CHAN_BODY, CHANF_DEFAULT, 1, ATTN_IDLE);
+	}
+	
+	Void A_Arachnotronwalk2()
+	{
+		A_Chase();
+		A_StartSound("Arachnotron/walk2", CHAN_AUTO, CHANF_DEFAULT, 1, ATTN_IDLE);
+	}
+	
+	States
+	{
+	Spawn:
+		AISP AB 10 A_Look;
+		Loop;
+	See:
+		AISP A 20;
+		AISP A 3 A_Arachnotronwalk();
+		AISP ABB 3 A_Chase;
+		AISP C 3 A_Arachnotronwalk2();
+		AISP C 3 A_Chase;
+		AISP D 3 A_Arachnotronwalk();
+		AISP DEE 3 A_Chase;
+		AISP F 3 A_Arachnotronwalk2();
+		AISP F 3 A_Chase;
+		Goto see+1;
+	Missile:
+		AISP A 0 BRIGHT A_jump(100, "Missile2");
+		AISP A 20 A_FaceTarget;
+		AISP G 4 BRIGHT A_Arachnotronattack();
+		AISP H 4 BRIGHT A_FaceTarget();
+		AISP H 1 BRIGHT A_SpidRefire;
+		Goto Missile+2;
+	Missile2:
+		AISP G 10 A_FaceTarget;
+	Attack:
+		AISP G 2 BRIGHT A_Arachnotronattack();
+		AISP H 1 BRIGHT A_SpidRefire;
+		AISP G 2 BRIGHT A_Arachnotronattack();
+		AISP H 1 BRIGHT A_SpidRefire;
+		AISP G 2 BRIGHT A_Arachnotronattack();
+		AISP H 1 BRIGHT A_SpidRefire;
+		AISP G 2 BRIGHT A_Arachnotronattack();
+		AISP H 1 BRIGHT A_SpidRefire;
+		AISP G 2 BRIGHT  A_Arachnotronattack();
+		AISP H 1 BRIGHT A_SpidRefire;
+		AISP G 2 BRIGHT  A_Arachnotronattack();
+		AISP H 1 BRIGHT A_SpidRefire;
+		AISP G 2 BRIGHT  A_Arachnotronattack();
+		AISP G 20 BRIGHT A_SpidRefire;
+		AISP G 0 BRIGHT A_jump(20, "Attack");
+		Goto Missile+2;
+	Pain:
+		AISP I 3;
+		AISP I 3 A_Pain;
+		Goto See+1;
+	Death.Ice:
+		CSPI I 5 A_GenericFreezeDeath;
+		TNT1 A 1 A_Freezedeathchunks;
+		WAIT;
+	Death.SSGGIBING:
+		//TNT1 A 0 A_Jump(60, "Death");
+		//TNT1 A 0 A_Jumpifcloser(128, "XDeath");
+		TNT1 A 0 A_Jump(256, "Death");
+		Goto Death;
+	Death:
+		AISP J 1;
+		AISP J 19 A_Scream;
+		AISP K 7 A_NoBlocking;
+		AISP LMNO 7;
+		AISP P -1 A_BossDeath;
+		Stop;
+	Death.CHAINSAWGIBING:
+		Stop;
+	XDeath:
+		BSPX A 1;
+		BSPX A 5 A_XScream;
+		BSPX B 5 A_NoBlocking;
+		BSPX CDEF 5;
+		BSPX G -1 A_BossDeath;
+		Stop;
+	XDeath:
+		Stop;
+	 Raise:
+		AISP O 5;
+		AISP NMLKJ 5;
+		Goto See+1;
+	Crush:
+		AISP A 0;
+		AISP A 0 A_Startsound("Bloody/crush");
+		BSPG A -1;
+	}
+}
+
+class MM_ValiantSpider : MM_Arachnotron Replaces Arachnotron
+{
+	bool Unresurrectable; 
+	
+	States
+	{
+	Death:
+		//BSPI J 0 A_Jumpifcloser(80, "Deathcontinued");
+		BSPI J 1 A_Jump(127,"Notquitedead");
+	//Deathcontinued:
+		BSPI J 19 A_Scream;
+		BSPI K 7 A_NoBlocking;
+		BSPI LMNO 7;
+		BSPI P -1 A_BossDeath;
+		Stop;
+	Death.Bigfrickindamage:
+		//Goto XDeath+2;
+		Goto XDeath+1;
+	XDeath:
+		//BSPI J 0 A_Jumpifcloser(80, "XDeathcontinued");
+		BSPI J 0 A_Jump(127,"Notquitedead");
+	//XDeathcontinued:
+		BSPX A 1;
+		BSPX A 5 A_XScream;
+		BSPX B 5 A_NoBlocking;
+		BSPX CDEF 5;
+		BSPX G -1 A_BossDeath;
+		Stop;
+	Notquitedead:
+		BSPV F 1 {Unresurrectable = true;}
+		BSPV F 9 A_Scream();
+		BSPV F 1 A_Fall();
+		BSPV A 26 A_SpawnItem("MM_Arachnorb", 8);
+		BSPV B 11;
+		BSPV CD 7;
+		BSPV E 0 {bKILLED = True;}
+	StopRaise:
+		BSPV E 1 A_BossDeath;
+		Loop;
+	Raise:
+		BSPI P 0 A_Jumpif(Unresurrectable == true, "StopRaise");
+		BSPI P 5;
+		BSPI ONMLKJ 5;
+		Goto See+1;
+	}
+}
+
+class MM_Arachnorb : Actor
+{
+	Default
+	{
+		Health 120;
+		Radius 24;
+		Height 56;
+		Mass 400;
+		Speed 12;
+		PainChance 150;
+		ReactionTime 8;
+		FloatBobStrength 0.5;
+		Monster;
+		Scale 1.1;
+		Species "Arachnotron";
+		Seesound "VArachnorb/Sight";
+		PainSound "Arachnotron/pain";
+		ActiveSound "VArachnorb/Active";
+		Deathsound "VArachnorb/Death";
+		Obituary "%o got blasted by an Arachnorb.";
+		+FLOAT
+		+FLOATBOB
+		+NOGRAVITY
+		+NOINFIGHTSPECIES 
+		+DONTHARMSPECIES
+		//+NEVERRESPAWN
+	}
+	
+		Void A_Arachnorbattack(Class<Actor> p)
+	{
+		A_FaceTarget();
+		A_SpawnProjectile(p,32);
+	}
+	
+	States
+	{
+		Spawn:
+			ACNB A 10 A_Look();
+			Loop;
+		See:
+			ACNB A 3 A_Chase();
+			ACNB A 3 A_Chase();
+			Loop;
+		Missile:
+			ACNB A 20 A_FaceTarget();
+			ACNB B 4 BRIGHT A_Arachnorbattack("MM_ArachnotronPlasma");
+			ACNB C 5 BRIGHT A_FaceTarget();
+			ACNB B 4 BRIGHT A_Arachnorbattack("MM_ArachnotronPlasma");
+			ACNB C 5 BRIGHT A_FaceTarget();
+			ACNB B 4 BRIGHT A_Arachnorbattack("MM_ArachnotronPlasma");
+			ACNB C 5 BRIGHT A_FaceTarget();
+			ACNB A 9 BRIGHT A_SpidRefire;
+			Goto Missile;
+		Pain:
+			ACNB D 3;
+			ACNB D 3 A_Pain;
+			Goto See;
+		Death:
+			ACNB E 5 {bFLOATBOB = False;}
+			ACNB F 5 A_Scream;
+			ACNB G 5 A_Fall;
+			ACNB H -1 A_SetFloorClip;
+			Stop;
+		Raise:
+			ACNB G 5 {bFLOATBOB = True;}
+			ACNB F 5;
+			ACNB E 5 A_UnSetFloorClip;
+			Goto See;
+		Crush:
+			BSPI A 0;
+			BSPI A 0 A_Startsound("Bloody/crush");
+			BSPG A -1;
+	}
+}
+
+class MM_ArachnotronPlasma : ArachnotronPlasma
+{
+	Default
+	{
+		Radius 13;
+		Height 8;
+		Speed 25;
+		DamageFunction 20;
+		Projectile;
+		+RANDOMIZE
+		+ZDOOMTRANS
+		RenderStyle "Add";
+		Alpha 0.75;
+		DamageType "Enemydamage";
+		SeeSound "Arachnotron/attack";
+		DeathSound "Arachnotron/fade";
+	}
+	
+		Void A_Aplasmatrail(Class<Actor> p)
+	{
+		if (CallACS("Projtoggle")==1)
+		{
+			A_SpawnItemEx(p, 0, 0, 0, 0, 0, 0, 0, 128);
+		}
+		else
+		{
+			
+		}
+	}
+	
+	States
+	{
+	Spawn:
+		ATPL AAAAA 1 BRIGHT A_Aplasmatrail("MM_PlasmaTrail1");
+		ATPL BBBBB 1 BRIGHT A_Aplasmatrail("MM_PlasmaTrail2");
+		Loop;
+	Death:
+		APLX ABCDE 5 BRIGHT;
+		Stop;
+	}
+}
+
+class MM_PlasmaTrail1 : Actor
+{
+	Default
+	{
+		Scale 1.1;
+		PROJECTILE;
+		RENDERSTYLE "ADD";
+		+NOCLIP
+		//Alpha 0.5;
+		Alpha 0.70;
+		+ZDOOMTRANS
+	}
+	States
+	{
+	Spawn:
+		TNT1 A 2 Bright;
+	Fadeaway:
+		ATPL AA 1 Bright A_fadeout(0.3);
+		Loop;
+	}
+}
+
+class MM_PlasmaTrail2 : MM_PlasmaTrail1
+{
+	States
+	{
+	Spawn:
+		TNT1 A 2 Bright;
+	Fadeaway:
+		ATPL BB 1 Bright A_fadeout(0.3);
+		Loop;
+	}
+}
+
+class MM_GreenArachnotronPlasma : MM_ArachnotronPlasma
+{
+	States
+	{
+	Spawn:
+		GPLS AAAAA 1 BRIGHT A_Aplasmatrail("MM_ArachGreenPlasmaTrail1");
+		GPLS BBBBB 1 BRIGHT A_Aplasmatrail("MM_ArachGreenPlasmaTrail2");
+		Loop;
+	Death:
+		GPLX ABCDE 5 BRIGHT;
+		Stop;
+	}
+}
+
+class MM_ArachGreenPlasmaTrail1 :MM_PlasmaTrail1
+{
+	States
+	{
+	Spawn:
+		TNT1 A 2 Bright;
+	Fadeaway:
+		GPLS AA 1 Bright A_fadeout(0.3);
+		Loop;
+	}
+}
+
+class MM_ArachGreenPlasmaTrail2 : MM_PlasmaTrail1
+{
+	States
+	{
+	Spawn:
+		TNT1 A 2 Bright;
+	Fadeaway:
+		GPLS BB 1 Bright A_fadeout(0.3);
+		Loop;
+	}
+}

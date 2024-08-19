@@ -1,0 +1,201 @@
+
+class MM_FlemoidusCommonus : FlemoidusCommonus Replaces FlemoidusCommonus
+{
+	Default
+	{
+		DropItem "";
+		BloodColor "green";
+		SeeSound "Flemoid/Sight";
+		PainSound "Flemoid/Pain";
+		DeathSound "Flemoid/Death";
+		ActiveSound "Flemoid/Active";
+		Attacksound "Flemoid/Attack";
+		Obituary "$OB_COMMONUS";
+	}
+	States
+	{
+	Spawn:
+		FLMD AB 10 A_Look;
+		Loop;
+	See:
+		FLMD AABBCCDD 3 A_Chase;
+		Loop;
+	Melee:
+		FLMD E 10 A_FaceTarget;
+		FLMD F 10 A_CustomMeleeAttack(random(1,5)*3, "", "", "Flem");
+		Goto See;
+	Pain:
+		FLMD G 3 Bright;
+		FLMD G 3 Bright A_Pain;
+		Goto See;
+	Death.Ice:
+		FLMD G 5 A_GenericFreezeDeath;
+		TNT1 A 1 A_Freezedeathchunks;
+		wait;
+	Death.SSGGIBING:
+		//TNT1 A 0 A_Jumpifcloser(128, "XDeath");
+		TNT1 A 0 A_Jump(256, "Death");
+		Goto Death;
+	Death:
+		FLMD H 5 Bright;
+		FLMD I 5 BRIGHT A_Scream;
+		FLMD J 5 Bright A_NoBlocking;
+		FLMD K 5 Bright;
+		Stop;
+	XDeath:
+		Stop;
+		FLMD M 5;
+		FLMD N 5 A_XScream;
+		FLMD O 5 A_NoBlocking;
+		FLMD PQRST 5;
+		FLMD U -1;
+		Stop;
+	Raise:
+		Stop;
+		FLMD K 5;
+		FLMD JI 5;
+		FLMD H 5;
+		Goto See;
+	Crush:
+		POL5 A 0;
+		POL5 A 0 A_Startsound("Bloody/crush");
+		POL5 A -1;
+		stop;
+	}
+}
+
+class MM_Xparasite_yellow: Actor
+{
+	Default
+	{
+		+Nogravity
+		+FLOATBOB
+		+INVULNERABLE
+		+FRIGHTENING
+		+NOINFIGHTSPECIES
+		+DONTHARMSPECIES
+		+NOFEAR
+		+DONTHARMCLASS
+		+NOTARGET
+		+THRUSPECIES
+		+FLOAT
+		-COUNTKILL
+		+SPECTRAL
+		+FRIENDLY
+		+NOPAIN
+		Scale 0.6;
+		//FloatBobStrength 2.0;
+		Monster;
+		species "X parasite";
+		RenderStyle "Translucent";
+		Alpha 0.8;
+		Radius 16;
+		Height 16;
+		speed 8;
+
+		tag "Yellow X-parasite";
+	}
+	
+	States
+	{
+	Spawn:
+		XPR1 ABCDEFGHIJKL 3 BRIGHT A_Look;
+		Loop;
+	See:
+		XPR1 ABCDEFGHIJKL 3 BRIGHT;
+	Chaseloop:
+		XPR1 AAA 1 BRIGHT A_Chase();
+		XPR1 A 0 BRIGHT A_Jump(4, "Transform");
+		XPR1 BBB 1 BRIGHT A_Chase();
+		XPR1 A 0 BRIGHT A_Jump(4, "Transform");
+		XPR1 CCC 1 BRIGHT A_Chase();
+		XPR1 A 0 BRIGHT A_Jump(4, "Transform");
+		XPR1 DDD 1 BRIGHT A_Chase();
+		XPR1 A 0 BRIGHT A_Jump(4, "Transform");
+		XPR1 EEE 1 BRIGHT A_Chase();
+		XPR1 A 0 BRIGHT A_Jump(4, "Transform");
+		XPR1 FFF 1 BRIGHT A_Chase();
+		XPR1 A 0 BRIGHT A_Jump(4, "Transform");
+		XPR1 GGG 1 BRIGHT A_Chase();
+		XPR1 A 0 BRIGHT A_Jump(4, "Transform");
+		XPR1 HHH 1 BRIGHT A_Chase();
+		XPR1 A 0 BRIGHT A_Jump(4, "Transform");
+		XPR1 III 1 BRIGHT A_Chase();
+		XPR1 A 0 BRIGHT A_Jump(4, "Transform");
+		XPR1 JJJ 1 BRIGHT A_Chase();
+		XPR1 A 0 BRIGHT A_Jump(4, "Transform");
+		XPR1 KKK 1 BRIGHT A_Chase();
+		XPR1 A 0 BRIGHT A_Jump(4, "Transform");
+		XPR1 LLL 1 BRIGHT A_Chase();
+		Loop;
+	Pain:
+		stop;
+	Melee:
+		XPR1 A 1 Bright A_CustomMeleeAttack(10000,"","","Infection");
+		Goto Chaseloop;
+	Transform:
+		XPR1 A 0 { bFRIENDLY = false; }
+		XPR1 ABCDEFGHIJKL 3 BRIGHT;
+		TNT1 A 0 A_NoBlocking;
+		TNT1 A 0 A_SpawnItemEx("MM_Pinky_X",0,0,0,0,0,0,0,SXF_NOCHECKPOSITION | SXF_TRANSFERAMBUSHFLAG | SXF_TRANSFERPOINTERS | 288,0,tid);
+		Stop;
+	}
+}
+
+Class MM_Pinky_X : MM_Pinky
+{
+	Default
+	{
+		-COUNTKILL
+		species "X parasite";
+		+NEVERTARGET
+	}
+	States
+	{
+	XDeath:
+	Death:
+		PNKY H 8;
+		XPR1 A 0 { bFRIENDLY = true; }
+		TNT1 A 0 A_NoBlocking;
+		TNT1 A 0 A_SpawnItemEx("MM_Xparasite_yellow",0,0,32,0,0,0,0,SXF_NOCHECKPOSITION | SXF_TRANSFERAMBUSHFLAG | SXF_TRANSFERPOINTERS | 288,0,tid);
+		Stop;
+		Stop;
+	}
+}
+
+class MM_Xparasite_green: MM_Xparasite_yellow
+{
+	States
+	{
+	Spawn:
+		XPR2 ABCDEFGHIJKL 3 BRIGHT;
+		Loop;
+	}
+}
+
+class MM_Xparasite_Red: MM_Xparasite_yellow
+{
+	States
+	{
+	Spawn:
+		XPR3 ABCDEFGHIJKL 3 BRIGHT;
+		Loop;
+	}
+}
+
+class MM_Xparasite_Blue: MM_Xparasite_yellow
+{
+		Default
+	{
+		+Nogravity
+		+FLOATBOB
+		Scale 0.9;
+		FloatBobStrength 0.5;
+	}
+	States
+	{
+	Spawn:
+		XPR4 ABCDEFGHIJKL 3 BRIGHT;
+		Loop;
+	}
+}

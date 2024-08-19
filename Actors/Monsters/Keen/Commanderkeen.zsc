@@ -1,0 +1,241 @@
+Class MM_Keenspawner : MM_Monsterspawners
+{
+	States
+	{
+	Ultimatedoomspawn:
+	AAilenspawn:
+	TNTRevoSpawn:
+	JenesisSpawner:
+	Normalspawn:
+		TNT1 A 0 A_SpawnItemEx("MM_CommanderKeen",0,0, 100000000000,0,0,0,0,SXF_NOCHECKPOSITION | SXF_TRANSFERAMBUSHFLAG | SXF_TRANSFERPITCH ,0);
+		Stop;
+	Alternatespawn:
+		TNT1 A 0 A_SpawnItemEx("MM_Generic_Keenreplacement",0,0, 100000000000,0,0,0,0,SXF_NOCHECKPOSITION | SXF_TRANSFERAMBUSHFLAG | SXF_TRANSFERPITCH ,0);
+		Stop;
+	Ultimatedoomspawn:
+		TNT1 A 0 A_SpawnItemEx("MM_Imp",0,0,0,0,0,0,0,SXF_NOCHECKPOSITION | SXF_TRANSFERAMBUSHFLAG | SXF_TRANSFERPOINTERS | 288,0,tid);
+		Stop;
+	Goingdownspawn:
+		TNT1 A 0 A_SpawnItemEx("MM_GoingDown_Forbidenfruit",0,0, 100000000000,0,0,0,0,SXF_NOCHECKPOSITION | SXF_TRANSFERAMBUSHFLAG | SXF_TRANSFERPITCH ,0);
+		Stop;
+	Doomzerospawn:
+		TNT1 A 0 A_SpawnItemEx("MM_Dopefish",0,0, 100000000000,0,0,0,0,SXF_NOCHECKPOSITION | SXF_TRANSFERAMBUSHFLAG | SXF_TRANSFERPITCH ,0);
+		Stop;
+	D64D2Spawner:
+		TNT1 A 0 A_SpawnItemEx("MM_NightmareImp",0,0,0,0,0,0,0,SXF_NOCHECKPOSITION | SXF_TRANSFERAMBUSHFLAG | SXF_TRANSFERPITCH,0);
+		Stop;
+	Epic2spawner:
+	Scythe2spawn:
+		TNT1 A 0 A_SpawnItemEx("MM_Scythe2_afrit",0,0,0,0,0,0,0,SXF_NOCHECKPOSITION | SXF_TRANSFERAMBUSHFLAG | SXF_TRANSFERPITCH,0);
+		Stop;
+	Eviternityspawn:
+		TNT1 A 0 A_SpawnItemEx("MM_Astralcaco",0,0,0,0,0,0,0,SXF_NOCHECKPOSITION | SXF_TRANSFERAMBUSHFLAG | SXF_TRANSFERPITCH,0);
+		Stop;
+	Valiantspawn:
+		TNT1 A 0 A_SpawnItemEx("MM_ValiantSpider",0,0,0,0,0,0,0,SXF_NOCHECKPOSITION | SXF_TRANSFERAMBUSHFLAG | SXF_TRANSFERPITCH,0);
+		Stop;
+	KDIKDIZDSpawn:
+		TNT1 A 0 A_SpawnItemEx("MM_Shadow",0,0, 100000000000,0,0,0,0,SXF_NOCHECKPOSITION | SXF_TRANSFERAMBUSHFLAG | SXF_TRANSFERPITCH ,0);
+		Stop;
+	}
+}
+
+class MM_CommanderKeen : CommanderKeen
+{
+	Default
+	{
+		Health 100;
+		Radius 16;
+		Height 72;
+		Mass 10000000;
+		PainChance 256;
+		+SOLID 
+		+SPAWNCEILING 
+		+NOGRAVITY 
+		+SHOOTABLE 
+		+COUNTKILL 
+		+NEVERRESPAWN
+		+NOICEDEATH
+		+DONTFALL
+		+ISMONSTER
+		PainSound "Commanderkeen/pain";
+		DeathSound "Commanderkeen/death";
+		Tag "Commander keen";
+	}
+	States
+	{
+	Spawn:
+	Idle:
+		COKN A -1;
+		Loop;
+	Pain:
+		COKN N	4;
+		COKN N	8 A_Pain;
+		Goto Spawn;
+	Death:
+		ROPE A 6 A_SpawnItemEx("MM_Keenbodie", 0, 0, -8);
+		ROPE B 6;
+		ROPE C 6 A_Scream;
+		ROPE DEF 6;
+		ROPE F 30;
+		ROPE F 0 A_KeenDie;
+		ROPE F -1;
+		Stop;
+	}
+}
+
+Class MM_Keenbodie : Actor
+{
+	default
+	{
+		+NOGRAVITY 
+		+NEVERRESPAWN
+		+Noblockmap
+		+noclip
+		Mass 10000000;
+	}
+	States
+	{
+		Spawn:
+		COKN M 4;
+		COKN B 6 { bNOGRAVITY = false; }
+		COKN CDEFGHIJK 6;
+		COKN L -1;
+		Stop;
+	}
+}
+
+class MM_Generic_Keenreplacement : MM_CommanderKeen
+{
+	Default
+	{
+		Health 100;
+		Radius 16;
+		Height 72;
+		Mass 10000000;
+		PainChance 0;
+		+SOLID 
+		+SPAWNCEILING 
+		+NOGRAVITY 
+		+SHOOTABLE 
+		+COUNTKILL 
+		+NOICEDEATH
+		+ISMONSTER
+		+NOBLOODDECALS
+		+NOBLOOD
+		//PainSound "";
+		DeathSound "";
+		Tag "Power module";
+	}
+	States
+	{
+	Spawn:
+		TESC ABCD 4 Bright;
+		Loop;
+	Death:
+		TESC E 1;
+		TESC E 5 A_SpawnItem ("MM_keenreplacement_explosion");
+		TESC E 6 A_Scream;
+		TESC E 29;
+		TESC E 1 A_KeenDie;
+		TESC E -1;
+		Stop;
+	Pain:
+		Stop;
+	}
+}
+
+Class MM_keenreplacement_explosion : Rocket
+{
+	Default
+		{
+			Speed 0;
+			Damage 0;
+			RenderStyle "Translucent";
+			Alpha 0.7;
+			Scale 0.9;
+			-ROCKETTRAIL
+		}
+	States
+		{
+			Spawn:
+				MISL B 8 Bright;
+				MISL C 6 Bright;
+				MISL D 4 Bright;
+				Stop;
+		}
+}
+
+class MM_Dopefish : MM_CommanderKeen
+{
+	Default
+	{
+		//+SPAWNCEILING 
+		-DONTFALL
+		Painsound "Dopefish/grunt";
+		Deathsound "Dopefish/grunt";
+		Tag "Dopefish";
+	}
+	States
+	{
+		Spawn:
+			DOPE A -1;
+			Loop;
+		Pain:
+			DOPE B 4;
+			DOPE B 8 A_Pain;
+			Goto Spawn;
+		Death:
+			DOPE A 6;
+			DOPE B 6 A_Scream;
+			DOPE C 6;
+			DOPE D 6 A_KeenDie;
+			DOPE FGFGFGFGFG 6;
+			DOPE E -1;
+			Stop;
+		Raise:
+			DOPE DCB 6;
+			Goto Spawn;
+	}
+}
+
+class MM_GoingDown_Forbidenfruit : Actor
+{
+	Default
+	{
+		Health 100;
+		Radius 16;
+		Height 72;
+		Mass 10000000;
+		PainChance 256;
+		+SOLID 
+		+SPAWNCEILING 
+		+NOGRAVITY 
+		+SHOOTABLE 
+		+COUNTKILL 
+		+NOICEDEATH
+		+ISMONSTER
+		PainSound "Fruit/pain";
+		DeathSound "Fruit/Death";
+		Tag "Forbiden Fruit";
+	}
+	States
+	{
+	Spawn:
+		FRUT A -1;
+		Loop;
+	Death:
+		FRUT C	6;
+		FRUT D 6 A_Scream;
+		FRUT EFGHI	6;
+		FRUT J 6;
+		FRUT K 6;
+		FRUT K 6 A_KeenDie;
+		FRUT K -1;
+		Stop;
+	Pain:
+		FRUT B	4;
+		FRUT B	8 A_Pain;
+		Goto Spawn;
+	}
+}

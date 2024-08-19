@@ -1,0 +1,56 @@
+
+class MM_HansGrosse : MM_WolfensteinSS
+{
+	Default
+	{
+		Health 70;
+		Speed 8;
+		PainChance 50;
+		Monster;
+		Mass 1000;
+		+FLOORCLIP
+		+NOINFIGHTSPECIES
+		SeeSound "Grosse/Sight";
+		ActiveSound "Grosse/Active";
+		PainSound "Grosse/Pain";
+		DeathSound "Grosse/Death";
+		DropItem "MM_Chaingun", 256;
+	    DropItem "MM_Chaingun", 256;
+		AttackSound "chainguy/attack";
+		+FLOORCLIP
+		+NOINFIGHTSPECIES
+		Tag "Hans Grosse";
+	}
+	States
+	{
+	Spawn:
+		HANS A 10 A_Look;
+		Loop;
+	See:
+		HANS AABBCCDD 3 A_Chase;
+		Loop;
+	Missile:
+		HANS E 10 A_FaceTarget;
+		HANS F 2 bright;
+		HANS G 2 bright A_CustomBulletAttack(5.6, 0, 2, 5, "BulletPuff");
+		HANS F 0 A_CPosRefire;
+		Goto Missile+1;
+	Pain:
+		HANS E 1 A_Pain;
+		Goto See;
+	Death.Ice:
+		HANS E 5 A_GenericFreezeDeath;
+		TNT1 A 1 A_Freezedeathchunks;
+		wait;
+	Death:
+		HANS H 6;
+		HANS I 6 A_ScreamAndUnblock;
+		HANS J 6;
+		HANS K -1;
+		Stop;
+	Raise:
+		HANS K 5;
+		HANS JIH 5;
+		Goto See ;
+	}
+}

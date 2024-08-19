@@ -1,0 +1,142 @@
+
+class MM_Impgantic : MM_Imp
+{
+	Default
+	{
+	Health 4000;
+	Radius 40;
+	Height 110;
+	Speed 16;
+	Scale 2.00;
+	Mass 1000;
+	PainChance 20;
+	+noradiusdmg
+	+Boss
+	Deathsound "Impgantic/Death";
+	DropItem "MM_Impbully";
+	DropItem "MM_Impbully";
+	DropItem "MM_Impbully";
+	Tag "Impgantic the error handler";
+	}
+	States
+	{
+	melee:
+	missile:
+		TROO EF 8 A_facetarget;
+		TROO G 6 A_CustomComboAttack("GiantDoomImpBall", 48, 3 * random(1, 8), "Imp/melee");
+		Goto see;
+	XDeath:
+	Death:
+		TROO H 1 A_SpawnProjectile("Supermushroom",50,-10,90);
+		TROO H 1 A_Scream;
+		TROO H 3 A_SetScale(1.50);
+		TROO H 4 A_SetScale(2.00);
+		TROO H 3 A_SetScale(1.50);
+		TROO H 4 A_SetScale(2.00);
+		TROO H 3 A_SetScale(1.50);
+		TROO H 4 A_SetScale(2.00);
+		TROO H 3 A_SetScale(1.50);
+		TROO H 0 A_NoBlocking;
+		Stop;
+	}
+}
+
+class MM_Impbully : MM_Imp
+{
+	Default
+	{
+	Health 1000;
+	Radius 24;
+	Height 64;
+	Scale 1.50;
+	Mass 1000;
+	PainChance 50;
+	Speed 8;
+	+Boss
+	Deathsound "Impgantic/Death";
+	DropItem "MM_Imp";
+	DropItem "MM_Imp";
+	DropItem "MM_Imp";
+	DropItem "MM_Imp";
+	}
+	States
+	{
+	Death:
+		TROO H 1 A_SpawnProjectile("Supermushroom",50,-10,90);
+		TROO H 1 A_Scream;
+		TROO H 3 A_SetScale(1.00);
+		TROO H 4 A_SetScale(1.50);
+		TROO H 3 A_SetScale(1.00);
+		TROO H 4 A_SetScale(1.50);
+		TROO H 3 A_SetScale(1.00);
+		TROO H 4 A_SetScale(1.50);
+		TROO H 3 A_SetScale(1.00);
+		TROO H 0 A_NoBlocking;
+		Stop;
+	XDeath:
+		Stop;
+	}
+}
+
+class GiantDoomImpBall : MM_DoomImpBall
+{
+	Default
+	{
+	DamageFunction 116;
+	Scale 2.00;
+	Speed 25;
+	}
+	States
+	{
+	Spawn:
+		BAL1 AB 3 BRIGHT A_SpawnProjectile("GiantBall1Trail",0);
+		Loop;
+	Death:
+		BAL1 C 3 BRIGHT A_SpawnProjectile("GiantBall1Trail",0);
+		BAL1 DE 3 BRIGHT;
+		Stop;
+	}
+}
+
+Class GiantBall1Trail : actor
+{
+	Default
+	{
+		PROJECTILE;
+		RENDERSTYLE "TRANSLUCENT";
+		+NOCLIP
+		ALPHA 0.3;
+		Scale 1.0;
+	}
+	States
+	{
+	Spawn:
+		SMK1 J 3;
+		SMK1 ABCDEFGHI 2 Bright;
+		Stop;
+	}
+}
+
+Class SuperMushroom : Actor
+{
+  Default
+  {
+    Radius 5;
+    Height 5;
+    Speed 5;
+	Scale 1.10;
+    Mass 5000;
+    +DropOff
+    +Missile
+	+BOUNCEONACTORS
+  }
+
+  States
+  {
+  Spawn:
+    MUSH ABCD 2;
+    Loop;
+  Death:
+    Stop;
+  }
+}

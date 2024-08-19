@@ -1,0 +1,6 @@
+
+Actor ED_Cell : MM_Cellspawner Replaces cell {}
+
+Actor ED_Cellpack : MM_Cellpackspawner Replaces cellpack {}
+
+Actor ED_Wolfammo : Wolf3dMag 677 {}

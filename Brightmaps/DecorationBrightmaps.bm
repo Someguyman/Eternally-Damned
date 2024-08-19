@@ -1,0 +1,532 @@
+
+//		Eviternity	Torches		//
+
+Brightmap sprite SRT2A0
+{
+	map "brightmaps/Decorations/SET2A0.png"
+	disablefullbright
+}
+
+Brightmap sprite SRT2B0
+{
+	map "brightmaps/Decorations/SET2B0.png"
+	disablefullbright
+}
+
+Brightmap sprite SRT2C0
+{
+	map "brightmaps/Decorations/SET2C0.png"
+	disablefullbright
+}
+
+Brightmap sprite SRT2D0
+{
+	map "brightmaps/Decorations/SET2D0.png"
+	disablefullbright
+}
+
+Brightmap sprite SBT2A0
+{
+	map "brightmaps/Decorations/SET2A0.png"
+	disablefullbright
+}
+
+Brightmap sprite SBT2B0
+{
+	map "brightmaps/Decorations/SET2B0.png"
+	disablefullbright
+}
+
+Brightmap sprite SBT2C0
+{
+	map "brightmaps/Decorations/SET2C0.png"
+	disablefullbright
+}
+
+Brightmap sprite SBT2D0
+{
+	map "brightmaps/Decorations/SET2D0.png"
+	disablefullbright
+}
+
+Brightmap sprite SGT2A0
+{
+	map "brightmaps/Decorations/SET2A0.png"
+	disablefullbright
+}
+
+Brightmap sprite SGT2B0
+{
+	map "brightmaps/Decorations/SET2B0.png"
+	disablefullbright
+}
+
+Brightmap sprite SGT2C0
+{
+	map "brightmaps/Decorations/SET2C0.png"
+	disablefullbright
+}
+
+Brightmap sprite SGT2D0
+{
+	map "brightmaps/Decorations/SET2D0.png"
+	disablefullbright
+}
+
+//		Candles		//
+
+//	Short	//
+
+Brightmap sprite CNDLA0
+{
+	map "brightmaps/Decorations/CNDLA0.png"
+	disablefullbright
+}
+
+Brightmap sprite CNDLB0
+{
+	map "brightmaps/Decorations/CNDLB0.png"
+	disablefullbright
+}
+
+Brightmap sprite CNDLC0
+{
+	map "brightmaps/Decorations/CNDLB0.png"
+	disablefullbright
+}
+
+//	Large	//
+
+Brightmap sprite CBR1A0
+{
+	map "brightmaps/Decorations/CBR1A0.png"
+	disablefullbright
+}
+
+Brightmap sprite CBR1B0
+{
+	map "brightmaps/Decorations/CBR1B0.png"
+	disablefullbright
+}
+
+Brightmap sprite CBR1C0
+{
+	map "brightmaps/Decorations/CBR1C0.png"
+	disablefullbright
+}
+
+//	Skull Candle	//
+
+Brightmap sprite POL3A0
+{
+	map "brightmaps/Decorations/POL3A0.png"
+	disablefullbright
+}
+
+Brightmap sprite POL3B0
+{
+	map "brightmaps/Decorations/POL3B0.png"
+	disablefullbright
+}
+
+//		Evil Eye		//
+
+Brightmap sprite CEYEA0
+{
+	map "brightmaps/Decorations/CEYEA0.png"
+	disablefullbright
+}
+
+Brightmap sprite CEYEB0
+{
+	map "brightmaps/Decorations/CEYEB0.png"
+	disablefullbright
+}
+
+Brightmap sprite CEYEC0
+{
+	map "brightmaps/Decorations/CEYEC0.png"
+	disablefullbright
+}
+
+//		Short Red Torch		//
+
+Brightmap sprite SRT1A0
+{
+	map "brightmaps/Decorations/sgt1a0.png"
+	disablefullbright
+}
+
+Brightmap sprite SRT1B0
+{
+	map "brightmaps/Decorations/sgt1b0.png"
+	disablefullbright
+}
+
+Brightmap sprite SRT1C0
+{
+	map "brightmaps/Decorations/sgt1c0.png"
+	disablefullbright
+}
+
+Brightmap sprite SRT1D0
+{
+	map "brightmaps/Decorations/sgt1d0.png"
+	disablefullbright
+}
+
+//		Short Green Torch 		//
+
+Brightmap sprite SGT1A0
+{
+	map "brightmaps/Decorations/sgt1a0.png"
+	disablefullbright
+}
+
+Brightmap sprite SGT1B0
+{
+	map "brightmaps/Decorations/sgt1b0.png"
+	disablefullbright
+}
+
+Brightmap sprite SGT1C0
+{
+	map "brightmaps/Decorations/sgt1c0.png"
+	disablefullbright
+}
+
+Brightmap sprite SGT1D0
+{
+	map "brightmaps/Decorations/sgt1d0.png"
+	disablefullbright
+}
+
+//		Short Blue Torch		//
+
+Brightmap sprite SBT1A0
+{
+	map "brightmaps/Decorations/sgt1a0.png"
+	disablefullbright
+}
+
+Brightmap sprite SBT1B0
+{
+	map "brightmaps/Decorations/sgt1b0.png"
+	disablefullbright
+}
+
+Brightmap sprite SBT1C0
+{
+	map "brightmaps/Decorations/sgt1c0.png"
+	disablefullbright
+}
+
+Brightmap sprite SBT1D0
+{
+	map "brightmaps/Decorations/sgt1d0.png"
+	disablefullbright
+}
+
+//		Tall Red Torch		//
+
+Brightmap sprite TRT1A0
+{
+	map "brightmaps/Decorations/tgt1a0.png"
+	disablefullbright
+}
+
+Brightmap sprite TRT1B0
+{
+	map "brightmaps/Decorations/tgt1b0.png"
+	disablefullbright
+}
+
+Brightmap sprite TRT1C0
+{
+	map "brightmaps/Decorations/tgt1c0.png"
+	disablefullbright
+}
+
+Brightmap sprite TRT1D0
+{
+	map "brightmaps/Decorations/tgt1d0.png"
+	disablefullbright
+}
+
+//		Tall Blue Torch		//
+
+Brightmap sprite TBT1A0
+{
+	map "brightmaps/Decorations/tgt1a0.png"
+	disablefullbright
+}
+
+Brightmap sprite TBT1B0
+{
+	map "brightmaps/Decorations/tgt1b0.png"
+	disablefullbright
+}
+
+Brightmap sprite TBT1C0
+{
+	map "brightmaps/Decorations/tgt1c0.png"
+	disablefullbright
+}
+
+Brightmap sprite TBT1D0
+{
+	map "brightmaps/Decorations/tgt1d0.png"
+	disablefullbright
+}
+
+//		Tall Green Torch		//
+
+Brightmap sprite TGT1A0
+{
+	map "brightmaps/Decorations/tgt1a0.png"
+	disablefullbright
+}
+
+Brightmap sprite TGT1B0
+{
+	map "brightmaps/Decorations/tgt1b0.png"
+	disablefullbright
+}
+
+Brightmap sprite TGT1C0
+{
+	map "brightmaps/Decorations/tgt1c0.png"
+	disablefullbright
+}
+
+Brightmap sprite TGT1D0
+{
+	map "brightmaps/Decorations/tgt1d0.png"
+	disablefullbright
+}
+
+//		Eviternity torches		//
+
+//		Tall		//
+
+//	Red	//
+
+Brightmap sprite TRT2A0
+{
+	map "brightmaps/Decorations/trt2a0.png"
+	disablefullbright
+}
+
+Brightmap sprite TRT2B0
+{
+	map "brightmaps/Decorations/trt2b0.png"
+	disablefullbright
+}
+
+Brightmap sprite TRT2C0
+{
+	map "brightmaps/Decorations/trt2c0.png"
+	disablefullbright
+}
+
+Brightmap sprite TRT2D0
+{
+	map "brightmaps/Decorations/trt2d0.png"
+	disablefullbright
+}
+
+//	Green	//
+
+Brightmap sprite TGT2A0
+{
+	map "brightmaps/Decorations/trt2a0.png"
+	disablefullbright
+}
+
+Brightmap sprite TGT2B0
+{
+	map "brightmaps/Decorations/trt2b0.png"
+	disablefullbright
+}
+
+Brightmap sprite TGT2C0
+{
+	map "brightmaps/Decorations/trt2c0.png"
+	disablefullbright
+}
+
+Brightmap sprite TGT2D0
+{
+	map "brightmaps/Decorations/trt2d0.png"
+	disablefullbright
+}
+
+//	Blue	//
+
+Brightmap sprite TBT2A0
+{
+	map "brightmaps/Decorations/trt2a0.png"
+	disablefullbright
+}
+
+Brightmap sprite TBT2B0
+{
+	map "brightmaps/Decorations/trt2b0.png"
+	disablefullbright
+}
+
+Brightmap sprite TBT2C0
+{
+	map "brightmaps/Decorations/trt2c0.png"
+	disablefullbright
+}
+
+Brightmap sprite TBT2D0
+{
+	map "brightmaps/Decorations/trt2d0.png"
+	disablefullbright
+}
+
+
+//		Fire Barrel		//
+
+Brightmap sprite FCANA0
+{
+	map "brightmaps/Decorations/FCANA0.png"
+	disablefullbright
+}
+
+Brightmap sprite FCANB0
+{
+	map "brightmaps/Decorations/FCANB0.png"
+	disablefullbright
+}
+
+Brightmap sprite FCANC0
+{
+	map "brightmaps/Decorations/FCANC0.png"
+	disablefullbright
+}
+
+//		Lights		//
+
+//	Small lamp	//
+
+brightmap sprite STLPA0
+{
+	map "brightmaps/Decorations/STLPA0.png"
+	disablefullbright
+}
+
+brightmap sprite STLPB0
+{
+	map "brightmaps/Decorations/STLPA0.png"
+	disablefullbright
+}
+
+brightmap sprite STLPC0
+{
+	map "brightmaps/Decorations/STLPA0.png"
+	disablefullbright
+}
+
+//	Midsized Lamp	//
+
+brightmap sprite tlp2a0
+{
+	map "brightmaps/Decorations/tlp2a0.png"
+	disablefullbright
+}
+
+brightmap sprite tlp2b0
+{
+	map "brightmaps/Decorations/tlp2b0.png"
+	disablefullbright
+}
+
+brightmap sprite tlp2c0
+{
+	map "brightmaps/Decorations/tlp2c0.png"
+	disablefullbright
+}
+
+brightmap sprite tlp2d0
+{
+	map "brightmaps/Decorations/tlp2d0.png"
+	disablefullbright
+}
+
+//	Big lamp	//
+
+brightmap sprite tlmpA0
+{
+	map "brightmaps/Decorations/tlmpa0.png"
+	disablefullbright
+}
+
+brightmap sprite tlmpb0
+{
+	map "brightmaps/Decorations/tlmpb0.png"
+	disablefullbright
+}
+
+brightmap sprite tlmpc0
+{
+	map "brightmaps/Decorations/tlmpc0.png"
+	disablefullbright
+}
+
+brightmap sprite tlmpd0
+{
+	map "brightmaps/Decorations/tlmpd0.png"
+	disablefullbright
+}
+
+//		Explosive Barrel		//
+
+brightmap sprite BRELA0
+{
+	map "brightmaps/Decorations/BRELa0.png"
+	disablefullbright
+}
+
+brightmap sprite BRELB0
+{
+	map "brightmaps/Decorations/BRELB0.png"
+	disablefullbright
+}
+
+brightmap sprite BRLXA0
+{
+	map "brightmaps/Decorations/BRLXA0.png"
+	disablefullbright
+}
+
+brightmap sprite BRLXB0
+{
+	disablefullbright
+}
+
+brightmap sprite BRLXC0
+{
+	map "brightmaps/Decorations/BRLXC0.png"
+	disablefullbright
+}
+
+brightmap sprite BRLXD0
+{
+	map "brightmaps/Decorations/BRLXD0.png"
+	disablefullbright
+}
+
+brightmap sprite BRLXE0
+{
+	map "brightmaps/Decorations/BRLXE0.png"
+	disablefullbright
+}
+
+brightmap sprite BRLXF0
+{
+	map "brightmaps/Decorations/BRLXF0.png"
+	disablefullbright
+}

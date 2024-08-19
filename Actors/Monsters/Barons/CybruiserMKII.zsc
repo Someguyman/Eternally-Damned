@@ -1,0 +1,133 @@
+
+Class MM_CybruiserMKII : MM_Cybruiser
+{
+  Default
+  {
+    Health 900;
+    Radius 24;
+    Height 64;
+    Mass 1000;
+    Speed 10;
+    PainChance 20;
+	Scale 1.2;
+    Obituary "%o was blown away by the Annihilator.";
+	ATTACKSOUND "spider/attack";
+	SeeSound "Cybaron/sight";
+	Painsound "Cybernoble2/pain";
+	DeathSound "Cybaron/death";
+    Monster;
+	Species "Baronofhell";
+	+BOSSDEATH
+    +FloorClip
+	+MissileMore
+	+noradiusdmg
+    +DontHarmClass
+	Tag "Annihilator";
+  }
+  
+	Void A_CybruAttack(Class<Actor> p)
+	{
+		A_FaceTarget();
+		A_SpawnProjectile(p,38,12);
+	}
+	
+	 void A_Cybrustomp()
+	{
+		A_StartSound("Cybernoble/walk", CHAN_BODY, CHANF_DEFAULT, 1, ATTN_IDLE);
+		A_Chase();
+	}
+	
+	 void A_Cybruarm()
+	{
+		A_StartSound("Cybaron/metal", CHAN_BODY);
+		A_FaceTarget();
+	}
+	
+	States
+	{
+	Spawn:
+		CBR2 AB 10 A_Look;
+		Loop;
+	See:
+		 See:
+		CBR2 A 1 A_Cybrustomp();
+		CBR2 A 2 A_Chase();
+		CBR2 A 3 A_Chase();
+		CBR2 BB 3 A_Chase();
+		CBR2 C 1 A_Cybrustomp();
+		CBR2 C 2 A_Chase();
+		CBR2 C 3 A_Chase();
+		CBR2 DD 3 A_Chase();
+		Loop;
+	Melee:
+		Stop;
+	Missile:
+		CBR2 E 0 A_Jump(50,"Missile2");
+		CBR2 E 12 A_FaceTarget;
+		CBR2 F 6 Bright A_CybruAttack("CyberDemonRocket"); //BulletProjectile
+		CBR2 E 2 A_FaceTarget;
+		CBR2 E 0 A_Spidrefire();
+		Goto Fallowup;
+	Missile2:
+		CBR2 E 6 A_FaceTarget;
+		CBR2 F 6 Bright A_CybruAttack("Micromissile");
+		CBR2 E 3 A_FaceTarget;
+		CBR2 F 6 Bright A_CybruAttack("Micromissile");
+		CBR2 E 3 A_FaceTarget;
+		CBR2 F 6 Bright A_CybruAttack("Micromissile");
+		CBR2 E 6 A_FaceTarget;
+		CBR2 E 0 A_Spidrefire();
+		Goto Fallowup;
+	Fallowup:
+		CBR2 G 10 A_Cybruarm();
+		CBR2 U 10 A_FaceTarget;
+		CBR2 I 2 Bright A_CybruAttack("BulletProjectile");
+		CBR2 U 2 Bright A_FaceTarget;
+		CBR2 H 2 Bright A_CybruAttack("BulletProjectile");
+		CBR2 U 2 Bright A_FaceTarget;
+		CBR2 I 2 Bright A_CybruAttack("BulletProjectile");
+		CBR2 U 2 Bright A_FaceTarget;
+		CBR2 H 2 Bright A_CybruAttack("BulletProjectile");
+		CBR2 U 2 Bright A_FaceTarget;
+		CBR2 I 2 Bright A_CybruAttack("BulletProjectile");
+		CBR2 U 2 Bright A_FaceTarget;
+		CBR2 H 2 Bright A_CybruAttack("BulletProjectile");
+		CBR2 U 2 Bright A_FaceTarget;
+		CBR2 I 2 Bright A_CybruAttack("BulletProjectile");
+		CBR2 U 4 A_FaceTarget;
+		Goto See;
+	OLDFallowup:
+		CBR2 G 10 A_Cybruarm();
+		CBR2 U 10 A_FaceTarget;
+		CBR2 I 2 Bright A_SPosAttackUseAtkSound;
+		CBR2 U 2 Bright A_FaceTarget;
+		CBR2 H 2 Bright A_SPosAttackUseAtkSound;
+		CBR2 U 2 Bright A_FaceTarget;
+		CBR2 I 2 Bright A_SPosAttackUseAtkSound;
+		CBR2 U 2 Bright A_FaceTarget;
+		CBR2 H 2 Bright A_SPosAttackUseAtkSound;
+		CBR2 U 2 Bright A_FaceTarget;
+		CBR2 I 2 Bright A_SPosAttackUseAtkSound;
+		CBR2 U 2 Bright A_FaceTarget;
+		CBR2 H 2 Bright A_SPosAttackUseAtkSound;
+		CBR2 U 2 Bright A_FaceTarget;
+		CBR2 I 2 Bright A_SPosAttackUseAtkSound;
+		CBR2 U 4 A_FaceTarget;
+		Goto See;
+	Pain:
+		CBR2 J  3 A_Pain;
+		CBR2 J  3;
+		Goto See;
+    Xdeath:
+	Death:
+		CBR2 K 1 Bright;
+		CBR2 K 5 Bright A_Scream();
+		CBR2 LMN 6 Bright;
+		CBR2 O 6 Bright A_NoBlocking();
+		CBR2 QR 6 Bright;
+		CBR2 S 6;
+		CBR2 T -1 A_BossDeath();
+		Stop;
+    Stop;
+	}
+}

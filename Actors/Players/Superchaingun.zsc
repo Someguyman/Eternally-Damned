@@ -1,0 +1,79 @@
+
+class MM_Chainguncannon : Slaughterweapon
+{
+	Default
+	{
+		Weapon.SelectionOrder 700;
+		Weapon.AmmoUse 2;
+		Weapon.AmmoGive 50;
+		Weapon.AmmoType "Clip";
+		Weapon.UpSound "Weapons/SuperCup";
+		Inventory.PickupSound "Weapons/SuperCPickup";
+		Inventory.PickupMessage "\cgYou got the Super chaingun! Tear through fleash!";
+		Obituary "%o was mowed down by %k's Super chaingun.";
+		Tag "$TAG_CHAINGUN";
+	}
+	
+		Action Void A_FireSGGun()
+		{
+			A_GunFlash("Flash");
+			A_Startsound("Weapons/suprchngun", CHAN_WEAPON);
+			A_FireBullets(5.6, 0, 2, 9, "MM_ExtremeSSGPuff", FBF_USEAMMO||FBF_NORANDOM);
+		}
+	States
+	{
+	Ready:
+		SCHG A 1 A_WeaponReady;
+		Loop;
+	Deselect:
+		SCHG A 0 A_Lower;
+		SCHG A 1 A_Lower;
+		Loop;
+	Select:
+		SCHG A 0 A_Raise;
+		SCHG A 1 A_Raise;
+		Loop;
+	Fire:
+		SCHG B 0 A_Stopsound(CHAN_AUTO);
+	ContinueFire:
+		SCHG A 1 A_FireSGGun();
+		SCHG B 1 A_Light0;
+		SCHG B 0 A_ReFire("ContinueFire");
+	Spindown:
+		SCHG A 0 A_Startsound("Weapons/suprchngun2", CHAN_AUTO);
+		SCHG AB 3 A_Refire;
+		SCHG AB 6 A_Refire;
+		Goto Ready;
+	Flash:
+		SCGF A 1 Bright A_Light1;
+		SCGF B 1 Bright A_Light0;
+		Goto LightDone;
+	Spawn:
+		SCGP A -1;
+		Stop;
+	}
+}
+
+Class MM_Chainguncannonpickup : CustomInventory 
+{
+Default
+{
+	INVENTORY.RESTRICTEDTO "ET_Player_Slaughter";
+	VISIBLETOPLAYERCLASS "ET_Player_Slaughter";
+	//Inventory.PickupSound "Weapons/PistolPickup";
+	Inventory.PickupMessage "\cgYou got the Super chaingun! Tear through fleash!";
+}
+	States
+	{
+	Spawn:
+		TNT1 A 0 A_JumpIfInventory("MM_Chainguncannon", 1, "Taken");
+		SCGP A -1;
+		Stop;
+	Pickup:
+		TNT1 A 0 A_GiveInventory("MM_Chainguncannon", 1);
+		Stop;
+	Taken:
+		TNT1 A 0;
+		Fail;	
+	}
+}

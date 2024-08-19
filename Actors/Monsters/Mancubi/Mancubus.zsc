@@ -1,0 +1,413 @@
+
+Class MM_Mancubusspawner : MM_Monsterspawners
+{
+	Default
+	{
+		+Noblockmap
+		-COUNTKILL
+		+THRUACTORS
+	}
+	States
+	{
+	Spawn:
+		FMAN G 0;
+		Goto spawncheck;
+	Goingdownspawn:
+	DoomZerospawn:
+	D64D2spawner:
+	Eviternityspawn:
+	Valiantspawn:
+	Scythe2spawn:
+	TNTRevoSpawn:
+	JenesisSpawner:
+	Epic2spawner:
+	Alternatespawn:
+	Normalspawn:
+		TNT1 A 0 A_NoBlocking;
+		TNT1 A 0 A_SpawnItemEx("MM_Mancubus",0,0,0,0,0,0,0,SXF_NOCHECKPOSITION | SXF_TRANSFERAMBUSHFLAG | SXF_TRANSFERPOINTERS | 288,0,tid);
+		Stop;
+	Ultimatedoomspawn:
+		TNT1 A 0 A_NoBlocking;
+		TNT1 A 0 A_JumpIf(CallACS("Udoomcacoscript")==2, "Cacospawn");
+	Udoomspawncontinued:
+		TNT1 A 0 A_JumpIf(CallACS("Doom2spawntoggle")==1, "Udoomspawnalt2");
+		TNT1 A 0 A_Jump(120, "Fatsospawn");
+		Goto Cacospawn;
+	Udoomspawnalt2:
+		TNT1 A 0 A_Jump(120, "Fatsospawn");
+		TNT1 A 0 A_Jump(20, "Painspawn");
+		Goto Cacospawn;
+	Cacospawn:
+		TNT1 A 0 A_SpawnItemEx("MM_Cacodemon",0,0,0,0,0,0,0,SXF_NOCHECKPOSITION | SXF_TRANSFERAMBUSHFLAG | SXF_TRANSFERPOINTERS | 288,0,tid);
+		Stop;
+	Fatsospawn:
+		TNT1 A 0 A_JumpIf(CallACS("Udoomcacoscript")==7, "Cacospawn");
+		TNT1 A 0 A_SpawnItemEx("MM_Mancubus",0,0,0,0,0,0,0,SXF_NOCHECKPOSITION | SXF_TRANSFERAMBUSHFLAG | SXF_TRANSFERPOINTERS | 288,0,tid);
+		Stop;
+	Painspawn:
+		TNT1 A 0 A_SpawnItemEx("MM_D1_Painelemental",0,0,0,0,0,0,0,SXF_NOCHECKPOSITION | SXF_TRANSFERAMBUSHFLAG | SXF_TRANSFERPOINTERS | 288,0,tid);
+		Stop;
+	AAilenspawn:
+		TNT1 A 0 A_NoBlocking;
+		TNT1 A 0 A_SpawnItemEx("MM_AAlien_Mancubus",0,0,0,0,0,0,0,SXF_NOCHECKPOSITION | SXF_TRANSFERAMBUSHFLAG | SXF_TRANSFERPOINTERS | 288,0,tid);
+		Stop;
+	KDIKDIZDSpawn:
+		TNT1 A 0 A_NoBlocking;
+		TNT1 A 0 A_SpawnItemEx("MM_Wargrin",0,0,0,0,0,0,0,SXF_NOCHECKPOSITION | SXF_TRANSFERAMBUSHFLAG | SXF_TRANSFERPOINTERS | 288,0,tid);
+		Stop;
+	}
+}
+
+class MM_Mancubus: Fatso Replaces Fatso
+{
+	Default
+	{
+		Gibhealth 40;
+		+NOINFIGHTSPECIES
+		+DONTHARMSPECIES
+		Scale 1.1;
+		Tag "Mancubus";
+	}
+	
+	Void A_Manwalk()
+	{
+		A_Chase();
+		A_StartSound("Behemoth/Step", CHAN_BODY, CHANF_DEFAULT, 1, ATTN_IDLE);
+	}
+	
+	Void A_Manraise()
+	{
+		A_Startsound("fatso/raiseguns", CHAN_VOICE);
+		A_FaceTarget();
+	}
+	
+	void A_ManAttack1()
+	{
+		A_FaceTarget();
+		A_SpawnProjectile("MancubusShot",18,-34,20);
+		A_SpawnProjectile("MancubusShot",18,34,0);
+	}
+	
+	void A_ManAttack2()
+	{
+		A_FaceTarget();
+		A_SpawnProjectile("MancubusShot",18,-34,0);
+		A_SpawnProjectile("MancubusShot",18,34,-20);
+	}
+	
+	void A_ManAttack3()
+	{
+		A_FaceTarget();
+		A_SpawnProjectile("MancubusShot",18,-34,8);
+		A_SpawnProjectile("MancubusShot",18,34,-8);
+	}
+	
+	void A_ManAttack4()
+	{
+		A_FaceTarget();
+		A_SpawnProjectile("FireTrail",18,-34,8);
+		A_SpawnProjectile("FireTrail",18,34,-8);
+	}
+
+	States
+	{
+	Spawn:
+		FMAN AB 15 A_Look;
+		Loop;
+	See:
+		FMAN AABBC 4 A_Chase;
+		FMAN C 4 A_Manwalk();
+		FMAN DDEEF 4 A_Chase;
+		FMAN F 4 A_Manwalk();
+		Loop;
+	Missile:
+		FMAN G 12 A_Manraise();
+		FMAN A 0 Bright A_JumpIfCloser(260,"Flamethrower");
+		FMAN G 8 A_FaceTarget;
+		FMAN H 10 BRIGHT A_ManAttack1();
+		FMAN IG 5 A_FaceTarget;
+		FMAN H 10 BRIGHT A_ManAttack2();
+		FMAN IG 5 A_FaceTarget;
+		FMAN H 10 BRIGHT A_ManAttack3();
+		FMAN IG 5 A_FaceTarget;
+		Goto See;
+	Melee:
+		FMAN G 12 A_Manraise();
+		Goto Flamethrower;
+	Flamethrower:
+		FMAN HHHHHH 3 BRIGHT A_ManAttack4();
+		FMAN IG 5 A_FaceTarget;
+		Goto See;
+	Pain:
+		FMAN J 3;
+		FMAN J 3 A_Pain;
+		Goto See;
+	 Death:
+		FMAN K 6;
+		FMAN L 6 A_Scream;
+		FMAN M 6 A_NoBlocking;
+		FMAN NOPQRS 6;
+		FMAN T -1 A_BossDeath;
+	    Stop;
+	Death.Ice:
+		FMAN J 5 A_GenericFreezeDeath;
+		TNT1 J 1 A_Freezedeathchunks;
+		WAIT;
+	Death.SSGGIBING:
+		//TNT1 A 0 A_Jump(60, "Death");
+		//TNT1 A 0 A_Jumpifcloser(90, "XDeath");
+		TNT1 A 0 A_Jump(256, "Death");
+		Goto Death;
+	XDeath:
+		MANX A 5;
+		MANX B 5 A_XScream;
+		MANX C 5 A_NoBlocking();
+		MANX DEF 5;
+		MANX G -1 A_BossDeath;
+		Stop;
+	Crush:
+		MANG A 0;
+		MANG A 0 A_Startsound("Bloody/crush");
+		MANG A -1;
+		stop;
+	Raise:
+		FMAN R 5;
+		FMAN QPONMLK 5;
+		Goto See;
+	}
+}
+
+class MM_D1_Mancubus : MM_mancubus
+{
+	Default
+	{
+		Radius 31;
+		Height 56;
+	}
+	States
+	{
+	Spawn:
+		TNT1 A 0;
+		TNT1 A 0 A_SpawnItem("MM_REALClip", 10, 0);
+		TNT1 A 0 A_SpawnItem("MM_ShellBox", 5, 0);
+		TNT1 A 0 A_SpawnItem("MM_RocketAmmo", -10, 0);
+		Goto Idle;
+	Idle:
+		FMAN AB 15 A_Look; 
+		Loop;
+	}
+}
+
+class MM_AAlien_Mancubus : MM_Mancubus Replaces Fatso
+{
+	Default
+	{
+		SeeSound "Hellcubus/Sight";
+		PainSound "Hellcubus/pain";
+		DeathSound "Hellcubus/Death";
+		ActiveSound "Hellcubus/Act";
+	}
+	
+	Void A_Manraise()
+	{
+		A_Startsound("Hellcubus/attack", CHAN_VOICE);
+		A_FaceTarget();
+	}
+	States
+	{
+	Spawn:
+		AFAT AB 15 A_Look;
+		Loop;
+	See:
+		AFAT AABBC 4 A_Chase;
+		AFAT C 4 A_Manwalk();
+		AFAT DDEEF 4 A_Chase;
+		AFAT F 4 A_Manwalk();
+		Loop;
+	Missile:
+		AFAT G 12 A_Manraise();
+		AFAT A 0 Bright A_JumpIfCloser(260,"Flamethrower");
+		AFAT G 8 A_FaceTarget;
+		AFAT H 10 BRIGHT A_ManAttack1();
+		AFAT IG 5 A_FaceTarget;
+		AFAT H 10 BRIGHT A_ManAttack2();
+		AFAT IG 5 A_FaceTarget;
+		AFAT H 10 BRIGHT A_ManAttack3();
+		AFAT IG 5 A_FaceTarget;
+		Goto See;
+	Melee:
+		AFAT G 12 A_Manraise();
+		Goto Flamethrower;
+	Flamethrower:
+		AFAT HHHHHH 3 BRIGHT A_ManAttack4();
+		AFAT IG 5 A_FaceTarget;
+		Goto See;
+	Pain:
+		AFAT J 3;
+		AFAT J 3 A_Pain;
+		Goto See;
+	Death:
+		AFAT K 6;
+		AFAT L 6 A_Scream;
+		AFAT M 6 A_NoBlocking;
+		AFAT NOPQRS 6;
+		AFAT T -1 A_BossDeath;
+		Stop;
+	XDeath:
+		AFTG A 5;
+		AFTG B 5 A_XScream;
+		AFTG C 5;
+		AFTG D 5 A_NoBlocking();
+		AFTG E -1 A_BossDeath;
+		Stop;
+	 Raise:
+		AFAT R 5;
+		AFAT QPONMLK 5;
+		Goto See;
+	}
+}
+
+class MancubusShot : Fatshot Replaces Fatshot
+{
+	Default
+	{
+		DamageType "Enemydamage";
+		Renderstyle "Add";
+		+ZDOOMTRANS
+		DamageFunction 28;
+	}
+	
+	Void A_ManPPtrail()
+	{
+			A_SpawnItemEx("Fatsotrail", 0, 0, -2, 0, 0, 0, 0, 128);
+	}
+	
+	Void A_ManPPtrail2()
+	{
+			A_SpawnItemEx("Fatsotrail", 0, 0, -2, 0, 0, 0, 0, 128);
+			A_SpawnItemEx("MancubusTrail", 0, 0, 2, 0, 0, 0, 0, 128);
+	}
+	States
+	{
+	Spawn:
+		MAFN A 0 nodelay A_JumpIf(CallACS("Projtoggle")==1, "AltSpawn");
+		MAFN AB 3 Bright;
+		MAFN A 0 A_JumpIf(CallACS("Projtoggle")==1, "AltSpawn");
+		Loop;
+	AltSpawn:
+		MANF AA 1 BRIGHT A_ManPPtrail();
+		MANF A 1 BRIGHT A_ManPPtrail2();
+		MANF BB 1 BRIGHT A_ManPPtrail();
+		MANF B 1 BRIGHT A_ManPPtrail2();
+		Goto spawn;
+	Death:
+		MNFX A 8 BRIGHT;
+		MNFX B 6 BRIGHT;
+		MNFX C 4 BRIGHT;
+		Stop;
+	}
+}
+
+Class Fatsotrail : Actor
+{
+  Default
+  {
+    Radius 1;
+    Height 1;
+    Speed 0;
+    RenderStyle "Add";
+    Alpha 0.70;
+	Scale 1.2;
+    Projectile;
+    +NoClip
+	+ZDOOMTRANS
+  }
+
+  States
+  {
+  Spawn:
+	TNT1 A 2;
+    MNTL CDEFGHIJ 1 Bright;
+    Stop;
+  }
+}
+
+Class MancubusTrail : Ball1Trail
+{
+	Default
+	{
+		ALPHA 0.05;
+		Scale 0.5;
+	}
+	States
+	{
+	Spawn:
+		TSM1 J 3;
+		TSM1 ABCDE 3 Bright A_FadeTo (0.3, 0.05, false);
+		TSM1 FGHI 3 Bright A_FadeOut(0.1);
+	Fadeaway:
+		TSM1 I 1 Bright A_FadeOut(0.15);
+		Loop;
+	}
+}
+
+class FireTrail : Actor
+{
+	Default
+	{
+		Radius 6;
+		Height 8;
+		Speed 16;
+		FastSpeed 20;
+		DamageFunction 2;
+		Mass 100;
+		Scale 0.8;
+		Projectile;
+		+DOOMBOUNCE
+		//+RANDOMIZE
+		//+MTHRUSPECIES
+		+ZDOOMTRANS
+		+Ripper
+		RenderStyle "Add";
+		Seesound "vile/firecrkl";
+		//DeathSound "vile/firecrkl";
+		Alpha 1;
+	}
+	
+	void A_Fireburn()
+	{
+	A_Explode(5, 8, 0);
+	A_Fire();
+	}
+	
+	void A_Vilefirestart()
+	{
+		A_Fire();
+		A_Startsound("vile/Firestart");
+	}
+	
+	States
+	{
+	Spawn:
+		FLAM A 0 BRIGHT { A_Vilefirestart(); A_FireCrackle(); }
+		FLAM B 3 BRIGHT 
+		{
+		A_Fireburn();
+		A_LowGravity();
+		}
+		FLAM C 4 BRIGHT A_Fireburn();
+		FLAM DE 2 BRIGHT A_Fireburn();
+	Death:
+		FLAM F 3 BRIGHT A_Fireburn();
+		FLAM GH 1 BRIGHT A_Fireburn();
+		Stop;
+	}
+}
+
+Class yourmother : MM_Mancubus 
+{
+	Default
+	{
+		Tag "Your mother";
+	}
+}

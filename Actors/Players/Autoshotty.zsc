@@ -1,0 +1,139 @@
+
+class MM_Autoshotgun : Alternateweapon
+{
+	Default
+	{
+		Weapon.SelectionOrder 1300;
+		//Weapon.AmmoUse 1;
+		//Weapon.AmmoUse2 1;
+		Weapon.AmmoGive2 10;
+		Weapon.AmmoGive1 6;
+		Weapon.AmmoType1 "Shell";
+		Weapon.AmmoType2 "mm_Autoshell";
+		Weapon.UpSound "Weapons/Autoshotgunload";
+		//+WEAPON.AMMO_OPTIONAL
+		//+WEAPON.ALT_AMMO_OPTIONAL
+		+WEAPON.AMMO_CHECKBOTH
+		Inventory.PickupSound "Weapons/Autoshotgununload";
+		Inventory.PickupMessage "\cgYou got the Assult Shotgun!";
+		Obituary "$OB_MPSHOTGUN";
+		Tag "Auto Shotgun";
+	}
+	
+			Action Void A_FireAutoshotty()
+		{
+			A_Startsound("Weapons/Autoshotgunfire", CHAN_AUTO);
+			A_gunflash("Flash");
+			A_Firebullets(11.2, 7.1, 12, 3, "MM_ExtremeSSGPuff", FBF_USEAMMO);
+			A_TakeInventory("MM_AutoShell", 1);
+			A_TakeInventory("Shell", 1);
+		}
+		
+		//action void SetWeaponState(statelabel st,int layer=PSP_WEAPON)
+		action void SetWeaponState(statelabel st,int layer=PSP_WEAPON)
+		{
+			if(player) player.setpsprite(layer,invoker.findstate(st));
+		}
+		
+	States
+	{
+	Ready:
+		ATOS A 1
+		{
+			A_Weaponready(WRF_ALLOWRELOAD);
+			If(CountInv("MM_AutoShell") == 0)
+			{
+				If(CountInv("Shell") > 0)
+				{
+					SetWeaponState("Reload");
+				}
+				else
+				{
+					return;
+				}
+			}
+				
+		}
+		Loop;
+	Deselect:
+		ATOS A 1 A_Lower;
+		Loop;
+	Select:
+		ATOS A 1 A_Raise;
+		Loop;
+	Fire:
+		ATOS A 0 A_JumpIfInventory("MM_AutoShell",1,"Continuefire");
+		ATOS A 0 A_JumpIfInventory("Shell",1,"Reload");
+		Goto Noammo;
+	Continuefire:
+		ATOS B 2 Bright A_FireAutoshotty();
+		ATOS C 2 Bright;
+		ATOS A 4;
+		ATOS A 0 { A_ReFire(); A_CheckReload(); }
+		Goto Ready;
+	Altfire:
+	Reload:
+		TNT1 A 0 A_JumpIfInventory("MM_AutoShell",10,"Ready");
+		TNT1 A 0 A_JumpIfInventory("Shell",1,"ReloadContinue");
+		Goto Ready;
+	ReloadContinue:
+		ATOS DE 4 A_Weaponready(WRF_NOFIRE);
+		ATOS F 5 A_Startsound("Weapons/Autoshotgununload", CHAN_AUTO);
+		ATOS G 8;
+		ATOS HIJK 5;
+		ATOS L 5
+		{
+			A_Startsound("Weapons/Autoshotgunload", CHAN_AUTO);
+			while(CountInv("MM_AutoShell") < 10 && CountInv("Shell") > 0)
+			{
+			A_GiveInventory("MM_AutoShell", 1);
+			//A_TakeInventory("Shell", 1);
+			}
+		}
+		ATOS ED 4;
+		Goto Ready;
+	Noammo:
+		Goto Ready;
+	Flash:
+		//STGF A 2 Bright A_Light2;
+		//STGF B 2 Bright A_Light1;
+		Goto LightDone;
+	Spawn:
+		AOSG A -1;
+		Stop;
+	}
+}
+
+class MM_AutoShell : ammo
+{
+	Default
+	{
+		Inventory.MaxAmount 10;
+		Ammo.BackpackMaxAmount 10;
+		//+IGNORESKILL
+	}
+}
+
+Class MM_Autoshottypickup : CustomInventory 
+{
+Default
+{
+	INVENTORY.RESTRICTEDTO "ET_Player_Alt";
+	VISIBLETOPLAYERCLASS "ET_Player_alt";
+	Inventory.PickupSound "Weapons/Autoshotgununload";
+	Inventory.PickupMessage "\cgYou got the Assault Shotgun!";
+}
+	States
+	{
+	Spawn:
+		TNT1 A 0 A_JumpIfInventory("MM_Autoshotgun", 1, "Taken");
+		AOSG A -1;
+		Stop;
+	Pickup:
+		TNT1 A 0 A_GiveInventory("MM_Autoshotgun", 1);
+		Stop;
+	Taken:
+		TNT1 A 0;
+		Fail;	
+	}
+}

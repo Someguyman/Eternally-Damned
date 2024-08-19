@@ -1,0 +1,180 @@
+
+class MM_MaularDemon : MM_Pinky
+{
+	Default
+	{
+		Health 150;
+		PainChance 180;
+		Speed 10;
+		Radius 30;
+		Height 56;
+		Mass 500;
+		Monster;
+		Damage 2;
+		Scale 1.2;
+		+FLOORCLIP
+		+ONLYSLAMSOLID
+		-RETARGETAFTERSLAM
+		+MISSILEMORE
+		+MISSILEEVENMORE
+		Species "Demon";
+		SeeSound "Mulardemon/Sight";
+		AttackSound "Mulardemon/Attack";
+		PainSound "Mulardemon/Pain";
+		DeathSound "Mulardemon/Death";
+		ActiveSound "Mulardemon/Active";
+		Obituary "%o was gored by a Mauler Demon.";
+		HitObituary "%o was mauled by a Mauler Demon";
+		tag "Maular Demon";
+	}
+	
+	  States
+  {
+	Spawn:
+		KMLD AB 10 A_Look();
+		Loop;
+	See:
+		KMLD AABBCCDD 2 fast
+		{ 
+		statelabel st = null;
+		if (CheckIfCloser(target, 224))
+			st = "Missile"; 
+		if (CheckIfCloser(target, 80))
+			st = null;
+		A_Chase("Melee", st);
+		}
+		Loop;
+	Melee:
+		KMLD EF 6 Fast A_FaceTarget();
+		KMLD G 10 Fast A_CustomMeleeAttack(10*random(1,8));
+		Goto See;
+	Missile:
+		KMLD E 4 fast Bright A_FaceTarget();
+		KMLD F 10 Bright A_SkullAttack(30);
+		KMLD G 4 Fast Bright A_Gravity();
+		KMLD G 1  Bright A_ScaleVelocity(0); 
+		Loop;
+	Pain:
+		KMLD H 2;
+		KMLD H 2 A_Pain();
+		Goto See;
+	Death:
+		KMLD I 8;
+		KMLD J 8 A_Scream();
+		KMLD K 4;
+		KMLD L 4 A_Fall();
+		KMLD M 4;
+		KMLD N -1;
+		Stop;
+	XDeath:
+		S3GB A 4;
+		S3GB B 4 A_XScream;
+		S3GB C 4 A_NoBlocking();
+		S3GB DEFGHI 4;
+		S3GB J -1;
+		Stop;
+	Raise:
+		KMLD M 5;
+		KMLD LKJI 5;
+		Goto See;
+  }
+}
+
+class MM_SpectreMaular : MM_MaularDemon
+{
+	Default
+	{
+		RenderStyle "OptFuzzy";
+		BloodColor "green";
+		//Alpha 0.1;
+		tag "Phaze Maular";
+	}
+	
+		Void A_Maularwalk()
+		{
+				statelabel st = null;
+			if (CheckIfCloser(target, 224))
+			st = "Missile"; 
+			if (CheckIfCloser(target, 80))
+			st = null;
+			A_Chase("Melee", st);
+			A_FadeTo (0.1, 0.1667, false);	
+		}
+		
+			Void A_Maularwalk2()
+		{
+				statelabel st = null;
+			if (CheckIfCloser(target, 224))
+			st = "Missile"; 
+			if (CheckIfCloser(target, 80))
+			st = null;
+			A_Chase("Melee", st);
+			A_FadeTo (0.1, 0.1667, false);
+			A_UnSetShootable();
+		}
+	  States
+  {
+	Spawn:
+		NDEM AB 10 A_Look();
+		NDEM E 0 A_SetShootable();
+		Loop;
+	See:		
+		NDEM AABB 2 Fast A_Maularwalk();
+		NDEM CCDD 2 Fast A_Maularwalk2();
+		Loop;
+	Melee:
+		NDEM E 1 A_FadeIn(0.25);
+		NDEM EEE 1 
+		{
+			A_SetShootable();
+			A_FadeIn(0.25);
+		}
+		NDEM E 4;
+		NDEM F 8 A_FaceTarget();
+		NDEM G 8 A_CustomMeleeAttack(10*random(1,8));
+		Goto See;
+	Missile:
+		NDEM E 1 Fast Bright
+		{
+			A_FadeIn(0.25);
+			A_FaceTarget();
+		}
+		NDEM EEE 1 Fast Bright
+		{
+			A_FadeIn(0.25);
+			A_FaceTarget();
+			A_SetShootable();
+		}
+		NDEM F 10 Fast  Bright A_SkullAttack(30);
+		NDEM G 4 Fast Bright A_Gravity();
+		NDEM G 1  Bright A_ScaleVelocity(0); 
+		loop;
+	Pain:
+		NDEM H 2 Fast A_FadeTo (1.0, 0.1667, false);
+		NDEM H 2 Fast A_Pain();
+		Goto See;
+	Death:
+		NDEM I 8 A_FadeTo (1.0, 0.1667, false);
+		NDEM J 8 A_Scream();
+		NDEM K 4 A_FadeTo (1.0, 0.1667, false);
+		NDEM L 4 A_Fall();
+		NDEM M 4;
+		NDEM N -1;
+		Stop;
+	XDeath:
+		NDEM O 4 A_FadeTo (1.0, 0.1667, false);
+		NDEM P 4 A_XScream;
+		NDEM Q 4
+		{
+			A_NoBlocking();
+			A_FadeTo (1.0, 0.1667, false);
+		}
+		NDEM RSTUV 4;
+		NDEM W -1;
+		Stop;
+	Raise:
+		NDEM N 5;
+		NDEM MLKJI 5;
+		Goto See;
+  }
+}

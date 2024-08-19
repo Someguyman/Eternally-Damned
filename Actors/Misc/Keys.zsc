@@ -1,0 +1,185 @@
+
+
+//		Key Cards		//
+
+
+class MM_BlueCard : CustomInventory Replaces BlueCard
+{
+	Default
+	{
+		Inventory.Pickupmessage "\ccPicked up a \chblue \cckeycard.";
+		Inventory.PickupSound "Keycard/Pickup";
+		Inventory.Icon "STKEYS0";
+	}
+	States
+	{
+	Spawn:
+		BKEY A 10 A_JumpIf(CallACS("Gamespawntoggle")==12.0, "KDIKDIZDSpawn");
+		BKEY B 10 bright A_JumpIf(CallACS("Gamespawntoggle")==12.0, "KDIKDIZDSpawn");
+		loop;
+	KDIKDIZDSpawn:
+		KEYB ABCDEFGHIJKL 2 Bright;
+		Goto spawn;
+	Pickup:
+		TNT1 A 0 A_GiveInventory("BlueCard");
+		Stop;
+	}
+}
+
+class MM_YellowCard : CustomInventory Replaces YellowCard
+{
+	Default
+	{
+		Inventory.Pickupmessage "\ccPicked up a \ckyellow \cckeycard.";
+		Inventory.PickupSound "Keycard/Pickup";
+		Inventory.Icon "STKEYS1";
+	}
+	States
+	{
+	Spawn:
+		YKEY A 10 A_JumpIf(CallACS("Gamespawntoggle")==12.0, "KDIKDIZDSpawn");
+		YKEY B 10 bright A_JumpIf(CallACS("Gamespawntoggle")==12.0, "KDIKDIZDSpawn");
+		loop;
+	KDIKDIZDSpawn:
+		KEYY ABCDEFGHIJKL 2 Bright;
+		Goto spawn;
+	Pickup:
+		TNT1 A 0 A_GiveInventory("YellowCard");
+		Stop;
+	}
+}
+
+class MM_RedCard : CustomInventory Replaces RedCard
+{
+	Default
+	{
+		Inventory.Pickupmessage "\ccPicked up a \cgred \cckeycard.";
+		Inventory.PickupSound "Keycard/Pickup";
+		Inventory.Icon "STKEYS2";
+	}
+	States
+	{
+	Spawn:
+		RKEY A 10 A_JumpIf(CallACS("Gamespawntoggle")==12.0, "KDIKDIZDSpawn");
+		RKEY B 10 bright A_JumpIf(CallACS("Gamespawntoggle")==12.0, "KDIKDIZDSpawn");
+		loop;
+	KDIKDIZDSpawn:
+		KEYR ABCDEFGHIJKL 2 Bright;
+		Goto spawn;
+	Pickup:
+		TNT1 A 0 A_GiveInventory("RedCard");
+		Stop;
+	}
+}
+
+
+//		Skull Keys		//
+
+
+class MM_SapphireSkull : CustomInventory Replaces BlueSkull
+{
+	Default
+	{
+		Inventory.Pickupmessage "";
+		Inventory.PickupSound "";
+		Inventory.Icon "STKEYS3";
+	}
+	States
+	{
+	Spawn:
+		BSKU A 10 A_JumpIf(CallACS("Gamespawntoggle")==12.0, "KDIKDIZDSpawn");
+		BSKU B 10 bright A_JumpIf(CallACS("Gamespawntoggle")==12.0, "KDIKDIZDSpawn");
+		loop;
+	KDIKDIZDSpawn:
+		KEYS ABCDEFGHIJKL 2 Bright;
+		Goto spawn;
+	Pickup:
+		TNT1 A 0 A_GiveInventory("BlueSkull");
+		Tnt1 A 0
+		{
+		if (CallACS("Gamespawntoggle")==12.0)
+		{
+			A_Log("\ccPicked up a \cwsilver \cckeycard.");
+			A_Startsound("Keycard/Pickup", CHAN_BODY);
+		}
+		else
+		{
+			A_Log("\ccPicked up a \cysapphire \ccskull key.");
+			A_Startsound("SkullKey/Pickup", CHAN_BODY);
+		}
+		}
+		Stop;
+	}
+}
+
+class MM_TopazSkull : CustomInventory Replaces YellowSkull
+{
+	Default
+	{
+		Inventory.Pickupmessage "";
+		Inventory.PickupSound "";
+		Inventory.Icon "STKEYS4";
+	}
+	States
+	{
+	Spawn:
+		YSKU A 10 A_JumpIf(CallACS("Gamespawntoggle")==12.0, "KDIKDIZDSpawn");
+		YSKU B 10 bright A_JumpIf(CallACS("Gamespawntoggle")==12.0, "KDIKDIZDSpawn");
+		loop;
+	KDIKDIZDSpawn:
+		KEYG ABCDEFGHIJKL 2 Bright;
+		Goto spawn;
+	Pickup:
+		TNT1 A 0 A_GiveInventory("YellowSkull");
+				Tnt1 A 0
+		{
+		if (CallACS("Gamespawntoggle")==12.0)
+		{
+			A_Log("\ccPicked up a \cdgreen \cckeycard.");
+			A_Startsound("Keycard/Pickup", CHAN_BODY);
+		}
+		else
+		{
+			A_Log("\ccPicked up a \cftopaz \ccskull key.");
+			A_Startsound("SkullKey/Pickup", CHAN_BODY);
+		}
+		}
+		Stop;
+	}
+}
+
+class MM_RubySkull : CustomInventory Replaces RedSkull
+{
+	Default
+	{
+		Inventory.Pickupmessage "";
+		Inventory.PickupSound "";
+		Inventory.Icon "STKEYS5";
+	}
+	States
+	{
+	Spawn:
+		RSKU A 10 A_JumpIf(CallACS("Gamespawntoggle")==12.0, "KDIKDIZDSpawn");
+		RSKU B 10 bright A_JumpIf(CallACS("Gamespawntoggle")==12.0, "KDIKDIZDSpawn");
+		loop;
+	KDIKDIZDSpawn:
+		KEYO ABCDEFGHIJKL 2 Bright;
+		Goto spawn;
+	Pickup:
+		TNT1 A 0 A_GiveInventory("RedSkull");
+				Tnt1 A 0
+		{
+		if (CallACS("Gamespawntoggle")==12.0)
+		{
+			A_Log("\ccPicked up an \ciorange \cckeycard.");
+			A_Startsound("Keycard/Pickup", CHAN_BODY);
+		}
+		else
+		{
+			A_Log("\ccPicked up a \caruby \ccskull key.");
+			A_Startsound("SkullKey/Pickup", CHAN_BODY);
+		}
+		}
+		Stop;
+	}
+}

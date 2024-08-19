@@ -1,0 +1,10 @@
+
+Actor ED_InvulnerabilitySphere : MM_InvulnerabilitySpherePickUp Replaces InvulnerabilitySphere {}
+
+Actor ED_Soulsphere : MM_Soulsphere Replaces Soulsphere {}
+
+Actor ED_Megasphere : MM_Megasphere_spawner Replaces Megasphere {}
+
+Actor ED_BlurSphere : MM_BlurSpherePickup Replaces BlurSphere {}
+
+Actor ED_Lightamp : MM_Lightampspawner Replaces Infrared {}

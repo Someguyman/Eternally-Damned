@@ -1,0 +1,517 @@
+class ET_Player : Doomplayer Replaces PlayerPawn
+{
+	Default
+	{
+		Speed 1;
+		Health 100;
+		Radius 16;
+		Height 56;
+		Mass 100;
+		PainChance 255;
+		Player.DisplayName "Original";
+		Player.SoundClass "Original";
+		Player.CrouchSprite "PLYC";
+		Player.Face "STF";
+		Player.StartItem "MM_Pistol";
+		Player.StartItem "MM_Fists";
+		Player.StartItem "Clip", 50;
+		Player.WeaponSlot 1, "MM_Chainsaw", "MM_Fists";
+		Player.WeaponSlot 2, "MM_Pistol";
+		Player.WeaponSlot 3, "MM_Shotgun", "MM_SuperShotgun";
+		Player.WeaponSlot 4, "MM_Chaingun";
+		Player.WeaponSlot 5, "MM_RocketLauncher";
+		Player.WeaponSlot 6, "MM_PlasmaRifle";
+		//Player.WeaponSlot 6, "MM_Railgun", "MM_PlasmaRifle";
+		Player.WeaponSlot 7, "MM_Unmaker", "MM_BFG9000";
+		Player.WeaponSlot 8, "MM_Unmaker";
+	}
+
+	States
+	{
+	Spawn:
+		PLAM A -1;
+		Loop;
+	See:
+		PLAM ABCD 4;
+		Loop;
+	Missile:
+		PLAM E 12;
+		Goto Spawn;
+	Melee:
+		PLAM F 6 BRIGHT;
+		Goto Missile;
+	Pain:
+		PLAM G 4;
+		PLAM G 4 A_Pain;
+		Goto Spawn;
+	Death.SSGGIBING:
+		TNT1 A 0 A_Jumpifcloser(128, "XDeath");
+		TNT1 A 0 A_Jump(256, "Death");
+		Goto Death;
+	Death:
+		PLAM H 0 A_PlayerSkinCheck("AltSkinDeath");
+		Goto Death1;
+	Death1:
+		PLAM H 10;
+		PLAM I 10 A_PlayerScream;
+		PLAM J 10 A_NoBlocking;
+		PLAM KLM 10;
+		PLAM N -1;
+		Stop;
+	XDeath:
+		PLAM O 0 A_PlayerSkinCheck("AltSkinXDeath");
+	XDeath1:
+		PLAM O 5;
+		PLAM P 5 A_XScream;
+		PLAM Q 5 A_NoBlocking;
+		PLAM RSTUV 5;
+		PLAM W -1;
+		Stop;
+	AltSkinDeath:
+		PLAM H 6;
+		PLAM I 6 A_PlayerScream;
+		PLAM JK 6;
+		PLAM L 6 A_NoBlocking;
+		PLAM MNO 6;
+		PLAM P -1;
+		Stop;
+	AltSkinXDeath:
+		PLAM Q 5 A_PlayerScream;
+		PLAM R 0 A_NoBlocking;
+		PLAM R 5 A_SkullPop;
+		PLAM STUVWX 5;
+		PLAM Y -1;
+		Stop;
+	}
+}
+
+class ET_Player_Alt : DoomPlayer
+{
+	Default
+	{
+		Player.SoundClass "Alternate";
+		Player.DisplayName "Alternate";
+		Player.StartItem "MM_Rifle";
+		Player.StartItem "MM_Knife";
+		Player.StartItem "Clip", 25;
+		Player.Face "GAL";
+		Player.WeaponSlot 1, "MM_Knife", "MM_Fireaxe";
+		Player.WeaponSlot 2, "MM_Rifle";
+		Player.WeaponSlot 3, "MM_Sawedoff", "MM_Autoshotgun";
+		Player.WeaponSlot 4, "MM_Nailgun";
+		Player.WeaponSlot 5, "MM_GrenadeLauncher";
+		Player.WeaponSlot 6, "MM_Lightninggun";
+		Player.WeaponSlot 7, "MM_Soulcube", "MM_Wroaringgun2704";
+		Player.WeaponSlot 8, "MM_Soulcube";
+	}
+	
+	States
+	{
+	Spawn:
+		PLAF A -1;
+		Loop;
+	See:
+		PLAF ABCD 4;
+		Loop;
+	Missile:
+		PLAF E 12;
+		Goto Spawn;
+	Melee:
+		PLAF F 6 BRIGHT;
+		Goto Missile;
+	Pain:
+		PLAF G 4;
+		PLAF G 4 A_Pain;
+		Goto Spawn;
+	Death.SSGGIBING:
+		TNT1 A 0 A_Jumpifcloser(128, "XDeath");
+		TNT1 A 0 A_Jump(256, "Death");
+		Goto Death;
+	Death:
+		PLAF H 0 A_PlayerSkinCheck("AltSkinDeath");
+		Goto Death1;
+	Death1:
+		PLAF H 10;
+		PLAF I 10 A_PlayerScream;
+		PLAF J 10 A_NoBlocking;
+		PLAF KLM 10;
+		PLAF N -1;
+		Stop;
+	XDeath:
+		PLAF O 0 A_PlayerSkinCheck("AltSkinXDeath");
+	XDeath1:
+		PLAF O 5;
+		PLAF P 5 A_XScream;
+		PLAF Q 5 A_NoBlocking;
+		PLAF RSTUV 5;
+		PLAF W -1;
+		Stop;
+	AltSkinDeath:
+		PLAF H 6;
+		PLAF I 6 A_PlayerScream;
+		PLAF JK 6;
+		PLAF L 6 A_NoBlocking;
+		PLAF MNO 6;
+		PLAF P -1;
+		Stop;
+	AltSkinXDeath:
+		PLAF Q 5 A_PlayerScream;
+		PLAF R 0 A_NoBlocking;
+		PLAF R 5 A_SkullPop;
+		PLAF STUVWX 5;
+		PLAF Y -1;
+		Stop;
+	}
+}
+
+class ET_Player_Slaughter : DoomPlayer
+{
+	Default
+	{
+		Speed 1;
+		Health 100;
+		Radius 16;
+		Height 56;
+		Mass 500;
+		PainChance 255;
+		Player.DisplayName "Slaughter";
+		Player.SoundClass "Slaughter";
+		Player.CrouchSprite "PLYC";
+		Player.Face "BLK";
+		Player.StartItem "MM_Machinegun";
+		//Player.StartItem "MM_Shotgun";
+		//Player.StartItem "MM_SuperShotgun";
+		Player.StartItem "MM_SuperFists";
+		Player.StartItem "Clip", 100;
+		Player.StartItem "Shell", 8;
+		Player.StartItem "MM_MegaArmorBonus";
+		Player.WeaponSlot 1, "MM_SuperFists", "MM_Ubersaw";
+		Player.WeaponSlot 2, "MM_Machinegun";
+		Player.WeaponSlot 3, "MM_Autoshotgun2", "MM_Tacticalssg";
+		Player.WeaponSlot 4, "MM_Chainguncannon";
+		Player.WeaponSlot 5, "MM_Devestator";
+		Player.WeaponSlot 6, "MM_PlasmaGunMKII";
+		Player.WeaponSlot 7, "MM_BFG10K";
+		Player.WeaponSlot 8, "";
+		Player.ViewHeight 43;
+	}
+
+	States
+	{
+	Spawn:
+		PLAB A -1;
+		Loop;
+	See:
+		PLAB ABCD 4;
+		Loop;
+	Missile:
+		PLAB E 12;
+		Goto Spawn;
+	Melee:
+		PLAB F 6 BRIGHT;
+		Goto Missile;
+	Pain:
+		PLAB G 4;
+		PLAB G 4 A_Pain;
+		Goto Spawn;
+	Death.SSGGIBING:
+		TNT1 A 0 A_Jumpifcloser(128, "XDeath");
+		TNT1 A 0 A_Jump(256, "Death");
+		Goto Death;
+	Death:
+		PLAB H 0 A_PlayerSkinCheck("AltSkinDeath");
+		Goto Death1;
+	Death1:
+		PLAB H 10;
+		PLAB I 10 A_PlayerScream;
+		PLAB J 10 A_NoBlocking;
+		PLAB KLM 10;
+		PLAB N -1;
+		Stop;
+	XDeath:
+		PLAB O 0 A_PlayerSkinCheck("AltSkinXDeath");
+	XDeath1:
+		PLAB O 5;
+		PLAB P 5 A_XScream;
+		PLAB Q 5 A_NoBlocking;
+		PLAB RS 5;
+		PLAB T -1;
+		Stop;
+	AltSkinDeath:
+		PLAB H 6;
+		PLAB I 6 A_PlayerScream;
+		PLAB JK 6;
+		PLAB L 6 A_NoBlocking;
+		PLAB MNO 6;
+		PLAB P -1;
+		Stop;
+	AltSkinXDeath:
+		PLAB Q 5 A_PlayerScream;
+		PLAB R 0 A_NoBlocking;
+		PLAB R 5 A_SkullPop;
+		PLAB STUVWX 5;
+		PLAB Y -1;
+		Stop;
+	}
+}
+
+class ET_Player_Pacifist : DoomPlayer
+{
+	Default
+	{
+		+NOMENU
+		Speed 1;
+		Health 100;
+		Radius 16;
+		Height 56;
+		Mass 100;
+		PainChance 255;
+		Player.DisplayName "Pacifist";
+		Player.SoundClass "PlayerMale";
+		Player.CrouchSprite "PLYC";
+		Player.Face "GNG";
+		Player.StartItem "MM_Stunner";
+		Player.StartItem "MM_Fists";
+		Player.WeaponSlot 1, "MM_Fists";
+		Player.WeaponSlot 2, "MM_Stunner";
+		Player.WeaponSlot 3, "";
+		Player.WeaponSlot 4, "";
+		Player.WeaponSlot 5, "";
+		Player.WeaponSlot 6, "";
+		Player.WeaponSlot 7, "";
+		Player.WeaponSlot 8, "";
+	}
+
+	States
+	{
+	Spawn:
+		PLAM A -1;
+		Loop;
+	See:
+		PLAM ABCD 4;
+		Loop;
+	Missile:
+		PLAM E 12;
+		Goto Spawn;
+	Melee:
+		PLAM F 6 BRIGHT;
+		Goto Missile;
+	Pain:
+		PLAM G 4;
+		PLAM G 4 A_Pain;
+		Goto Spawn;
+	Death.SSGGIBING:
+		TNT1 A 0 A_Jumpifcloser(128, "XDeath");
+		TNT1 A 0 A_Jump(256, "Death");
+		Goto Death;
+	Death:
+		PLAM H 0 A_PlayerSkinCheck("AltSkinDeath");
+		Goto Death1;
+	Death1:
+		PLAM H 10;
+		PLAM I 10 A_PlayerScream;
+		PLAM J 10 A_NoBlocking;
+		PLAM KLM 10;
+		PLAM N -1;
+		Stop;
+	XDeath:
+		PLAM O 0 A_PlayerSkinCheck("AltSkinXDeath");
+	XDeath1:
+		PLAM O 5;
+		PLAM P 5 A_XScream;
+		PLAM Q 5 A_NoBlocking;
+		PLAM RSTUV 5;
+		PLAM W -1;
+		Stop;
+	AltSkinDeath:
+		PLAM H 6;
+		PLAM I 6 A_PlayerScream;
+		PLAM JK 6;
+		PLAM L 6 A_NoBlocking;
+		PLAM MNO 6;
+		PLAM P -1;
+		Stop;
+	AltSkinXDeath:
+		PLAM Q 5 A_PlayerScream;
+		PLAM R 0 A_NoBlocking;
+		PLAM R 5 A_SkullPop;
+		PLAM STUVWX 5;
+		PLAM Y -1;
+		Stop;
+	}
+}
+
+class ET_Player_Tyson : DoomPlayer
+{
+	Default
+	{
+		+NOMENU
+		Speed 1;
+		Health 100;
+		Radius 16;
+		Height 56;
+		Mass 100;
+		PainChance 255;
+		Player.DisplayName "Tyson";
+		Player.SoundClass "PlayerMale";
+		Player.CrouchSprite "PLYC";
+		Player.Face "STF";
+		Player.StartItem "MM_TysonPistol";
+		Player.StartItem "MM_Fists";
+		Player.StartItem "Clip", 50;
+		Player.WeaponSlot 1, "MM_Fists", "MM_Chainsaw";
+		Player.WeaponSlot 2, "MM_TysonPistol";
+		Player.WeaponSlot 3, "";
+		Player.WeaponSlot 4, "";
+		Player.WeaponSlot 5, "";
+		Player.WeaponSlot 6, "";
+		Player.WeaponSlot 7, "";
+		Player.WeaponSlot 8, "";
+	}
+
+	States
+	{
+	Spawn:
+		PLAM A -1;
+		Loop;
+	See:
+		PLAM ABCD 4;
+		Loop;
+	Missile:
+		PLAM E 12;
+		Goto Spawn;
+	Melee:
+		PLAM F 6 BRIGHT;
+		Goto Missile;
+	Pain:
+		PLAM G 4;
+		PLAM G 4 A_Pain;
+		Goto Spawn;
+	Death.SSGGIBING:
+		TNT1 A 0 A_Jumpifcloser(128, "XDeath");
+		TNT1 A 0 A_Jump(256, "Death");
+		Goto Death;
+	Death:
+		PLAM H 0 A_PlayerSkinCheck("AltSkinDeath");
+		Goto Death1;
+	Death1:
+		PLAM H 10;
+		PLAM I 10 A_PlayerScream;
+		PLAM J 10 A_NoBlocking;
+		PLAM KLM 10;
+		PLAM N -1;
+		Stop;
+	XDeath:
+		PLAM O 0 A_PlayerSkinCheck("AltSkinXDeath");
+	XDeath1:
+		PLAM O 5;
+		PLAM P 5 A_XScream;
+		PLAM Q 5 A_NoBlocking;
+		PLAM RSTUV 5;
+		PLAM W -1;
+		Stop;
+	AltSkinDeath:
+		PLAM H 6;
+		PLAM I 6 A_PlayerScream;
+		PLAM JK 6;
+		PLAM L 6 A_NoBlocking;
+		PLAM MNO 6;
+		PLAM P -1;
+		Stop;
+	AltSkinXDeath:
+		PLAM Q 5 A_PlayerScream;
+		PLAM R 0 A_NoBlocking;
+		PLAM R 5 A_SkullPop;
+		PLAM STUVWX 5;
+		PLAM Y -1;
+		Stop;
+	}
+}
+
+class ET_Player_Wolf : Doomplayer
+{
+	Default
+	{
+		+NOMENU
+		Speed 1;
+		Health 100;
+		Radius 16;
+		Height 56;
+		Mass 100;
+		PainChance 255;
+		Player.ViewBob 0;
+		Player.Face "BJB";
+		Player.DisplayName "Wolfenstein3D";
+		Player.SoundClass "Wolfenstein";
+		Player.DamageScreenColor "FF 00 00";
+		Player.StartItem "MM_Wolfentein3dPistol";
+		Player.StartItem "MM_Wolfentein3dKnife";
+		Player.StartItem "Wolf3dMag", 8;
+		Player.WeaponSlot 1, "MM_Wolfentein3dKnife";
+		Player.WeaponSlot 2, "MM_Wolfentein3dPistol";
+		Player.WeaponSlot 3, "MM_Wolfentein3dMachinegun";
+		Player.WeaponSlot 4, "MM_Wolfentein3dChaingun";
+		Player.WeaponSlot 5, "";
+		Player.WeaponSlot 6, "";
+		Player.WeaponSlot 7, "";
+		Player.WeaponSlot 8, "";
+	}
+
+	States
+	{
+	Spawn:
+		BJPL A -1;
+		Loop;
+	See:
+		BJPL ABCD 4;
+		Loop;
+	Missile:
+		BJPL E 12;
+		Goto Spawn;
+	Melee:
+		BJPL F 6 BRIGHT;
+		Goto Missile;
+	Pain:
+		BJPL G 4;
+		BJPL G 4 A_Pain;
+		Goto Spawn;
+	Death.SSGGIBING:
+		TNT1 A 0 A_Jumpifcloser(128, "XDeath");
+		TNT1 A 0 A_Jump(256, "Death");
+		Goto Death;
+	Death:
+		BJPL H 0 A_PlayerSkinCheck("AltSkinDeath");
+		Goto Death1;
+	Death1:
+		BJPL H 10;
+		BJPL I 10 A_PlayerScream;
+		BJPL J 10 A_NoBlocking;
+		BJPL KLM 10;
+		BJPL N -1;
+		Stop;
+	XDeath:
+		BJPL O 0 A_PlayerSkinCheck("AltSkinXDeath");
+	XDeath1:
+		BJPL O 5;
+		BJPL P 5 A_XScream;
+		BJPL Q 5 A_NoBlocking;
+		BJPL RSTUV 5;
+		BJPL W -1;
+		Stop;
+	AltSkinDeath:
+		BJPL H 6;
+		BJPL I 6 A_PlayerScream;
+		BJPL JK 6;
+		BJPL L 6 A_NoBlocking;
+		BJPL MNO 6;
+		BJPL P -1;
+		Stop;
+	AltSkinXDeath:
+		BJPL Q 5 A_PlayerScream;
+		BJPL R 0 A_NoBlocking;
+		BJPL R 5 A_SkullPop;
+		BJPL STUVWX 5;
+		BJPL Y -1;
+		Stop;
+	}
+}

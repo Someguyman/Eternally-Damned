@@ -1,0 +1,449 @@
+
+//		Dead male marines		//
+
+class MM_DeadMarine1 : DeadMarine
+{
+	States
+	{
+	Spawn:
+		DEM1 A -1;
+		Stop;
+	}
+}
+
+class MM_DeadMarine2 : DeadMarine
+{
+	States
+	{
+	Spawn:
+		DEM2 A -1;
+		Stop;
+	}
+}
+
+class MM_DeadMarine3 : DeadMarine
+{
+	States
+	{
+	Spawn:
+		DEM3 A -1;
+		Stop;
+	}
+}
+
+class MM_DeadMarine4 : DeadMarine
+{
+	States
+	{
+	Spawn:
+		DEM4 A -1;
+		Stop;
+	}
+}
+
+//		Dead Female Marines		//
+
+class MM_DeadMarine5 : DeadMarine
+{
+	States
+	{
+	Spawn:
+		DEF1 A -1;
+		Stop;
+	}
+}
+
+class MM_DeadMarine6 : DeadMarine
+{
+	States
+	{
+	Spawn:
+		DEF2 A -1;
+		Stop;
+	}
+}
+
+class MM_DeadMarine7 : DeadMarine
+{
+	States
+	{
+	Spawn:
+		DEF3 A -1;
+		Stop;
+	}
+}
+
+class MM_DeadMarine8 : DeadMarine
+{
+	States
+	{
+	Spawn:
+		DEF4 A -1;
+		Stop;
+	}
+}
+
+//		Dead Black Commandos	//
+
+Class MM_DeadMarine9 : DeadMarine
+{
+	States
+	{
+	Spawn:
+		DEB1 A -1;
+		Stop;
+	}
+}
+
+Class MM_DeadMarine10 : DeadMarine
+{
+	States
+	{
+	Spawn:
+		DEB2 A -1;
+		Stop;
+	}
+}
+
+Class MM_DeadMarine11 : DeadMarine
+{
+	States
+	{
+	Spawn:
+		DEB3 A -1;
+		Stop;
+	}
+}
+
+Class MM_DeadMarine12 : DeadMarine
+{
+	States
+	{
+	Spawn:
+		DEB4 A -1;
+		Stop;
+	}
+}
+
+//		Gibbed Monster		//
+
+Class MM_GibbedMarine1 : GibbedMarine
+{
+	States
+	{
+		Spawn:
+			GBM1 A -1;
+			Stop;
+	}
+}
+
+Class MM_GibbedMarine2 : GibbedMarine
+{
+	States
+	{
+		Spawn:
+			GBM2 A -1;
+			Stop;
+	}
+}
+
+Class MM_GibbedMarine3 : GibbedMarine
+{
+	States
+	{
+		Spawn:
+			GBM3 A -1;
+			Stop;
+	}
+}
+
+Class MM_GibbedMarine4 : GibbedMarine
+{
+	States
+	{
+		Spawn:
+			GBM4 A -1;
+			Stop;
+	}
+}
+
+Class MM_GibbedMarine5 : GibbedMarine
+{
+	States
+	{
+		Spawn:
+			GBF1 A -1;
+			Stop;
+	}
+}
+
+Class MM_GibbedMarine6 : GibbedMarine
+{
+	States
+	{
+		Spawn:
+			GBF2 A -1;
+			Stop;
+	}
+}
+
+Class MM_GibbedMarine7 : GibbedMarine
+{
+	States
+	{
+		Spawn:
+			GBF3 A -1;
+			Stop;
+	}
+}
+
+Class MM_GibbedMarine8 : GibbedMarine
+{
+	States
+	{
+		Spawn:
+			GBF4 A -1;
+			Stop;
+	}
+}
+
+Class MM_GibbedMarine9 : GibbedMarine
+{
+	States
+	{
+		Spawn:
+			GBB1 A -1;
+			Stop;
+	}
+}
+
+Class MM_GibbedMarine10 : GibbedMarine
+{
+	States
+	{
+		Spawn:
+			GBB2 A -1;
+			Stop;
+	}
+}
+
+Class MM_GibbedMarine11 : GibbedMarine
+{
+	States
+	{
+		Spawn:
+			GBB3 A -1;
+			Stop;
+	}
+}
+
+Class MM_GibbedMarine12 : GibbedMarine
+{
+	States
+	{
+		Spawn:
+			GBB4 A -1;
+			Stop;
+	}
+}
+
+//		Gibbedextra		//
+
+Class MM_GibbedZombie1 : GibbedMarine
+{
+	States
+	{
+		Spawn:
+			POSS U -1;
+			Stop;
+	}
+}
+
+Class MM_GibbedZombie2 : GibbedMarine
+{
+	States
+	{
+		Spawn:
+			SPOS U -1;
+			Stop;
+	}
+}
+
+Class MM_KDIKDIZD_Deadminer : Deadmarine
+{
+	States
+	{
+		Spawn:
+			DECO A -1;
+			loop;
+	}
+}
+
+class MM_Gibbedthingextraspawner : Randomspawner
+{
+	Default
+	{
+		DropItem "MM_GibbedZombie1", 256, 50;
+		DropItem "MM_GibbedZombie2", 256, 50;
+	}
+}
+
+Class MM_Extragibbedthingspawner : Actor
+{
+	Default
+	{
+		+Noblockmap
+		-COUNTKILL 
+	}
+	States
+	{
+	Spawn:
+		TNT1 A 0;
+		TNT1 A 0 A_JumpIf(CallACS("Gamespawntoggle")==4, "D64D2Spawner");
+		TNT1 A 0 A_JumpIf(CallACS("Gamespawntoggle")==12.0, "KDIKDIZDSpawner");
+		Goto Normalspawn;
+	Normalspawn:
+		TNT1 A 0 A_NoBlocking;
+		TNT1 A 0 A_SpawnItemEx("MM_Gibbedthingextraspawner",0,0,0,0,0,0,0,SXF_NOCHECKPOSITION | SXF_TRANSFERAMBUSHFLAG ,0);
+		Stop;
+	D64D2Spawner:
+		TNT1 A 0 A_NoBlocking;
+		TNT1 A 0 A_SpawnItemEx("MM_NightmareCacodemon",0,0,0,0,0,0,0,SXF_NOCHECKPOSITION | SXF_TRANSFERAMBUSHFLAG | SXF_TRANSFERPITCH,0);
+		Stop;
+	KDIKDIZDSpawner:
+		TNT1 A 0 A_NoBlocking;
+		TNT1 A 0 A_SpawnItemEx("MM_SpinningChair",0,0,0,0,0,0,0,SXF_NOCHECKPOSITION | SXF_TRANSFERAMBUSHFLAG ,0);
+		Stop;
+	}
+}
+
+class MM_Pileofbones : Actor
+{
+	States
+	{
+	Spawn:
+		SKEX A -1;
+		Stop;
+	}
+}
+
+Class MM_Deadlostsoulspawner : Actor
+{
+	Default
+	{
+		+Noblockmap
+		-COUNTKILL 
+	}
+	States
+	{
+	Spawn:
+		TNT1 A 0;
+		TNT1 A 0 A_JumpIf(CallACS("Gamespawntoggle")==6 || CallACS("Gamespawntoggle")==12.0, "ValiantSpawner");
+		//TNT1 A 0 A_JumpIf(CallACS("Gamespawntoggle")==12.0, "ValiantSpawner");
+		Goto Normalspawn;
+	Normalspawn:
+		TNT1 A 0 A_NoBlocking;
+        TNT1 A 0 {bCOUNTKILL = 0; }
+        TNT1 A 0 {bTHRUACTORS = 1; }
+		TNT1 A 0 A_SpawnItemEx("MM_Pileofbones",0,0,0,0,0,0,0,SXF_NOCHECKPOSITION | SXF_TRANSFERAMBUSHFLAG ,0);
+		Stop;
+	ValiantSpawner:
+		TNT1 A 0 A_NoBlocking;
+        TNT1 A 0 {bCOUNTKILL = 0; }
+        TNT1 A 0 {bTHRUACTORS = 1; }
+		TNT1 A 0 A_SpawnItemEx("MM_SuicideBomber",0,0,0,0,0,0,0,SXF_NOCHECKPOSITION | SXF_TRANSFERAMBUSHFLAG | SXF_TRANSFERPITCH,0);
+		Stop;
+	}
+}
+
+//		Misc		//
+
+class MM_BrainStem : BrainStem {}
+
+Class MM_Brainstem_spawner : Actor
+{
+	Default
+	{
+		+Noblockmap
+		-COUNTKILL 
+	}
+	States
+	{
+	Spawn:
+		TNT1 A 0;
+		TNT1 A 0 A_JumpIf(CallACS("Gamespawntoggle")==12.0, "KDIKDIZDSpawner");
+		Goto Normalspawn;
+	Normalspawn:
+		TNT1 A 0 A_NoBlocking;
+        TNT1 A 0 {bCOUNTKILL = 0; }
+        TNT1 A 0 {bTHRUACTORS = 1; }
+		TNT1 A 0 A_SpawnItemEx("MM_BrainStem",0,0,0,0,0,0,0,SXF_NOCHECKPOSITION | SXF_TRANSFERAMBUSHFLAG ,0);
+		Stop;
+	KDIKDIZDSpawner:
+		TNT1 A 0 A_NoBlocking;
+        TNT1 A 0 {bCOUNTKILL = 0; }
+        TNT1 A 0 {bTHRUACTORS = 1; }
+		TNT1 A 0 A_SpawnItemEx("MM_MaularDemon",0,0,0,0,0,0,0,SXF_NOCHECKPOSITION | SXF_TRANSFERAMBUSHFLAG | SXF_TRANSFERPITCH,0);
+		Stop;
+	}
+}
+
+Class MM_HangTLookingDown : HangTLookingDown {}
+
+Class MM_HangTLookingDown_spawner : Actor
+{
+	Default
+	{
+		+Noblockmap
+		-COUNTKILL 
+	}
+	States
+	{
+	Spawn:
+		TNT1 A 0;
+		TNT1 A 0 A_JumpIf(CallACS("Gamespawntoggle")==12.0, "KDIKDIZDSpawner");
+		Goto Normalspawn;
+	Normalspawn:
+		TNT1 A 0 A_NoBlocking;
+        TNT1 A 0 {bCOUNTKILL = 0; }
+        TNT1 A 0 {bTHRUACTORS = 1; }
+		TNT1 A 0 A_SpawnItemEx("MM_HangTLookingDown",0,0, 100000000000,0,0,0,0,SXF_NOCHECKPOSITION | SXF_TRANSFERAMBUSHFLAG | SXF_TRANSFERPITCH ,0);
+		Stop;
+	KDIKDIZDSpawner:
+		TNT1 A 0 A_NoBlocking;
+        TNT1 A 0 {bCOUNTKILL = 0; }
+        TNT1 A 0 {bTHRUACTORS = 1; }
+		TNT1 A 0 A_SpawnItemEx("MM_KDIKDIZD_Nightmaredemon",0,0,0,0,0,0,0,SXF_NOCHECKPOSITION | SXF_TRANSFERAMBUSHFLAG | SXF_TRANSFERPITCH,0);
+		Stop;
+	}
+}
+
+Class MM_HangTSkull : HangTSkull {}
+
+Class MM_HangTSkull_spawner : actor
+{
+	Default
+	{
+		+Noblockmap
+		-COUNTKILL 
+	}
+	States
+	{
+	Spawn:
+		TNT1 A 0;
+		TNT1 A 0 A_JumpIf(CallACS("Gamespawntoggle")==12.0, "KDIKDIZDSpawner");
+		Goto Normalspawn;
+	Normalspawn:
+		TNT1 A 0 A_NoBlocking;
+        TNT1 A 0 {bCOUNTKILL = 0; }
+        TNT1 A 0 {bTHRUACTORS = 1; }
+		TNT1 A 0 A_SpawnItemEx("MM_HangTSkull",0,0, 100000000000,0,0,0,0,SXF_NOCHECKPOSITION | SXF_TRANSFERAMBUSHFLAG | SXF_TRANSFERPITCH ,0);
+		Stop;
+	KDIKDIZDSpawner:
+		TNT1 A 0 A_NoBlocking;
+        TNT1 A 0 {bCOUNTKILL = 0; }
+        TNT1 A 0 {bTHRUACTORS = 1; }
+		TNT1 A 0 A_SpawnItemEx("MM_KDIKDIZD_Zombieman",0,0,0,0,0,0,0,SXF_NOCHECKPOSITION | SXF_TRANSFERAMBUSHFLAG | SXF_TRANSFERPITCH,0);
+		Stop;
+	}
+}

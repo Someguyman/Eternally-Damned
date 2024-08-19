@@ -1,0 +1,175 @@
+class MM_Wolfentein3dKnife : Wolfenteinweapon
+{
+	Default
+	{
+		Weapon.SelectionOrder 3700;
+		Weapon.Kickback 100;
+		weapon.ammouse1 0;
+		weapon.ammogive1 0;
+		//weapon.yadjust 0;
+		Obituary "$OB_MPFIST";
+		Tag "Knife";
+		//attacksound "wold3dknife/attack";
+		+WEAPON.WIMPY_WEAPON
+		+WEAPON.MELEEWEAPON
+		+WEAPON.NOAUTOSWITCHTO
+		+WEAPON.NOAUTOFIRE
+		+WEAPON.NOALERT
+	}
+	States
+	{
+	Ready:
+		W3DK A 1 A_WeaponReady;
+		Loop;
+	Deselect:
+		TNT1 A 0 A_Lower;
+		Loop;
+	Select:
+		TNT1 A 0 A_Raise;
+		Loop;
+	Fire:
+		W3DK B 3;
+		W3DK C 3;
+		W3DK D 3
+		{
+			A_CustomPunch(9, true, CPF_NOTURN);
+			A_Startsound("wold3dknife/attack", CHAN_AUTO);
+		}
+		W3DK C 3;
+		Goto Ready;
+	}
+}
+
+class MM_Wolfentein3dPistol : Wolfenteinweapon
+{
+	Default
+	{
+		Weapon.SelectionOrder 1900;
+		Weapon.AmmoType "Wolf3dMag";
+		Obituary "$OB_MPPISTOL";
+		+WEAPON.WIMPY_WEAPON
+		+WEAPON.NOAUTOFIRE
+		Attacksound "wold3dpisol/fire";
+		Inventory.Pickupmessage "$PICKUP_PISTOL_DROPPED";
+		Tag "Pistol";
+	}
+	States
+	{
+	Ready:
+		W3DP A 1 A_WeaponReady;
+		Loop;
+	Deselect:
+		TNT1 A 0 A_Lower;
+		Loop;
+	Select:
+		TNT1 A 0 A_Raise;
+		Loop;
+	Fire:
+		W3DP C 3;
+		W3DP D 3 bright;
+		W3DP E 3 Bright A_FireBullets(2.2, 2.2, 1, 5, "BulletPuff");
+		W3DP B 3;
+		Goto Ready;
+	Flash:
+		Goto LightDone;
+ 	Spawn:
+		W3PP A -1;
+		Stop;
+	}
+}
+
+class MM_Wolfentein3dMachinegun : Wolfenteinweapon
+{
+	Default
+	{
+		Weapon.SelectionOrder 1300;
+		Weapon.AmmoType "Wolf3dMag";
+		Attacksound "wold3dmachinegun/fire";
+		Inventory.PickupMessage "You got the machinegun!";
+		Obituary "$OB_MPCHAINGUN";
+		Tag "Machine gun";
+	}
+	States
+	{
+	Ready:
+		W3DM A 1 A_WeaponReady;
+		Loop;
+	Deselect:
+		TNT1 A 0 A_Lower;
+		Loop;
+	Select:
+		TNT1 A 0 A_Raise;
+		Loop;
+	Fire:
+		W3DM B 3;
+	Hold:
+		W3DM C 3 Bright A_FireBullets(2.7, 2.7, 1, 7, "BulletPuff");
+		W3DM D 4;
+		W3DM B 3 A_ReFire;
+		Goto Ready;
+	Flash:
+		Goto LightDone;
+	Spawn:
+		W3MP A -1;
+		Stop;
+	}
+}
+
+
+class MM_Wolfentein3dChaingun : Wolfenteinweapon
+{
+	Default
+	{
+		Weapon.SelectionOrder 700;
+		Attacksound "wold3dchaingun/fire";
+		Inventory.PickupSound "Wold3dChaingun/pickup";
+		Inventory.PickupMessage "\cgYou got the Chaingun! \cdOh yes!";
+		Obituary "$OB_MPCHAINGUN";
+		Tag "Chain gun";
+	}
+	States
+	{
+	Ready:
+		W3DG A 1 A_WeaponReady;
+		Loop;
+	Deselect:
+		TNT1 A 0 A_Lower;
+		Loop;
+	Select:
+		TNT1 A 0 A_Raise;
+		Loop;
+	Fire:
+		W3DG C 3;
+	Hold:
+		W3DG DE 3 Bright A_FireBullets(2.7, 2.7, 1, 7, "BulletPuff");
+		W3DG C 3 A_ReFire;
+		W3DG B 3;
+		Goto Ready;
+	Flash:
+		Goto LightDone;
+	Spawn:
+		W3GP A -1;
+		Stop;
+	}
+}
+
+class Wolf3dMag : Ammo
+{
+	Default
+	{
+		Inventory.PickupMessage "Picked up magazine";
+		Inventory.PickupSound "Wold3dammo/pickup";
+		Inventory.Amount 8;
+		Inventory.MaxAmount 100;
+		Ammo.BackpackAmount 20;
+		Ammo.BackpackMaxAmount 200;
+		Inventory.Icon "W3DCA0";
+		Tag "Magazine";
+	}
+	States
+	{
+	Spawn:
+		W3DC A -1;
+		Stop;
+	}
+}

@@ -1,0 +1,124 @@
+
+class MM_Deadcubus : MM_Mancubus
+{
+	Default
+	{
+		Health 900;
+		Radius 48;
+		Height 64;
+		Mass 1000;
+		Speed 8;
+		PainChance 80;
+		Monster;
+		Scale 1.25;
+		+FLOORCLIP
+		+BOSSDEATH
+		+DONTMORPH
+		+DONTHARMCLASS
+		SeeSound "Dead/Sight";
+		PainSound "Dead/pain";
+		DeathSound "Dead/Death";
+		ActiveSound "Dead/Act";
+		Obituary "%o couldn't avoid the Super Mancubus's volley.";
+		Tag "Super mancubus";
+	}
+	
+	Void A_Manwalk()
+	{
+		A_Chase();
+		A_StartSound("Behemoth/Step", CHAN_BODY, CHANF_DEFAULT, 1, ATTN_IDLE);
+	}
+	
+	void A_ManAttack1()
+	{
+		A_FaceTarget();
+		A_SpawnProjectile("MancubusShot",18,-34,20);
+		A_SpawnProjectile("MancubusShot",18,34,0);
+	}
+	
+	void A_ManAttack2()
+	{
+		A_FaceTarget();
+		A_SpawnProjectile("MancubusShot",18,-34,0);
+		A_SpawnProjectile("MancubusShot",18,34,-20);
+	}
+	
+	void A_ManAttack3()
+	{
+		A_FaceTarget();
+		A_SpawnProjectile("MancubusShot",18,-34,8);
+		A_SpawnProjectile("MancubusShot",18,34,-8);
+	}
+	
+	void A_ManAttack4()
+	{
+		A_FaceTarget();
+		A_SpawnProjectile("FireTrail",18,-34,8);
+		A_SpawnProjectile("FireTrail",18,34,-8);
+	}
+	
+		void A_DeadRaise()
+	{
+		A_FaceTarget();
+		A_StartSound("Dead/attack", CHAN_VOICE);
+	}
+	
+	States
+	{
+	Spawn:
+		DECU AB 15 A_Look;
+		Loop;
+	See:
+		DECU AABBC 4 A_Chase;
+		DECU C 4 A_Manwalk();
+		DECU DDEEF 4 A_Chase;
+		DECU F 4 A_Manwalk();
+		Loop;
+	Missile:
+		DECU G 12 A_DeadRaise();
+		DECU A 0 Bright A_JumpIfCloser(260,"melee");
+		DECU G 8 A_Facetarget(); 
+		DECU H 3 BRIGHT A_ManAttack1();
+		DECU H 3 BRIGHT A_ManAttack2();
+		DECU H 10 BRIGHT A_ManAttack3();
+		DECU G 20 A_FaceTarget;
+		DECU H 3 BRIGHT A_ManAttack1();
+		DECU H 3 BRIGHT A_ManAttack2();
+		DECU H 10 BRIGHT A_ManAttack3();
+		DECU I 10 A_FaceTarget;
+		Goto See;
+	Melee:
+		DECU HHHHHH 3 BRIGHT A_ManAttack4();
+		DECU A 0 Bright A_MonsterRefire(130, "see");
+		DECU A 0 Bright A_JumpIfCloser(260,"melee");
+		DECU IG 5 A_FaceTarget;
+		Goto See;
+	Death.Ice:
+		DECU J 5 A_GenericFreezeDeath;
+		TNT1 J 1 A_Freezedeathchunks;
+		WAIT;
+	Pain:
+		DECU J 3;
+		DECU J 3 A_Pain;
+		Goto See;
+    Death:
+		DECU K 6;
+		DECU L 6 A_Scream;
+		DECU M 6 A_NoBlocking;
+		DECU NOPQRS 6;
+		DECU T -1 A_BossDeath;
+	    Stop;
+	XDeath:
+		DEUG A 1;
+		DEUG A 4 A_Scream;
+		DEUG B 5 A_XScream;
+		DEUG C 5 A_NoBlocking();
+		DEUG DE 5;
+		DEUG F -1 A_BossDeath;
+		Stop;
+	 Raise:
+		DECU R 6;
+		DECU QPONMLK 6;
+		Goto See;
+	}
+}

@@ -1,0 +1,242 @@
+
+class MM_Boss_SpiderMasterMind : MM_Spidermastermind Replaces Spidermastermind
+{
+	Default
+	{
+		Health 6400;
+		Radius 128;
+		Height 100;
+		Mass 10000;
+		Speed 22;
+		DamageFactor "Bigfrickindamage", 0.33;
+		DamageFactor "BFGSplash", 0.33;
+		DamageFactor "Extreme", 0.33;
+		DamageFactor "Enemydamage", 0.5;
+		DeathSound "Mastermindboss/death";
+		//DamageFactor "Plasma", 0.5;
+		dropitem "BFG9000";
+		BloodColor "green";
+		PainChance 15;
+		+DOHARMSPECIES
+		+MISSILEEVENMORE
+		+NOINFIGHTSPECIES
+		+CANTLEAVEFLOORPIC
+		+NOFEAR
+		Scale 1.5;
+		Monster;
+		Tag "Spider Mastermind";
+		Obituary "%o stood in awe of the Spider Mastermind.";
+	}
+	
+	void A_Mastermindwalk()
+	{
+		A_StartSound("Mastermind/walk", CHAN_BODY, CHANF_DEFAULT, 1, ATTN_IDLE);
+		A_Chase();
+	}
+	
+	void A_Mastermindwalk2()
+	{
+		A_StartSound("Mastermind/walk2", CHAN_AUTO, CHANF_DEFAULT, 1, ATTN_IDLE);
+		A_Chase();
+	}
+	
+	Void A_Spiderattack1()
+	{
+		A_FaceTarget();
+		A_CustomBulletAttack(22.5, 7.1, 7, 6, "BulletPuff", 0, CBAF_NORANDOM);
+		A_CustomBulletAttack(22.5, 7.1, 7, 6, "BulletPuff", 0, CBAF_NORANDOM);
+	}
+	
+	Void A_Spiderattack2()
+	{
+		A_Startsound("Weapons/NailMGFire");
+		A_FaceTarget();
+		A_Spawnprojectile("MGNail",20,0,0,CMF_OFFSETPITCH,frandom(-0.5,0.5));
+		A_Spawnprojectile("MGNail",20,0,-10,CMF_OFFSETPITCH,frandom(-0.5,0.5));
+		A_Spawnprojectile("MGNail",20,0,10,CMF_OFFSETPITCH,frandom(-0.5,0.5));
+	}
+	
+	Void A_Spiderattack3()
+	{
+		//A_Startsound("Weapons/GrenadeFire");
+		A_FaceTarget();
+		A_SpawnProjectile("MM_BFGBall",41);
+	}
+	
+		Void A_Spiderexplode()
+	{
+		if (CallACS("Projtoggle")==1)
+		{
+			A_SpawnProjectile("BossExplosion4",FRandom(20,80),FRandom(20,-20)*2,FRandom(0,360)*2,2,FRandom(0,360)*2);
+		}
+		else
+		{
+			
+		}
+	}
+	
+		Void A_Spiderdeath()
+	{
+		if(CallACS("Gamespawntoggle")==2)
+		{
+			A_BrainDie();
+		}
+		Else
+		{
+			A_BossDeath();
+		}
+	}
+	
+		Void A_DemoBFGcharge()
+	{
+		A_AlertMonsters(0, AMF_TARGETEMITTER);
+		A_StartSound("weapons/bfgf");
+	}
+	
+	States
+	{
+	Spawn:
+		Tnt1 A 0;
+		TNT1 A 0 A_SpawnItem("MM_Cellpack", 25, 0);
+		TNT1 A 0 A_SpawnItem("MM_soulsphere", 0, 0);
+		TNT1 A 0 A_SpawnItem("MM_Cellpack", -25, 0);
+		Goto Idle;
+	Idle:
+		DEMO AB 10 A_Look;
+		Loop;
+	See:
+		DEMO A 3 A_Mastermindwalk();
+		DEMO ABB 3 A_Chase;
+		DEMO C 3 A_Mastermindwalk2();
+		DEMO C 3 A_Chase;
+		DEMO D 3 A_Mastermindwalk();
+		DEMO DEE 3 A_Chase;
+		DEMO F 3 A_Mastermindwalk2();
+		DEMO F 3 A_Chase;
+		Loop;
+	Missile:
+		DEMO A 0 A_JumpIfCloser(600,"Missile3");
+		DEMO A 17 A_FaceTarget;
+		DEMO A 0 A_JumpIfCloser(1000,"Standstill");
+		DEMO A 4 bright
+		{
+			A_FaceTarget();
+			ThrustThing(random(angle*256/360-64,angle*256/360-192), 30, 0, 0);
+			ThrustThingZ(0, 20, 0, 0);
+		}
+		DEMO A 0 A_JumpIfCloser(1000,"Missile2");
+		DEMO G 2 BRIGHT A_FaceTarget;
+		DEMO H 2 BRIGHT A_Spiderattack2();
+		DEMO V 1 BRIGHT A_FaceTarget;
+		DEMO H 0 BRIGHT A_SpidRefire;
+		Goto Missile+4;
+	Standstill:
+		DEMO A 4 A_FaceTarget;
+		goto missile2;
+	Missile2:
+		DEMO G 2 BRIGHT;
+		DEMO H 2 BRIGHT A_Spiderattack1();
+		DEMO H 0 BRIGHT A_SpidRefire;
+		Goto Missile+4;
+	melee:
+	Missile3:
+		DEMO V 0 BRIGHT A_DemoBFGcharge();
+		DEMO T 4 bright A_FaceTarget;
+		DEMO T 4 bright
+		{
+			A_FaceTarget();
+			ThrustThing(random(angle*256/360-64,angle*256/360-192), 30, 0, 0);
+			ThrustThingZ(0, 20, 0, 0);
+			bNOPAIN = true;
+		}
+		DEMO T 12 BRIGHT A_FaceTarget;
+		DEMO U 10 Bright A_Spiderattack3();
+		DEMO VVVVVVVVVV 3 Bright A_FaceTarget;
+		DEMO V 0 BRIGHT A_SpidRefire;
+		DEMO A 0 BRIGHT A_Jump(128, "BFGFire2");
+		Goto Missile+2;
+	BFGFire2:	
+		DEMO V 0 BRIGHT A_SpidRefire;
+		DEMO V 0 BRIGHT A_DemoBFGcharge();
+		DEMO T 4 A_FaceTarget;
+		DEMO T 4 Bright
+		{
+			A_FaceTarget();
+			ThrustThing(random(angle*256/360-64,angle*256/360-192), 30, 0, 0);
+			ThrustThingZ(0, 20, 0, 0);
+			bNOPAIN = true;
+		}
+		DEMO T 12 BRIGHT A_FaceTarget;
+		DEMO U 10 Bright A_Spiderattack3();
+		DEMO VVVVVVVVVV 3 Bright A_FaceTarget;
+		DEMO V 0 BRIGHT A_SpidRefire;
+		Goto Missile+2;
+	Pain:
+		DEMO I 3;
+		DEMO I 3 A_Pain;
+		Goto missile3;
+	Death:
+		DEMO I 1 Bright;
+		DEMO J 19 Bright A_Scream;
+		DEMO J 0 Bright A_NoBlocking;
+		DEMO KL 10 Bright A_Spiderexplode();
+		DEMO M 8 Bright A_Spiderexplode();
+		DEMO M 2 Bright A_Spiderexplode();
+		DEMO NNOOPPQQ 5 Bright A_Spiderexplode();
+		DEMO R 10 Bright;
+		DEMO S 30;
+		DEMO S -1 A_BossDeath();
+		Stop;
+	Crush:
+		SPIG A 0;
+		SPIG A 0 A_Startsound("Bloody/crush");
+		SPIG A -1;
+		stop;
+	}
+}
+
+Class MM_Mastermind_Grenade : MM_Grenade 
+{
+  Default
+  {
+    DamageFunction 112;
+  }
+  
+	void A_rocketexplode()
+	{
+		A_NoGravity();
+		A_SetRenderStyle(0.5, STYLE_Add);
+		A_Explode(256, 160, 1);
+		//A_Explode(-1, 160, 1);
+	}
+	
+  States
+  {
+  Spawn:
+    SGRN A 0 A_CountDown();
+    GBOM ABCD 4 A_SpawnProjectile("GrenadePuff", 3, 0, 0, CMF_AIMOFFSET);
+    Loop;
+  Death:
+    MISL B 8 Bright A_rocketexplode();
+    MISL C 6 Bright;
+    MISL D 4 BRIGHT;
+    Stop;
+  }
+}
+
+Class BossExplosion4 : BossExplosion
+{
+	Default
+	{
+	scale 1.5;
+	}
+	states
+	{
+	Spawn:
+		EPO3 B 0 bright;
+		EPO3 B 6 bright A_Startsound("Epic/Expolsions", CHAN_BODY);
+		EPO3 C 4 bright A_FadeOut (0.12);
+		EPO3 D 3 bright A_FadeOut (0.12);
+		Stop;
+	}
+}

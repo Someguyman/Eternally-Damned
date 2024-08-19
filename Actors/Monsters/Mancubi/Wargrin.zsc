@@ -1,0 +1,109 @@
+
+class MM_Wargrin : Actor
+{
+	Default
+	{
+		Health 250;
+		Radius 20;
+		Height 56;
+		Speed 7;
+		Gibhealth 40;
+		PainChance 160;
+		Mass 200;
+		Monster;
+		+FLOORCLIP
+		SeeSound "Wargrin/Sight";
+		PainSound "Wargrin/pain";
+		DeathSound "Wargrin/death";
+		ActiveSound "Wargrin/active";
+		Obituary "%o was squished by a wargrin.";
+		Tag "Wargrin";
+	}
+	
+	Void A_Warraise()
+	{
+		A_Startsound("Wargrin/active", CHAN_VOICE);
+		A_FaceTarget();
+	}
+	
+	void A_WarAttack1()
+	{
+		A_FaceTarget();
+		A_SpawnProjectile("MM_Pyrofireball",18,0,20);
+		A_SpawnProjectile("MM_Pyrofireball",18,0,0);
+	}
+	
+	void A_WarAttack2()
+	{
+		A_FaceTarget();
+		A_SpawnProjectile("MM_Pyrofireball",18,0,0);
+		A_SpawnProjectile("MM_Pyrofireball",18,0,-20);
+	}
+	
+	void A_WarAttack3()
+	{
+		A_FaceTarget();
+		A_SpawnProjectile("MM_Pyrofireball",18,0,8);
+		A_SpawnProjectile("MM_Pyrofireball",18,0,-8);
+	}
+	
+	States
+	{
+	Spawn:
+		WARG AB 10 A_Look;
+		Loop;
+	See:
+		WARG AABBCCDD 2 A_Chase;
+		Loop;
+	Melee:
+		WARG HI 8 A_FaceTarget;
+		WARG J 8 A_CustomMeleeAttack(random(1, 10) * 4, "Imp/melee");
+		Goto see;
+	Missile:
+		WARG E 18 A_Warraise();
+		WARG F 8 A_WarAttack1();
+		WARG E 20 A_FaceTarget;
+		WARG F 8 A_WarAttack2();
+		WARG E 20 A_FaceTarget;
+		WARG F 8 A_WarAttack3();
+		WARG G 26 A_FaceTarget;
+		Goto See;
+	Pain:
+		WARG K 4;
+		WARG K 4 A_Pain;
+		Goto See;
+	Death:
+		WARG L 8;
+		WARG M 8 A_Scream;
+		WARG N 6;
+		WARG O 6 A_NoBlocking;
+		WARG P -1;
+		Stop;
+	Death.Ice:
+		WARG H 5 A_GenericFreezeDeath;
+		TNT1 A 1 A_Freezedeathchunks;
+		WAIT;
+	Death.SSGGIBING:
+		TNT1 A 0 A_Jump(60, "Death");
+		TNT1 A 0 A_Jumpifcloser(128, "XDeath");
+		TNT1 A 0 A_Jump(256, "Death");
+		Goto Death;
+	XDeath:
+		WARG Q 5;
+		WARG R 5 A_XScream;
+		WARG S 5;
+		WARG T 5 A_NoBlocking;
+		WARG UVW 5;
+		WARG X -1;
+		Stop;
+	Crush:
+		POL5 A 0;
+		POL5 A 0 A_Startsound("Bloody/crush");
+		POL5 A -1;
+		stop;
+	Raise:
+		WARG ML 6;
+		WARG KJI 8;
+		Goto See;
+	}
+}

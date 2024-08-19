@@ -1,0 +1,75 @@
+
+class MM_SuperShotgun : Originalweapon Replaces SuperShotgun
+{
+	Default
+	{
+		Weapon.SelectionOrder 400;
+		Weapon.SlotNumber 3;
+		Weapon.AmmoUse 2;
+		Weapon.AmmoGive 10;
+		Weapon.AmmoType "Shell";
+		Weapon.UpSound "weapons/sshotc";
+		Inventory.PickupSound "Weapons/SsgPickup";
+		Inventory.PickupMessage "\cgYou got the \cfSuper \cgshotgun!";
+		Obituary "$OB_MPSSHOTGUN";
+		Tag "$TAG_SUPERSHOTGUN";
+	}
+		Action Void A_FireSSG()
+		{
+			A_Startsound("weapons/sshotf", CHAN_AUTO);
+			A_gunflash("Flash");
+			A_Firebullets(11.2, 7.1, 20, 5, "MM_ExtremeSSGPuff");
+		}
+	States
+	{
+	Ready:
+		SSJG A 1 A_WeaponReady;
+		Goto ready;
+	Deselect:
+		SSJG A 1 A_Lower;
+		Loop;
+	Select:
+		SSJG A 1 A_Raise;
+		Loop;
+	Fire:
+		SSJG B 4 Offset(0,32) A_FireSSG();
+		SSJG A 6 Offset(0,32);
+		SSJG A 0 Offset(0,32) A_CheckReload;
+	Reload:
+		SSJG C 3 Offset(0,32);
+		SSJG D 6 Offset(0,32);
+		SSJG E 3 Offset(0,32) A_OpenShotgun2;
+		SSJG F 3 Offset(0,32);
+		SSJG G 4 Offset(0,32);
+		SSJG H 4 Offset(0,32);
+		SSJG I 3 Offset(0,32) A_LoadShotgun2;
+		SSJG J 3 Offset(0,32);
+		SSJG K 3 Offset(0,32);
+		SSJG L 2 Offset(0,32);
+		SSJG M 4 Offset(0,32) A_Startsound("weapons/sshotc", CHAN_WEAPON);
+		SSJG A 4 Offset(0,32) A_ReFire;
+		Goto Ready;
+	Flash:
+		SSJF A 2 Bright A_Light2;
+		SSJF B 2 Bright A_Light1;
+		Goto LightDone;
+	Spawn:
+		SSJP A -1;
+		Stop;
+	}
+}
+
+class MM_Supershell : ammo
+{
+	Default
+	{
+		Inventory.MaxAmount 2;
+		Ammo.BackpackMaxAmount 2;
+		//+IGNORESKILL
+	}
+}
+
+class MM_ExtremeSSGPuff : MM_ExtremeBulletPuff
+{
+	Default{ DamageType "SSGGIBING"; }
+}

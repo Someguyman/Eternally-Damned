@@ -1,0 +1,185 @@
+
+class MM_Unmaker : Originalweapon
+{
+	Default
+	{
+		Height 20;
+		Weapon.SelectionOrder 50;
+		Weapon.AmmoUse 1;
+		Weapon.AmmoGive 50;
+		+WEAPON.BFG;
+		Weapon.AmmoType "Cell";
+		Weapon.UpSound "Weapons/Unmakerup";
+		Inventory.PickupSound "Weapons/UnmakerPickup";
+		Inventory.PickupMessage "\cgWhat the \ca@&*% \cgis this?!";
+		//Attacksound "Weapons/Umakerfire";
+		Obituary "%o wad pulverised by an unkown source";
+		Tag "The Unmaker";
+	}
+	
+	States
+	{
+	Ready:
+		MAKR A 1 A_WeaponReady;
+		Loop;
+	Deselect:
+		MAKR A 1 A_Lower;
+		Loop;
+	Select:
+		MAKR A 1 A_Raise;
+		Loop;
+	Fire:
+		MAKR A 2 Offset(0,34) A_FireMaker();
+		MAKR A 1 Offset(0,33);
+		MAKR A 0 Offset(0,33) A_JumpIfInventory("Demonkeycount", 3, 7);
+		MAKR A 0 Offset(0,33) A_JumpIfInventory("Demonkeycount", 2, 6);
+		MAKR A 0 Offset(0,33) A_JumpIfInventory("Demonkeycount", 1, 3); 
+		MAKR A 7 Offset(0,32);
+		MAKR A 0 Offset(0,32) A_Jump(256, 4); 
+		MAKR A 4 Offset(0,32);
+		MAKR A 0 Offset(0,32) A_Jump(256, 2); 
+		MAKR A 2 Offset(0,32);
+		MAKR A 0 Offset(0,32) A_ReFire;
+		MAKR A 0 Offset(0,32) A_Unmakerreset();
+		Goto Ready;
+	Flash:
+		MAKR B 3 Bright A_Light1;
+		Goto LightDone;
+	Spawn:
+		UMKR A -1;
+		Stop;
+	}
+			
+		int variable;
+		int variable2;
+		Action Void A_FireMaker()
+			{
+			A_Overlay(2, "Flash");
+			A_StartSound("Weapons/Umakerfire", CHAN_AUTO, 0, 1.0, ATTN_NORM);
+			if (CountInv("DemonkeyCount") < 2)
+				{
+					A_Fireprojectile("UnmakerBall",0,0,0,8,0); 
+					A_FireBullets(0, 0, 1, 10*random(1,7), "MM_UnmakerPuff", FBF_EXPLICITANGLE || FBF_NORANDOMPUFFZ || FBF_NORANDOM);
+					A_TakeInventory("Cell", 1);
+				}
+			if (CountInv("DemonkeyCount") == 2)
+				{
+					A_Fireprojectile("UnmakerBall",2,0,0,8,0); 
+					A_Fireprojectile("UnmakerBall",-2,0,0,8,0); 
+					A_FireBullets(2, 0, 1, 10*random(1,7), "MM_UnmakerPuff", FBF_EXPLICITANGLE || FBF_NORANDOMPUFFZ || FBF_NORANDOM);
+					A_FireBullets(-2, 0, 1, 10*random(1,7), "MM_UnmakerPuff", FBF_EXPLICITANGLE || FBF_NORANDOMPUFFZ || FBF_NORANDOM);
+					A_TakeInventory("Cell", 2);
+				}
+				
+			if (CountInv("DemonkeyCount") == 3)
+				{
+					A_FireProjectile("UnmakerBall", 0, 0,0,8,0);
+					A_FireProjectile("UnmakerBall", 3*invoker.variable,0,0,8,0);
+					A_FireProjectile("UnmakerBall", -3*invoker.variable,0,0,8,0);
+					A_FireBullets(0, 0, 1, 10*random(1,7), "MM_UnmakerPuff", FBF_EXPLICITANGLE || FBF_NORANDOMPUFFZ || FBF_NORANDOM);
+					A_FireBullets(3*invoker.variable, 0, 1, 10*random(1,7), "MM_UnmakerPuff", FBF_EXPLICITANGLE || FBF_NORANDOMPUFFZ || FBF_NORANDOM);
+					A_FireBullets(-3*invoker.variable, 0, 1, 10*random(1,7), "MM_UnmakerPuff", FBF_EXPLICITANGLE || FBF_NORANDOMPUFFZ || FBF_NORANDOM);
+					A_TakeInventory("Cell", 3);
+					invoker.variable++;
+			FTranslatedLineTarget t;
+					if(invoker.variable >= 5)
+					{	
+						invoker.variable = 1;
+					}
+					
+				}
+		}
+		
+		Action Void A_Unmakerreset()
+				{		
+					invoker.variable = 1;
+				}
+}
+
+Class MM_Unmakerpuff : Bulletpuff
+{
+	Default
+	{
+		//Scale 0.7;
+		VSpeed 0;
+		-RANDOMIZE
+		+EXTREMEDEATH
+		RENDERSTYLE "add";
+		DamageType "Extreme";
+	}
+	States
+	{
+	Spawn:
+		//LASR A 8 Bright;
+		Stop;
+	}
+}
+
+class UnmakerBall : FastProjectile
+{
+	Default
+	{
+	Radius 1;
+	Height 1;
+	MissileType "UnmakerTrail";
+	RENDERSTYLE "add";
+	Damage 0;
+	Speed 80;
+	}
+	States
+	{
+	Spawn:
+		LASR A 0 BRIGHT;
+		LASR A 0 BRIGHT;
+	SpawnLoop:
+		TNT1 AA 2 BRIGHT;
+		Loop;
+	Death:
+		TNT1 E 1 BRIGHT;
+		Stop;
+	}
+}
+
+Class UnmakerTrail : actor
+{
+	Default
+	{
+		PROJECTILE;
+		RENDERSTYLE "add";
+		+NOCLIP
+		Alpha 0.75;
+		Scale 0.3;
+		Speed 0;
+	}
+	States
+	{
+	Spawn:
+		LASR AAAAA 2 Bright A_Fadeout(0.1);
+		LASR AAAAA 2 Bright A_Fadeout(0.1);
+		Stop;
+	}
+}
+
+Class MM_FullUnmaker : CustomInventory 
+{
+Default
+{
+	Inventory.PickupMessage "";
+	INVENTORY.RESTRICTEDTO "ET_Player";
+	VISIBLETOPLAYERCLASS "ET_Player";
+}
+	States
+	{
+	Spawn:
+		UMKR A -1 Bright;
+		Stop;
+	Pickup:
+		TNT1 A 0 A_GiveInventory("Demonkeycount", 3);
+		TNT1 A 0 A_GiveInventory("MM_Unmaker", 1);
+		TNT1 A 0 A_GiveInventory("MM_Orangekeyicon", 1);
+		TNT1 A 0 A_GiveInventory("MM_Purplekeyicon", 1);
+		TNT1 A 0 A_GiveInventory("MM_Cyankeyicon", 1);
+		TNT1 A 0 A_Print("You shall forever be Eternally damned, Cheater!");
+		Stop;
+	}
+}

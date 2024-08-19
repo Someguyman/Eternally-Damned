@@ -1,0 +1,66 @@
+
+actor Ed_Zombieman : MM_Zombiemanspawner Replaces Zombieman {}
+
+actor Ed_Shotgunguy : MM_Shotgunnerspawner Replaces ShotgunGuy {}
+
+actor Ed_Chaingunguy : MM_Chaingunnerspawner Replaces Chaingunguy {}
+
+actor Ed_Shocktrooper : MM_Shocktrooper 3010 {}
+
+actor Ed_Doomimp : MM_Doomimpspawner Replaces Doomimp {}
+
+actor Ed_Pinkydemon : MM_Pinkyspawner Replaces Demon {}
+
+actor Ed_Spectredemon : MM_Spectrespawner Replaces Spectre {}
+
+actor Ed_Lostsoul : MM_Lostsoulspawner Replaces Lostsoul {}
+
+Actor ED_Ghoul : MM_Ghoul 3007 {}
+
+Actor ED_Banshee : MM_Banshee 3008 {}
+
+actor Ed_Cacodemon : MM_Cacospawner Replaces Cacodemon {}
+
+actor Ed_Revenant : MM_Revenantspawner Replaces Revenant {}
+
+actor Ed_Hellknight : MM_Knightspawner Replaces Hellknight {}
+
+actor Ed_Mancubus : MM_Mancubusspawner Replaces fatso {}
+
+actor Ed_Arachnotron : MM_Arachnotronspawner Replaces Arachnotron {}
+
+Actor ED_Mineweaver : MM_Mindweaver 3009 {}
+
+actor Ed_Painelemental : MM_Painspawner Replaces Painelemental {}
+
+actor Ed_Baronofhell : MM_Baronspawner Replaces Baronofhell {}
+
+actor Ed_Vassago : MM_Vassago 3011 {}
+
+actor Ed_Archvile : MM_Arachvilespawner Replaces Archvile {}
+
+actor Ed_Tyrant : MM_Tyrant 3012 {}
+
+actor Ed_Cyberdemon : MM_Cyberdemonspawner Replaces Cyberdemon {}
+
+actor Ed_Spidermastermind : MM_MasterMindspawner Replaces Spidermastermind {}
+
+actor Ed_Helperdog : MM_Mbfdogspawner 888 {}
+
+actor Ed_WolfensteinSS : MM_SSspawner Replaces WolfensteinSS {}
+
+actor Ed_Commanderkeen : MM_Keenspawner Replaces CommanderKeen {}
+
+Actor Ed_Soulharvester : MM_SoulReaper 3023 {}
+
+Actor ED_Passive_Imp : MM_Passive_imp 667 {}
+
+Actor ED_LesserCyber : MM_Diecastdemontoy 669 {}
+
+Actor ED_Widow : MM_SpiderBrainlet 670 {}
+
+Actor ED_NightmareSpectre : MM_NightmareSpectre 697 {} 
+
+Actor ED_NightmareImp : MM_NightmareImp 685 {} 
+
+Actor ED_Motherdemon : MM_Boss_MotherDemon 683 {}

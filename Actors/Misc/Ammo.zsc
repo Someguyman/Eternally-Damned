@@ -1,0 +1,365 @@
+class MM_REALClip : Clip Replaces Clip
+{
+	Default
+	{
+		Inventory.PickupSound "Ammo/PickupS";
+		Inventory.PickupMessage "\coPicked up a clip";
+		//tag "Clip";
+	}
+	States
+	{
+	Spawn:
+		CLIP A -1;
+		Stop;
+	}
+}
+
+Class MM_Ammospawner1 : Actor Replaces Clip
+{
+	Default
+	{
+		+Noblockmap
+		-COUNTKILL 
+	}
+	
+	void A_Ammodrop(Class<Actor> p)
+	{
+			A_NoBlocking();
+			let pclass = players[consoleplayer].mo.GetClassName();
+			if(pclass == 'ET_Player_wolf')
+			{
+				A_SPAWNITEMEX("Wolf3dMag",0,0,0,0,0,0,0,SXF_NOCHECKPOSITION | SXF_TRANSFERAMBUSHFLAG ,0);
+			}
+			else
+			{
+				A_SpawnItemEx(p,0,0,0,0,0,0,0,SXF_NOCHECKPOSITION | SXF_TRANSFERAMBUSHFLAG ,0);
+			}
+	}
+	States
+	{
+	Spawn:
+		TNT1 A 0;
+		TNT1 A 0 A_Ammodrop("MM_REALClip");
+		stop;
+	}
+}
+
+class MM_Magazine : Clip
+{
+	Default
+	{
+		Inventory.PickupSound "Ammo/PickupS";
+		Inventory.PickupMessage "\coPicked up a magazine";
+		//Inventory.Amount 5;
+	}
+	States
+	{
+	Spawn:
+		MAGZ A -1;
+		Stop;
+	}
+}
+
+class MM_ClipBox : ClipBox Replaces ClipBox
+{
+	Default
+	{
+		Inventory.PickupSound "Ammo/PickupL";
+		Inventory.PickupMessage "\coPicked up a box of bullets!";
+	}
+	States
+	{
+	Spawn:
+		AMMO A -1;
+		Stop;
+	}
+}
+
+Class MM_Ammospawner2 : MM_Ammospawner1 Replaces ClipBox
+{
+	States
+	{
+	Spawn:
+		TNT1 A 0;
+		TNT1 A 0 A_Ammodrop("MM_ClipBox");
+		stop;
+	}
+}
+
+
+class MM_Shell : Shell Replaces Shell
+{
+	Default
+	{
+		Inventory.PickupSound "Ammo/PickupS";
+		Inventory.PickupMessage "\coPicked up shotgun shells";
+	}
+	States
+	{
+	Spawn:
+		SHEL A -1;
+		Stop;
+	}
+}
+
+Class MM_Ammospawner3 : MM_Ammospawner1 Replaces Shell
+{
+	States
+	{
+	Spawn:
+		TNT1 A 0;
+		TNT1 A 0 A_Ammodrop("MM_Shell");
+		stop;
+	}
+}
+
+class MM_ShellBox : ShellBox Replaces ShellBox
+{
+	Default
+	{
+		Inventory.PickupSound "Ammo/PickupL";
+		Inventory.PickupMessage "\coPicked up a box of shotgun shells!";
+	}
+	States
+	{
+	Spawn:
+		SBOX A -1;
+		Stop;
+	}
+}
+
+Class MM_Ammospawner4 : MM_Ammospawner1 Replaces ShellBox
+{
+	States
+	{
+	Spawn:
+		TNT1 A 0;
+		TNT1 A 0 A_Ammodrop("MM_ShellBox");
+		stop;
+	}
+}
+
+class MM_RocketAmmo : RocketAmmo Replaces RocketAmmo
+{
+	Default
+	{
+		Inventory.PickupSound "Ammo/RocketSup";
+		Inventory.PickupMessage "\coPicked up rocket";
+	}
+	States
+	{
+	Spawn:
+		ROCK A -1;
+		Stop;
+	}
+}
+
+Class MM_Ammospawner5 : MM_Ammospawner1 Replaces RocketAmmo
+{
+	States
+	{
+	Spawn:
+		TNT1 A 0;
+		TNT1 A 0 A_Ammodrop("MM_RocketAmmo");
+		stop;
+	}
+}
+
+class MM_RocketBox : RocketBox replaces RocketBox
+{
+	Default
+	{
+		Inventory.PickupSound "Ammo/RocketLup";
+		Inventory.PickupMessage "\coPicked up a box of rockets!";
+	}
+	States
+	{
+	Spawn:
+		BROK A -1;
+		Stop;
+	}
+}
+
+Class MM_Ammospawner6 : MM_Ammospawner1 replaces RocketBox
+{
+	States
+	{
+	Spawn:
+		TNT1 A 0;
+		TNT1 A 0 A_Ammodrop("MM_RocketBox");
+		stop;
+	}
+}
+
+Class MM_Cellspawner : Actor
+{
+	Default
+	{
+		+Noblockmap
+		-COUNTKILL 
+	}
+	
+	void A_Ammodrop()
+	{
+			A_NoBlocking();
+			let pclass = players[consoleplayer].mo.GetClassName();
+			if(pclass == 'ET_Player_wolf')
+			{
+				A_SPAWNITEMEX("Wolf3dMag",0,0,0,0,0,0,0,SXF_NOCHECKPOSITION | SXF_TRANSFERAMBUSHFLAG ,0);
+			}
+			else
+			{
+				if(CallACS("Gamespawntoggle")==12.0)
+				{
+					A_SpawnItemEx("MM_KDIKDIZD_Cell",0,0,0,0,0,0,0,SXF_NOCHECKPOSITION | SXF_TRANSFERAMBUSHFLAG ,0);
+				}
+				else
+				{
+					A_SpawnItemEx("MM_Cell",0,0,0,0,0,0,0,SXF_NOCHECKPOSITION | SXF_TRANSFERAMBUSHFLAG ,0);
+				}
+			}
+	}
+	States
+	{
+	Spawn:
+		TNT1 A 0;
+		TNT1 A 0 A_Ammodrop();
+		stop;
+	}
+}
+
+class MM_Cell : Cell replaces cell
+{
+	Default
+	{
+		Inventory.PickupSound "Ammo/CellSup";
+		Inventory.Icon "CELLA0";
+		Inventory.PickupMessage "\coPicked up an energy cell";
+	}
+	States
+	{
+	Spawn:
+		CELL BCDC 5;
+		Loop;
+	}
+}
+
+Class MM_Cellpackspawner : Actor
+{
+	Default
+	{
+		+Noblockmap
+		-COUNTKILL 
+	}
+	
+			void A_Ammodrop()
+	{
+			A_NoBlocking();
+			let pclass = players[consoleplayer].mo.GetClassName();
+			if(pclass == 'ET_Player_wolf')
+			{
+				A_SPAWNITEMEX("Wolf3dMag",0,0,0,0,0,0,0,SXF_NOCHECKPOSITION | SXF_TRANSFERAMBUSHFLAG ,0);
+			}
+			else
+			{
+				if(CallACS("Gamespawntoggle")==12.0)
+				{
+					A_SpawnItemEx("MM_KDIKDIZD_CellPack",0,0,0,0,0,0,0,SXF_NOCHECKPOSITION | SXF_TRANSFERAMBUSHFLAG ,0);
+				}
+				else
+				{
+					A_SpawnItemEx("MM_CellPack",0,0,0,0,0,0,0,SXF_NOCHECKPOSITION | SXF_TRANSFERAMBUSHFLAG ,0);
+				}
+			}
+	}
+	
+	States
+	{
+	Spawn:
+		TNT1 A 0;
+		TNT1 A 0 A_Ammodrop();
+		stop;
+	}
+}
+
+class MM_CellPack : CellPack Replaces Cellpack
+{
+	Default
+	{
+		Inventory.PickupSound "Ammo/CellLup";
+		Inventory.PickupMessage "\coPicked up an energy cell pack!";
+	}
+	States
+	{
+	Spawn:
+		CELP ABCD 5; 
+		Loop;
+	}
+}
+
+class MM_KDIKDIZD_Cell : Cell
+{
+	Default
+	{
+		Inventory.PickupSound "Ammo/PickupS";
+		Inventory.Amount 5;
+		Inventory.PickupMessage "\coPicked up rifle ammo";
+	}
+	States
+	{
+	Spawn:
+		RIFA A -1;
+		Stop;
+	}
+}
+
+class MM_KDIKDIZD_CellPack : CellPack
+{
+	Default
+	{
+		Inventory.PickupSound "Ammo/PickupL";
+		Inventory.Amount 10;
+		Inventory.PickupMessage "\coPicked up a box of rifle ammo!";
+	}
+	States
+	{
+	Spawn:
+		RIFP A -1; 
+		Stop;
+	}
+}
+
+class MM_Chainsawfuel : Ammo
+{
+	Default
+	{
+		Inventory.PickupMessage "Picked up a gas canister";
+		Inventory.Amount 50;
+		Inventory.MaxAmount 150;
+		Ammo.BackpackAmount 50;
+		Ammo.BackpackMaxAmount 300;
+		Inventory.Icon "AGASA0";
+		Tag "Gas canister";
+	}
+	States
+	{
+	Spawn:
+		AGAS A -1;
+		Stop;
+	}
+}
+
+class MM_Backpack : Backpack Replaces Backpack
+{
+	Default
+	{
+		Inventory.PickupSound "Ammo/Backpackup";
+		Inventory.PickupMessage "\coPicked up a backpack full of ammo!";
+	}
+	States
+	{
+	Spawn:
+		BPAK A -1;
+		Stop;
+	}
+}

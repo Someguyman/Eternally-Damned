@@ -1,0 +1,318 @@
+Class MM_Revenantspawner : MM_Monsterspawners
+{
+	States
+	{
+	Spawn:
+		SKEL I 0;
+		Goto spawncheck;
+	Ultimatedoomspawn:
+	Goingdownspawn:
+	DoomZerospawn:
+	D64D2spawner:
+	Eviternityspawn:
+	Valiantspawn:
+	Scythe2spawn:
+	AAilenspawn:
+	TNTRevoSpawn:
+	JenesisSpawner:
+	Epic2spawner:
+	Alternatespawn:
+	Normalspawn:
+		TNT1 A 0 A_NoBlocking;
+		TNT1 A 0 A_SpawnItemEx("MM_Revenant",0,0,0,0,0,0,0,SXF_NOCHECKPOSITION | SXF_TRANSFERAMBUSHFLAG | SXF_TRANSFERPOINTERS | 288,0,tid);
+		Stop;
+	Ultimatedoomspawn:
+		TNT1 A 0 A_NoBlocking;
+		TNT1 A 0 A_Jump(90, "Pinkyspawn");
+		TNT1 A 0 A_SpawnItemEx("MM_D1_Revenant",0,0,0,0,0,0,0,SXF_NOCHECKPOSITION | SXF_TRANSFERAMBUSHFLAG | SXF_TRANSFERPOINTERS | 288,0,tid);
+		Stop;
+	Pinkyspawn:
+		TNT1 A 0 A_SpawnItemEx("MM_pinky",0,0,0,0,0,0,0,SXF_NOCHECKPOSITION | SXF_TRANSFERAMBUSHFLAG | SXF_TRANSFERPOINTERS | 288,0,tid);
+		Stop;
+	KDIKDIZDSpawn:
+		TNT1 A 0 A_SpawnItemEx("MM_SoulHarvester",0,0,0,0,0,0,0,SXF_NOCHECKPOSITION | SXF_TRANSFERAMBUSHFLAG | SXF_TRANSFERPOINTERS | 288,0,tid);
+		Stop;
+	}
+}
+
+class MM_Revenant : Revenant
+{
+	Default
+	{
+		Gibhealth 40;
+		+NOFEAR
+		Height 64;
+		//DamageFactor "rmissile", 100;
+		//SelfDamageFactor 100;
+		Obituary "%o couldn't evade a Revenant's missile.";
+	}
+	
+	Void A_Revwalk()
+	{
+		A_Chase();
+		A_StartSound("skeleton/walk", CHAN_BODY, CHANF_DEFAULT, 1, ATTN_IDLE);
+	}
+	
+	Void A_RevAttack()
+	{
+		A_Facetarget();
+		if (CallACS("Projtoggle")==1)
+		{
+			A_SpawnProjectile("MM_WeakRevenantTracer",56,-10);
+			A_SpawnProjectile("MM_WeakRevenantTracer",56,10);
+		}
+		else
+		{
+			A_SpawnProjectile("MM_WeakOldRevenantTracer",56,-10);
+			A_SpawnProjectile("MM_WeakOldRevenantTracer",56,10);
+		}
+	}
+	
+		Void A_SingleRevAttack()
+	{
+		A_Facetarget();
+		if (CallACS("Projtoggle")==1)
+		{
+			A_SpawnProjectile("MM_RevenantTracer",56,10);
+		}
+		else
+		{
+			A_SpawnProjectile("MM_OldRevenantTracer",56,10);
+		}
+	}
+	
+	States
+	{
+	Spawn:
+		TNT1 A 0;
+		TNT1 A 0 A_CheckCeiling("Strink");
+		Goto Idle;
+	Idle:
+		SKEL AB 10 A_Look;
+		Loop;
+	See:
+		SKEL A 2 A_Revwalk();
+		SKEL ABBCC 2 A_Chase;
+		SKEL D 2 A_Revwalk();
+		SKEL DEEFF 2 A_Chase;
+		Loop;
+	Melee:
+		SKEL G 8 A_FaceTarget;
+		SKEL G 0 A_SkelWhoosh;
+		SKEL H 6 A_FaceTarget;
+		SKEL I 6 A_CustomMeleeAttack(30, "skeleton/melee");
+		Goto See;
+	Missile:
+		SKEL K 0 A_FaceTarget;
+		SKEL K 16 A_FaceTarget;
+		SKEL J 10 Bright A_RevAttack();
+		SKEL K 10 A_FaceTarget;
+		Goto See;
+	Pain:
+		SKEL L 5;
+		SKEL L 5 A_Pain;
+		Goto See;
+	Death.SSGGIBING:
+		TNT1 A 0 A_Jumpifcloser(128, "XDeath");
+		TNT1 A 0 A_Jump(256, "Death");
+		Goto Death;
+	Death.Ice:
+		SKEL L 5 A_GenericFreezeDeath;
+		TNT1 A 1 A_Freezedeathchunks;
+		wait;
+	Death:
+		SKEL LM 7;
+		SKEL N 7 A_Scream;
+		SKEL O 7 A_NoBlocking;
+		SKEL P 7;
+		SKEL Q -1;
+		Stop;
+	XDeath:
+		SKEG A 5;
+		SKEG B 5 A_XScream;
+		SKEG C 5;
+		SKEG D 5 A_NoBlocking();
+		SKEG EFG 5;
+		SKEG H -1;
+		Stop;
+	Raise:
+		SKEL P 5;
+		SKEL ONML 5;
+		Goto See;
+	Strink:
+		TNT1 A 0
+		{
+			Height = 56;
+		}
+		goto Idle;
+	Crush:
+		SKEX A 0;
+		SKEX A 0 A_Startsound("Bloody/crush");
+		SKEX A -1;
+		stop;
+	}
+}
+
+Class MM_D1_Revenant : MM_Revenant 
+{	
+	States
+	{
+		Spawn:
+			Tnt1 A 0;
+			TNT1 A 0 A_SpawnItem("MM_Stimpack", 15, 0);
+			TNT1 A 0 A_SpawnItem("MM_Shell", -15, 0);
+			Goto Idle;
+		Idle:
+			SKEL AB 10 A_Look;
+			Loop;
+	}
+}
+
+class MM_GhostRevenant : MM_Revenant
+{
+	Default
+	{
+		+SHADOW
+		+NOBLOODDECALS
+		RenderStyle "OptFuzzy";
+		BloodColor "black";
+		Alpha 0.25;
+		Health 200;
+	}
+	
+	States
+	{
+	Spawn:
+		SKGH AB 10 A_Look;
+		Loop;
+	See:
+		SKGH AABBCCDDEEFF 2 A_Chase;
+		Loop;
+	Melee:
+		SKGH G 8 A_FaceTarget;
+		SKGH G 0 A_SkelWhoosh;
+		SKGH H 6 A_FaceTarget;
+		SKGH I 6 A_CustomMeleeAttack(30, "skeleton/melee");
+		Goto See;
+	Missile:
+		SKGH K 0 A_FaceTarget;
+		SKGH K 16 A_FaceTarget;
+		SKGH J 10 Bright A_RevAttack();
+		SKGH K 10 A_FaceTarget;
+		Goto See;
+	Pain:
+		SKGH L 5;
+		SKGH L 5 A_Pain;
+		Goto See;
+	Death.SSGGIBING:
+		TNT1 A 0 A_Jumpifcloser(128, "XDeath");
+		TNT1 A 0 A_Jump(256, "Death");
+		Goto Death;
+	Death.Ice:
+		SKGH L 5 A_GenericFreezeDeath;
+		TNT1 A 1 A_Freezedeathchunks;
+		wait;
+	Death:
+		SKGH LM 7;
+		SKGH N 7 A_Scream;
+		SKGH O 7 A_NoBlocking;
+		SKGH P 7;
+		SKGH Q -1;
+		Stop;
+	XDeath:
+		SKGX A 5;
+		SKGX B 5 A_XScream;
+		SKGX C 5;
+		SKGX D 5 A_NoBlocking();
+		SKGX EFG 5;
+		SKGX H -1;
+		Stop;
+	Raise:
+		SKGH Q 5;
+		SKGH PONML 5;
+		Goto See;
+	Crush:
+		SKGS A 0;
+		SKGS A 0 A_Startsound("Bloody/crush");
+		SKGS A -1;
+		stop;
+	}
+}
+
+class MM_RevenantTracer : RevenantTracer
+{
+	Default
+	{
+		RenderStyle "Translucent";
+		Alpha 0.7;
+		+ZDOOMTRANS +DONTSEEKINVISIBLE
+		DamageFunction 40;
+		DamageType "Enemydamage";
+	}
+	States
+	{
+	Spawn:
+		FATB AB 2 BRIGHT 
+		{
+		A_Tracer();
+		//A_SetRenderStyle(0.7, STYLE_Translucent);
+		A_Weave(6, 6, 0.2, 0.2);
+		A_SpawnItemEx("MM_Revenantmissiletrail", 0, 0, 0, 0, 0, 0, 0, 128);
+		}
+		Loop;
+	Death:
+		FBXP A 8 BRIGHT A_SetRenderStyle(1.0, STYLE_Add);
+		FBXP B 6 BRIGHT;
+		FBXP C 4 BRIGHT;
+		Stop;
+	}
+}
+
+
+class MM_WeakRevenantTracer : MM_RevenantTracer
+{
+	Default
+	{
+		DamageFunction 28;
+	}
+}
+
+class MM_OldRevenantTracer : RevenantTracer Replaces RevenantTracer
+{
+	Default
+	{
+		DamageType "Enemydamage";
+	}
+	States
+	{
+	Spawn:
+		BATF AB 2 BRIGHT A_Tracer();
+	}
+}
+
+class MM_WeakOldRevenantTracer : MM_OldRevenantTracer
+{
+	Default
+	{
+		DamageFunction 28;
+	}
+}
+
+class MM_Revenantmissiletrail : Actor
+{
+	Default
+	{
+	+NOINTERACTION;
+	+ROLLSPRITE;
+	Renderstyle "Add";
+	+ZDOOMTRANS
+	}
+	States
+	{
+	Spawn:
+		tnt1 A 2 Bright;
+		FTB1 AB 2 Bright;
+		FTBT AABBCCDD 1 Bright A_Fadeout;
+		Stop;
+	}
+}

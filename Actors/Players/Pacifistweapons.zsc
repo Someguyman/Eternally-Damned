@@ -1,0 +1,57 @@
+class MM_Stunner : Pacifistweapon
+{
+	Default
+	{
+		Weapon.SelectionOrder 1900;
+		//Weapon.AmmoUse 1;
+		//Weapon.AmmoGive 30;
+		//Weapon.AmmoType "Clip";
+		+WEAPON.WIMPY_WEAPON
+		//Attacksound "weapons/pistol";
+		Weapon.UpSound "Weapons/Pistolup";
+		Inventory.PickupSound "Weapons/PistolPickup";
+		+WEAPON.NOAUTOFIRE
+		Inventory.Pickupmessage "\cjyou got the stun gun";
+	}
+	
+		Action Void A_FireGlock()
+		{
+			A_gunflash("Flash");
+			A_Startsound("weapons/pistol", CHAN_WEAPON);
+			A_Firebullets(0.2, 0, 1, 0, "Bulletpuff");
+		}
+		
+	States
+	{
+	Ready:
+		PSTL A 1 A_WeaponReady;
+		Loop;
+	Deselect:
+		PSTL A 1 A_Lower;
+		Loop;
+	Select:
+		PSTL A 1 A_Raise;
+		Loop;
+	Fire:
+		PSTL B 1 A_FireGlock();
+		PSTL C 2;
+		PSTL D 3;
+		PSTL B 1;
+		PSTL A 0 A_Refire("Hold");
+		Goto Ready;
+	Hold:
+		PSTL A 8;
+		PSTL B 1 A_FireGlock();
+		PSTL C 2;
+		PSTL D 3;
+		PSTL B 1;
+		PSTL A 0 A_Refire("Hold");
+		Goto Ready;
+	Flash:
+		PSTF A 1 Bright A_Light1;
+		Goto LightDone;
+	Spawn:
+		PSTP A -1;
+		Stop;
+	}
+}

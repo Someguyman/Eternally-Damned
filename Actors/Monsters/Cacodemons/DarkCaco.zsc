@@ -1,0 +1,85 @@
+
+class MM_DarkCacodemon : MM_Cacodemon
+{
+	Default
+	{
+		Health 400;
+		SeeSound "DarkCaco/sight";
+		ActiveSound "DarkCaco/active";
+		PainSound "DarkCaco/pain";
+		DeathSound "DarkCaco/death";
+		Speed 8;
+		BloodColor "red";
+		Tag "Dark Cacodemon";
+	}
+	States
+	{
+	Spawn:
+		DKCO A 10 A_Look;
+		Loop;
+	See:
+		DKCO A 2 A_Chase;
+		Loop;
+	Melee:
+		DKCO C 4 A_FaceTarget();
+		DKCO DC 6 A_FaceTarget();
+		DKCO B 6 A_CustomMeleeAttack(30,"caco/melee");
+		Goto See;
+	Melee:
+		Stop;
+	Missile:
+		DKCO B 0 A_Jump(100, "Missile2");
+		DKCO AB 4 A_FaceTarget;
+		DKCO C 5 Bright A_FaceTarget;
+		DKCO D 5 BRIGHT A_CustomComboAttack("MM_ShadowBall", 22, 10 * random(1, 6),"caco/melee");
+		DKCO C 0 Bright A_SpidRefire;
+		Goto Missile+3;
+	Missile2:
+		DKCO E 4 A_FaceTarget;
+		DKCO B 4 A_FaceTarget;
+		DKCO C 4 Bright A_FaceTarget;
+		DKCO DDDDDD 4 BRIGHT A_SpawnProjectile("MM_ShadowBall",22);
+		Goto See;
+	Pain:
+		DKCO E 3;
+		DKCO F 6 A_Pain;
+		Goto See;
+	Death:
+		DKCO G 6 {bFLOATBOB = False;}
+		DKCO H 6 A_Scream;
+		DKCO IJ 6;
+		DKCO K 6 A_NoBlocking;
+		DKCO LMN 6;
+		DKCO O -1 A_SetFloorClip;
+		Stop;
+	Death.Ice:
+		DKCO F 0 {bFLOATBOB = False;}
+		DKCO F 5 A_GenericFreezeDeath;
+		TNT1 A 1 A_Freezedeathchunks;
+		WAIT;
+	Death.SSGGIBING:
+		TNT1 A 0 A_Jumpifcloser(128, "XDeath");
+		TNT1 A 0 A_Jump(256, "Death");
+		Goto Death;
+	XDeath:
+		DCAX A 1 {bFLOATBOB = False;}
+		DCAX A 3;
+		DCAX B 4 A_XScream;
+		DCAX C 4;
+		DCAX D 4 A_NoBlocking();
+		DCAX EFGHI 4;
+		DCAX J -1;
+		Stop;
+	Raise:
+		DKCO l 0 {bFLOATBOB = False;}
+		DKCO N 6 A_UnSetFloorClip;
+		DKCO MLKJIHG 6;
+		DKCO A 0 {bFLOATBOB = True;}
+		Goto See;
+	Crush:
+		HEGI A 0;
+		HEGI A 0 A_Startsound("Bloody/crush");
+		HEGI A -1;
+		stop;
+	}
+}

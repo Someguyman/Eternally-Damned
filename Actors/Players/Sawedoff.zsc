@@ -1,0 +1,146 @@
+
+class MM_Sawedoff : Alternateweapon
+{
+	Default
+	{
+		Weapon.SelectionOrder 400;
+		Weapon.AmmoUse 1;
+		Weapon.AmmoGive 0;
+		Weapon.AmmoType "Shell";
+		Inventory.PickupSound "Weapons/SawedoffLoad";
+		Weapon.UpSound "Weapons/SawedoffClose";
+		Inventory.PickupMessage "\cgYou got the Sawed off!";
+		Obituary "$OB_MPSSHOTGUN";
+		Tag "$TAG_SUPERSHOTGUN";
+	}
+	
+		Action Void A_FireSawedoff()
+		{
+			A_Startsound("Weapons/Sawedofffire", CHAN_AUTO);
+			A_GiveInventory("MM_Sawedoffcountdown",1);
+			A_gunflash("Flash");
+			if (CountInv("PowerQuadDamage") == 1)
+			{
+				A_Firebullets(7, 5, 9, 6, "MM_ExtremeSSGPuff", FBF_USEAMMO);
+			}
+			else 
+			{
+				A_Firebullets(7, 5, 9, 6, "MM_TameBulletPuff", FBF_USEAMMO);
+			}
+		}
+		
+	States
+	{
+	Ready:
+		SWDS A 1 A_Weaponready(WRF_ALLOWRELOAD);
+		Loop;
+	Deselect:
+		SWDS A 0 A_TakeInventory("MM_Sawedoffcountdown",2);
+		SWDS A 1 A_Lower;
+		Loop;
+	Select:
+		SWDS A 1 A_Raise;
+		Loop;
+	Fire:
+		SWDS A 0 A_JumpIfInventory("MM_Sawedoffcountdown",2,"reload");
+		SWDS A 0 A_JumpIfInventory("MM_Sawedoffcountdown",1,"Fireright");
+	Fireleft:
+		SWDF C 2 Bright A_FireSawedoff();
+		SWDF D 2 Bright;
+		Goto Firecontinue;
+	Fireright:
+		SWDF E 2 Bright A_FireSawedoff();
+		SWDF F 2 Bright;
+		Goto Firecontinue;
+	Firecontinue:
+		SWDS A 3;
+		SWDS A 0 A_CheckReload;
+		SWDS A 0 A_JumpIfInventory("MM_Sawedoffcountdown",2,"reload");
+		Goto Ready;
+	Reload:
+		SWDS C 0 A_JumpIfInventory("MM_Sawedoffcountdown",2,"ReloadContinue");
+		SWDS C 0 A_JumpIfInventory("MM_Sawedoffcountdown",1,"ReloadContinue2");
+		Goto Ready;
+	ReloadContinue:
+		SWDS C 3 A_TakeInventory("MM_Sawedoffcountdown",2);
+		SWDS D 3;
+		SWDS E 3 A_Startsound("Weapons/SawedoffOpen", CHAN_WEAPON);
+		SWDS HIJ 3;
+		SWDS K 3 A_Startsound("Weapons/SawedoffLoad", CHAN_WEAPON);
+		SWDS LM 3;
+		SWDS O 3 A_Startsound("Weapons/SawedoffClose", CHAN_WEAPON);
+		SWDS PC 3;
+		SWDS A 3 A_ReFire;
+		Goto Ready;
+	ReloadContinue2:
+		SWDS C 3 A_TakeInventory("MM_Sawedoffcountdown",2);
+		SWDS D 3;
+		SWDS E 3 A_Startsound("Weapons/SawedoffOpen", CHAN_WEAPON);
+		SWDS QRS 3;
+		SWDS T 3 A_Startsound("Weapons/SawedoffLoad", CHAN_WEAPON);
+		SWDS U 3;
+		Goto ReloadContinue+8;
+	//Fire:
+		//SWDS A 7 A_FireShotgun2;
+		//SWDS B 7;
+		//SWDS C 7 A_CheckReload;
+		//SWDS D 7 A_OpenShotgun2;
+		//SWDS E 7;
+		//SWDS F 7 A_LoadShotgun2;
+		//SWDS G 6;
+		//SWDS H 6 A_CloseShotgun2;
+		//SWDS A 5 A_ReFire;
+		//Goto Ready;
+	Flash:
+		//SHT2 I 4 Bright A_Light1;
+		//SHT2 J 3 Bright A_Light2;
+		Goto LightDone;
+	Spawn:
+		SWDP A -1;
+		Stop;
+	}
+}
+
+Class MM_Sawedoffcountdown : Inventory 
+{ 
+Default
+{
+Inventory.MaxAmount 4;
+}
+}
+
+Class MM_Sawedoffpickup : CustomInventory 
+{
+Default
+{
+	INVENTORY.RESTRICTEDTO "ET_Player_Alt";
+	VISIBLETOPLAYERCLASS "ET_Player_alt";
+	Inventory.PickupSound "Weapons/SawedoffLoad";
+	Inventory.PickupMessage "\cgYou got the Sawed off!";
+}
+	States
+	{
+	Spawn:
+		TNT1 A 0 A_JumpIfInventory("MM_Sawedoff", 1, "Taken");
+		SWDP A -1;
+		Stop;
+	Pickup:
+		TNT1 A 0 A_GiveInventory("MM_Sawedoff", 1);
+		TNT1 A 0 A_GiveInventory("Shell", 4);
+		Stop;
+	Taken:
+		TNT1 A 0;
+		Fail;	
+	}
+}
+
+Class MM_Sawedoffpickup2 : MM_Sawedoffpickup
+{
+	States
+	{
+	Pickup:
+		TNT1 A 0 A_GiveInventory("MM_Sawedoff", 1);
+		TNT1 A 0 A_GiveInventory("Shell", 2);
+		Stop;
+	}
+}

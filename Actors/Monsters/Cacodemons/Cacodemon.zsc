@@ -1,0 +1,356 @@
+Class MM_Cacospawner : MM_Monsterspawners
+{
+	Default
+	{
+		//Radius 50;
+		//Height 64;
+	}
+	States
+	{
+	Spawn:
+		HEAD D 0;
+		Goto spawncheck;
+	Goingdownspawn:
+	DoomZerospawn:
+	D64D2spawner:
+	Eviternityspawn:
+	Valiantspawn:
+	Scythe2spawn:
+	AAilenspawn:
+	TNTRevoSpawn:
+	JenesisSpawner:
+	Epic2spawner:
+	KDIKDIZDSpawn:
+	Alternatespawn:
+	Normalspawn:
+		TNT1 A 0 A_NoBlocking;
+		TNT1 A 0 A_SpawnItemEx("MM_Cacodemon",0,0,0,0,0,0,0,SXF_NOCHECKPOSITION | SXF_TRANSFERAMBUSHFLAG | SXF_TRANSFERPOINTERS | 288,0,tid);
+		Stop;
+	Ultimatedoomspawn:
+		TNT1 A 0 A_JumpIf(CallACS("Udoomcacoscript")==3, "Fatsospawn");
+		TNT1 A 0 A_JumpIf(CallACS("Udoomcacoscript")==4, "Arachnidspawn");
+		TNT1 A 0 A_JumpIf(CallACS("Udoomcacoscript")==7, "Udoomspawnalt2");
+		TNT1 A 0 A_Jump(20, "Painspawn");
+		TNT1 A 0 A_Jump(50, "Arachnidspawn");
+		TNT1 A 0 A_Jump(50, "fatsospawn");
+		Goto Normalspawn;
+	Udoomspawnalt2:
+		TNT1 A 0 A_Jump(15, "Painspawn");
+		Goto Normalspawn;
+	Fatsospawn:
+		TNT1 A 0 A_Fatsospawn();
+		Stop;
+	Arachnidspawn:
+		TNT1 A 0 A_Arachnidspawn();
+		Stop;
+	Painspawn:
+		TNT1 A 0 A_Painspawn();
+		Stop;
+	}
+}
+
+class MM_Cacodemon : Cacodemon
+{
+	Default
+	{
+		Gibhealth 20;
+		Species "Cacodemon";
+		+NOINFIGHTSPECIES +DONTHARMSPECIES +FLOATBOB
+		BloodColor "blue";
+		FloatBobStrength 0.5;
+		Scale 1.1;
+		Tag "Cacodemon";
+	}
+	States
+	{
+	Spawn:
+		HEAD A 10 A_Look;
+		Loop;
+	See:
+		HEAD A 3 A_Chase;
+		Loop;
+	Melee:
+		HEAD C 4 A_FaceTarget();
+		HEAD DC 6 A_FaceTarget();
+		HEAD B 6 A_CustomMeleeAttack(30,"caco/melee");
+		Goto See;
+	Missile:
+		HEAD B 0 A_Jump(100, "Missile2");
+	Attack:
+		HEAD B 5 A_FaceTarget;
+		HEAD C 5 Bright A_FaceTarget;
+		HEAD D 5 BRIGHT { A_CustomComboAttack("MM_CacodemonBall", 22, 10 * random(1, 6),"caco/melee"); A_FaceTarget(); }
+		HEAD B 0 A_Jump(56, "Attack");
+		Goto See;
+	Missile2:
+		HEAD E 5 A_FaceTarget;
+		HEAD B 5 A_FaceTarget;
+		HEAD C 5 Bright A_FaceTarget;
+		HEAD DDD 5 BRIGHT { A_SpawnProjectile("MM_CacodemonBall",22); A_FaceTarget(); }
+		Goto See;
+	Pain:
+		HEAD E 3;
+		HEAD E 3 A_Pain;
+		HEAD F 6;
+		Goto See;
+	Death:
+		HEAD G 8 {bFLOATBOB = False;}
+		HEAD H 8 A_Scream;
+		HEAD I 8;
+		HEAD J 8;
+		HEAD K 8 A_NoBlocking;
+		HEAD L -1 A_SetFloorClip;
+		Stop;
+	Death.Ice:
+		HEAD F 0 {bFLOATBOB = False;}
+		HEAD F 5 A_GenericFreezeDeath;
+		TNT1 A 1 A_Freezedeathchunks;
+		WAIT;
+	Death.SSGGIBING:
+		TNT1 A 0 A_Jumpifcloser(128, "XDeath");
+		TNT1 A 0 A_Jump(256, "Death");
+		Goto Death;
+	XDeath:
+		CAXD A 1 {bFLOATBOB = False;}
+		CAXD A 3;
+		CAXD B 4 A_XScream;
+		CAXD C 4;
+		CAXD D 4 A_NoBlocking();
+		CAXD EFGHI 4;
+		CAXD J -1;
+		Stop;
+	Raise:
+		HEAD l 0 {bFLOATBOB = False;}
+		HEAD K 8 A_UnSetFloorClip;
+		HEAD JIHG 8;
+		HEAD A 0 {bFLOATBOB = True;}
+		Goto See;
+	Crush:
+		HEGI A 0;
+		HEGI A 0 A_Startsound("Bloody/crush");
+		HEGI A -1;
+		stop;
+	}
+}
+
+Class MM_DeadCaco : MM_Cacodemon Replaces DeadCacodemon
+{
+	Default
+	{
+		-COUNTKILL
+	}
+	States
+	{
+		Spawn:
+			TNT1 A 0;
+			TNT1 A 0 A_Die("spawndeath");
+			Stop;
+		Idle:
+			HEAD A 10 A_Look;
+			Loop;
+		Death.Spawndeath:
+			HEAD A 0 A_NoBlocking;
+			HEAD A 0 {bFLOATBOB = False;}
+			HEAD A 0 A_Jump(50, "Gibbed");
+			HEAD L -1;
+			Stop;
+		Gibbed:
+			CAXD J -1;
+			Stop;
+	}
+}
+
+class MM_NightmareCacodemon : MM_Cacodemon
+{
+	Default
+	{
+		RenderStyle "subtract";
+		BloodColor "Yellow";
+		Alpha 0.5;
+		Speed 12;
+		Painchance 96;
+		SeeSound "CacoLantern/Sight";
+		PainSound "CacoLantern/Pain";
+		DeathSound "CacoLantern/Death";
+		ActiveSound "CacoLantern/Active";
+		Obituary "$OB_CACO";
+		HitObituary "%o was devoured by a Nightmare Cacodemon.";
+		Obituary "%o was smitten by a Nightmare Cacodemon.";
+		Scale 1.1;
+		Tag "Nightmare Cacodemon";
+	}
+		States
+	{
+	Spawn:
+		CCBT A 10 Bright A_Look;
+		Loop;
+	See:
+		CCBT A 3 Bright A_Chase;
+		Loop;
+	Melee:
+		CCBT C 4 Bright A_FaceTarget();
+		CCBT DC 6 Bright A_FaceTarget();
+		CCBT B 6 Bright A_CustomMeleeAttack(30,"caco/melee");
+		Goto See;
+	Missile:
+		CCBT B 5 Bright A_FaceTarget;
+		CCBT C 5 Bright A_FaceTarget;
+		CCBT DDD 5 BRIGHT A_CustomComboAttack("MM_CrackodemonBall", 22, 10 * random(1, 6),"caco/melee");
+		Goto See;
+	Pain:
+		CCBT E 3 Bright;
+		CCBT E 3 Bright A_Pain;
+		CCBT F 6 Bright;
+		Goto See;
+	Death.Ice:
+		CCBT F 0 {bFLOATBOB = False;}
+		CCBT F 5 A_GenericFreezeDeath;
+		TNT1 A 1 A_Freezedeathchunks;
+		WAIT;
+	Death:
+		CCBT G 8 Bright {bFLOATBOB = False;}
+		CCBT H 8 Bright A_Scream;
+		CCBT I 8 Bright;
+		CCBT J 8 Bright;
+		CCBT K 8 Bright A_NoBlocking;
+		CCBT L -1 Bright A_SetFloorClip;
+		Stop;
+	Death.SSGGIBING:
+		TNT1 A 0 Bright A_Jumpifcloser(128, "XDeath");
+		TNT1 A 0 Bright A_Jump(256, "Death");
+		Goto Death;
+	XDeath:
+		CAXD A 1 Bright {bFLOATBOB = False;}
+		CAXD A 4 Bright A_Scream;
+		CAXD B 4 Bright A_XScream;
+		CAXD C 4 Bright;
+		CAXD D 4 Bright A_NoBlocking();
+		CAXD EFGHI 4 Bright;
+		CAXD J -1 Bright;
+		Stop;
+	Raise:
+		CCBT L 8 Bright A_UnSetFloorClip;
+		CCBT KJIHG 8 Bright;
+		CCBT A 0 Bright {bFLOATBOB = True;}
+		Goto See;
+	Crush:
+		HEGI A 0;
+		HEGI A 0 A_Startsound("Bloody/crush");
+		HEGI A -1 Bright;
+		stop;
+		}
+}
+
+class MM_CacodemonBall : CacodemonBall Replaces CacodemonBall
+{
+	Default
+	{
+		Speed 13;
+		DamageFunction 24;
+		Scale 1.1;
+		+ZDOOMTRANS
+		DamageType "Enemydamage";
+	}
+	
+		Void A_Cacoballtrail()
+	{
+		if (CallACS("Projtoggle")==1)
+		{
+			A_SpawnItemEx("MM_CacodemonBallTrail", 0, 0, 0, 0, 0, 0, 0, 128);
+		}
+		else
+		{
+			
+		}
+	}
+	
+	States
+	{
+	Spawn:
+		BAL2 AAAABBBB 1 BRIGHT A_Cacoballtrail();
+		Loop;
+	Death:
+		BAL2 CDE 6 BRIGHT;
+		Stop;
+	}
+}
+
+class MM_CacodemonBallTrail : Actor
+{
+	Default
+	{
+		Scale 1.1;
+		PROJECTILE;
+		RENDERSTYLE "ADD";
+		+NOCLIP
+		Alpha 0.5;
+	}
+	States
+	{
+	Spawn:
+		TNT1 A 2 Bright;
+		BAL2 AB 3 Bright A_fadeout(0.2);
+		Loop;
+	}
+}
+
+class MM_CrackodemonBall : CacodemonBall
+{
+	Default
+	{
+		Radius 6;
+		Height 8;
+		Speed 15;
+		FastSpeed 20;
+		DamageFunction 36;
+		Projectile;
+		+RANDOMIZE
+		+ZDOOMTRANS
+		RenderStyle "Add";
+		DamageType "Enemydamage";
+		Scale 1.0;
+		Alpha 1;
+		SeeSound "caco/attack";
+		DeathSound "caco/shotx";
+	}
+	
+		Void A_Crackoballtrail()
+	{
+		if (CallACS("Projtoggle")==1)
+		{
+			A_SpawnItemEx("MM_CrackodemonBallTrail", 0, 0, 0, 0, 0, 0, 0, 128);
+		}
+		else
+		{
+			
+		}
+	}
+	
+	States
+	{
+	Spawn:
+		NBL2 AAAABBBB 1 BRIGHT A_Crackoballtrail();
+		Loop;
+	Death:
+		NBL2 CDE 6 BRIGHT;
+		Stop;
+	}
+}
+
+class MM_CrackodemonBallTrail : Actor
+{
+	Default
+	{
+		PROJECTILE;
+		RENDERSTYLE "ADD";
+		+NOCLIP
+		Alpha 0.5;
+	}
+	States
+	{
+	Spawn:
+		TNT1 A 2 Bright;
+		NBL2 AB 3 Bright A_fadeout(0.2);
+		Loop;
+	}
+}

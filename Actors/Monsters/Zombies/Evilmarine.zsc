@@ -1,0 +1,139 @@
+
+class MM_Evilmarine : Actor
+{
+	Default
+	{
+		Health 250;
+		Radius 20;
+		Height 56;
+		Speed 16;
+		PainChance 30;
+		Monster;
+		+FLOORCLIP
+		+NOINFIGHTING
+		Translation 2;
+		SeeSound "Evilmarine/Sight";
+		PainSound "Evilmarine/Pain";
+		DeathSound "Evilmarine/Death";
+		ActiveSound "Evilmarine/Active";
+		Obituary "%o was pulverized by an evil marine";
+		Tag "Evil Marine";
+		Dropitem "MM_Cell";
+	}
+	
+		Void A_EvilMAttack()
+	{
+		A_FaceTarget();
+		A_SpawnProjectile("MM_PlasmaBall");
+	}
+	
+	States
+	{
+	Spawn:
+		EVMP AB 10 A_Look;
+		Loop;
+	See:
+		EVMP AABBCCDD 1 A_Chase;
+		Loop;
+	Missile:
+		EVMP E 2 A_FaceTarget;
+		EVMP F 1 BRIGHT A_EvilMAttack();
+		EVMP E 2 A_FaceTarget;
+		EVMP F 1 BRIGHT A_EvilMAttack();
+		EVMP E 2 A_FaceTarget;
+		EVMP F 1 BRIGHT A_EvilMAttack();
+		Goto See;
+	Pain:
+		EVMP G 3;
+		EVMP G 3 A_Pain;
+		Goto See;
+	Death.SSGGIBING:
+		TNT1 A 0 A_Jumpifcloser(128, "XDeath");
+		TNT1 A 0 A_Jump(256, "Death");
+		Goto Death;
+	Death:
+		EVMP H 10;
+		EVMP I 10 A_Scream;
+		EVMP J 10 A_NoBlocking;
+		EVMP KLM 10;
+		EVMP N -1;
+		Stop;
+	XDeath:
+		EVMP O 5 ;
+		EVMP P 5 A_XScream;
+		EVMP Q 5 A_NoBlocking;
+		EVMP RSTUV 5;
+		EVMP W -1;
+		Stop;
+	Raise:
+		EVMP M 5;
+		EVMP LKJIH 5;
+		Goto See ;
+	}
+}
+
+Class MM_D64D2EvilMarine : MM_Evilmarine
+{
+	Default
+	{
+		Health 250;
+		Radius 20;
+		Height 56;
+		Speed 16;
+		PainChance 30;
+		Monster;
+		+FLOORCLIP
+		+NOINFIGHTING
+		Translation 2;
+		SeeSound "StrongZombie/Sight";
+		PainSound "StrongZombie/Pain";
+		DeathSound "StrongZombie/Death";
+		ActiveSound "StrongZombie/Active";
+		Obituary "%o was pulverized by an evil marine";
+		Tag "Evil Marine";
+		Dropitem "MM_Cell";
+	}
+	States
+	{
+		Spawn:
+			EVMP AB 10 A_Look;
+			Loop;
+		See:
+			EVMP AABBCCDD 1 A_Chase;
+			Loop;
+		Missile:
+			EVMP E 2 A_FaceTarget;
+			EVMP F 1 BRIGHT A_EvilMAttack();
+			EVMP E 2 A_FaceTarget;
+			EVMP F 1 BRIGHT A_EvilMAttack();
+			EVMP E 2 A_FaceTarget;
+			EVMP F 1 BRIGHT A_EvilMAttack();
+			Goto See;
+		Pain:
+			EVMP G 3;
+			EVMP G 3 A_Pain;
+			Goto See;
+	Death.SSGGIBING:
+			TNT1 A 0 A_Jumpifcloser(128, "XDeath");
+			TNT1 A 0 A_Jump(256, "Death");
+			Goto Death;
+		Death:
+			EVMP H 10;
+			EVMP I 10 A_Scream;
+			EVMP J 10 A_NoBlocking;
+			EVMP KLM 10;
+			EVMP N -1;
+			Stop;
+		XDeath:
+			EVMP O 5 ;
+			EVMP P 5 A_XScream;
+			EVMP Q 5 A_NoBlocking;
+			EVMP RSTUV 5;
+			EVMP W -1;
+			Stop;
+		Raise:
+			EVMP M 5;
+			EVMP LKJIH 5;
+			Goto See ;
+	}
+}

@@ -1,0 +1,308 @@
+
+Class MM_Baronspawner : MM_Monsterspawners
+{
+	Default
+	{
+		+Noblockmap
+	}
+	States
+	{
+	Spawn:
+		BNOH E 0;
+		Goto spawncheck;
+	Goingdownspawn:
+	DoomZerospawn:
+	D64D2spawner:
+	Scythe2spawn:
+	AAilenspawn:
+	TNTRevoSpawn:
+	JenesisSpawner:
+	Epic2spawner:
+	KDIKDIZDSpawn:
+	Alternatespawn:
+	Normalspawn:
+	Bossspawn:
+		TNT1 A 0 A_NoBlocking;
+		TNT1 A 0 A_SpawnItemEx("MM_BaronOfHell",0,0,0,0,0,0,0,SXF_NOCHECKPOSITION | SXF_TRANSFERAMBUSHFLAG | SXF_TRANSFERPOINTERS | 288,0,tid);
+		Stop;
+	Ultimatedoomspawn:
+		TNT1 A 0;
+		TNT1 A 0 A_JumpIf(CallACS("UdoomBaronscript")==2, "Bossspawn");
+		TNT1 A 0 A_JumpIf(CallACS("UdoomBaronscript")==3, "Knightspawn");
+		TNT1 A 0 A_JumpIf(CallACS("UdoomBaronscript")==4, "Vilespawn");
+	UDoomspawncontinued:
+		TNT1 A 0 A_NoBlocking;
+		TNT1 A 0 A_JumpIf(CallACS("UdoomBaronscript")==5, "UDoomspawncontinued2");
+		TNT1 A 0 A_Jump(30, "Vilespawn");
+	UDoomspawncontinued2:
+		TNT1 A 0 A_Jump(100, "Knightspawn");
+		TNT1 A 0 A_SpawnItemEx("MM_BaronOfHell",0,0,0,0,0,0,0,SXF_NOCHECKPOSITION | SXF_TRANSFERAMBUSHFLAG | SXF_TRANSFERPOINTERS | 288,0,tid);
+		Stop;
+	Knightspawn:
+		TNT1 A 0 A_Knightspawn();
+		Stop;
+	Vilespawn:
+		TNT1 A 0 A_SpawnItemEx("MM_D1_Archvile",0,0,0,0,0,0,0,SXF_NOCHECKPOSITION | SXF_TRANSFERAMBUSHFLAG | SXF_TRANSFERPOINTERS | 288,0,tid);
+		Stop;
+	Eviternityspawn:
+		TNT1 A 0 A_NoBlocking;
+		TNT1 A 0 A_SpawnItemEx("MM_CybruiserMKII",0,0,0,0,0,0,0,SXF_NOCHECKPOSITION | SXF_TRANSFERAMBUSHFLAG | SXF_TRANSFERPOINTERS | 288,0,tid);
+		Stop;
+	Valiantspawn:
+		TNT1 A 0 A_NoBlocking;
+		TNT1 A 0 A_SpawnItemEx("MM_Deadcubus",0,0,0,0,0,0,0,SXF_NOCHECKPOSITION | SXF_TRANSFERAMBUSHFLAG | SXF_TRANSFERPOINTERS | 288,0,tid);
+		Stop;
+	}
+}
+
+Class MM_Baronattackpattern : Inventory 
+{ 
+Default
+{
+Inventory.MaxAmount 2;
+}
+}
+
+class MM_BaronOfHell : BaronOfHell Replaces Baronofhell
+{
+	Default
+	{
+		Health 900;
+		Gibhealth 40;
+		PainChance 30;
+		Speed 8;
+		SeeSound "baronofhell/sight";
+		PainSound "baronofhell/pain";
+		DeathSound "baronofhell/death";
+		ActiveSound "baronofhell/active";
+		BloodColor "30 67 23";
+		+MISSILEMORE
+		+NOINFIGHTSPECIES
+		Scale 1.2;
+		+NOFEAR
+	}
+	
+	Void A_Noblewalk()
+	{
+		A_Chase();
+		A_StartSound("Heavynoble/Walk", CHAN_BODY, CHANF_DEFAULT, 1, ATTN_IDLE);
+	}
+	
+	Void A_Baronattack()
+	
+	{
+		A_SpawnProjectile("MM_BaronBall2",30);
+		A_Facetarget();
+	
+	}
+	
+	Void A_Nobleattack()
+	
+	{
+		A_CustomComboAttack("MM_BaronBall", 30, 40, "baron/melee");
+		A_Facetarget();
+	}
+	
+	Void A_TripleBruisAttack()
+	
+	{
+		A_FaceTarget();
+		A_CustomComboAttack("MM_BaronBall", 30, 40, "baron/melee");
+		A_SpawnProjectile("MM_BaronBall",30,0,-10,0);
+		A_SpawnProjectile("MM_BaronBall",30,0,10,0);
+	}
+	
+	States
+	{
+	Spawn:
+		BNOH AB 10 A_Look ;
+		Loop;
+	See:
+		BNOH A 3 A_Noblewalk();
+		BNOH ABB 3 A_Chase;
+		BNOH C 3 A_Noblewalk();
+		BNOH CDD 3 A_Chase;
+		Loop;
+	Melee:
+		BNOH EF 6 A_FaceTarget();
+		BNOH G 6 A_Nobleattack();
+		BNOH ST 5 A_FaceTarget();
+		BNOH U 6 A_Nobleattack();
+		Goto See;
+	Missile:
+		BNOH A 0 A_JumpIfInventory("MM_Baronattackpattern", 2, "Missile3");
+		BNOH A 0 A_JumpIfInventory("MM_Baronattackpattern", 1, "Missile2");
+		BNOH A 0 A_GiveInventory("MM_Baronattackpattern", 1);
+		BNOH EF 8 A_FaceTarget;
+		BNOH G 8 Bright A_TripleBruisAttack();
+		Goto See;
+	Missile2:
+		BNOH ST 8 A_FaceTarget;
+		BNOH U 8 Bright A_TripleBruisAttack();
+		BNOH A 0 A_GiveInventory("MM_Baronattackpattern", 1);
+		Goto See;
+	Missile3:
+		BNOH PQ 8 A_FaceTarget;
+		BNOH RRRR 5 Bright A_Baronattack();
+		BNOH A 0 A_TakeInventory("MM_Baronattackpattern",2);
+		Goto See;
+	Pain:
+		BNOH H  2;
+		BNOH H  2 A_Pain;
+		Goto See;
+	Death.Ice:
+		BNOH H 5 A_GenericFreezeDeath;
+		TNT1 A 1 A_Freezedeathchunks;
+		WAIT;
+	Death.SSGGIBING:
+		//TNT1 A 0 A_Jump(100, "Death");
+		//TNT1 A 0 A_Jumpifcloser(128, "XDeath");
+		TNT1 A 0 A_Jump(256, "Death");
+		Goto Death;
+	Death:
+		BNOH I  8;
+		BNOH J  8 A_Scream;
+		BNOH K  8;
+		BNOH L  8 A_NoBlocking;
+		BNOH MN 8;
+		BNOH O -1 A_BossDeath;
+		Stop;
+	Raise:
+		BNOH M 8;
+		BNOH LKJI  8;
+		Goto See;
+	XDeath:
+		BNHG A 5;
+		BNHG B 5 A_XScream;
+		BNHG C 5;
+		BNHG D 5 A_NoBlocking();
+		BNHG EFGH 5;
+		BNHG I -1 A_BossDeath;
+		Stop;
+	Crush:
+		BNHX A 0;
+		BNHX A 0 A_Startsound("Bloody/crush");
+		BNHX A -1;
+		stop;
+	}
+}
+
+class MM_D1_Baronofhell : MM_BaronOfHell Replaces Baronofhell
+{
+	States
+	{
+	Spawn:
+		TNT1 A 0;
+		TNT1 A 0 A_SpawnItem("MM_Clipbox", 10, 0);
+		TNT1 A 0 A_SpawnItem("MM_ShellBox", 5, 0);
+		TNT1 A 0 A_SpawnItem("MM_RocketAmmo", -10, 0);
+		Goto Idle;
+	Idle:
+		BNOH AB 10 A_Look; 
+		Loop;
+	}
+}
+
+class MM_BaronBall : BaronBall Replaces BaronBall
+{
+	Default
+	{
+	SeeSound "baronofhell/attack";
+	DeathSound "baronofhell/shotx";
+	DamageType "Enemydamage";
+	Renderstyle "Add";
+	Speed 16;
+	DamageFunction 36;
+	+ZDOOMTRANS
+	}
+	States
+	{
+	Spawn:
+		BAL7 A 0 nodelay A_JumpIf(CallACS("Projtoggle")==1, "AltSpawn");
+		BA7L AB 4 BRIGHT;
+		BAL7 A 0 Bright A_JumpIf(CallACS("Projtoggle")==1, "AltSpawn");
+		Loop;
+	AltSpawn:
+		B7AL AAAABBBB 1 BRIGHT A_SpawnItemEx("MM_Baronballtrail", 0, 0, 0, 0, 0, 0, 0, 128);
+		Goto Spawn;
+	Death:
+		B7AL CDE 6 BRIGHT;
+		Stop;
+	}
+}
+
+class MM_Baronballtrail : Actor
+{
+	Default
+	{
+	+NOINTERACTION;
+	+ROLLSPRITE;
+	Renderstyle "Add";
+	+ZDOOMTRANS
+	}
+	States
+	{
+	Spawn:
+		tnt1 A 2; 
+		7BAL AABBCCDD 1 Bright A_Fadeout;
+		Stop;
+	}
+}
+
+Class MM_BaronBall2 : Actor
+{
+  Default
+  {
+    Radius 16;
+    Height 16;
+    Speed 25;
+    DamageFunction 52;
+    RenderStyle "Add";
+    Alpha 0.9;
+    SeeSound "baronofhell/attack";
+	DeathSound "baronofhell/shotx";
+	DamageType "Enemydamage";
+    Decal "Scorch";
+    Projectile;
+    +Randomize;
+	+ZDOOMTRANS
+  }
+
+  States
+  {
+  Spawn:
+	BNBL A 0 nodelay A_JumpIf(CallACS("Projtoggle")==1, "AltSpawn");
+    BBL2 AB 4 BRIGHT;
+	BNBL A 0 A_JumpIf(CallACS("Projtoggle")==1, "AltSpawn");
+    Loop;
+  Altspawn:
+    BNBL AAAABBBB 1 Bright A_SpawnItemEx("MM_BaronBallTrail2", 0, 0, 0, 0, 0, 0, 0, 128);
+	Goto spawn;
+  Death:
+    BNBL KLM 6 Bright;
+    Stop;
+  }
+}
+
+Class MM_BaronBallTrail2 : Actor
+{
+  Default
+  {
+    Radius 1;
+    Height 1;
+    Speed 0;
+    RenderStyle "Add";
+    Alpha 0.70;
+    Projectile;
+    +NoClip
+	+ZDOOMTRANS
+  }
+
+  States
+  {
+  Spawn:
+	tnt1 A 2;
+    BNBL CDEFGHIJ 2 Bright;
+    Stop;
+  }
+}

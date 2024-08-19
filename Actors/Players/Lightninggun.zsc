@@ -1,0 +1,138 @@
+
+class MM_Lightninggun : Alternateweapon
+{
+	Default
+	{
+		Weapon.SelectionOrder 100;
+		Weapon.AmmoUse 2;
+		Weapon.AmmoGive 40;
+		Weapon.AmmoType "Cell";
+		Inventory.PickupMessage "\cgYou got the lightning gun!";
+		Tag "Lightning gun";
+	}
+	States
+	{
+	Ready:
+		LTGN A 1 A_WeaponReady;
+		Loop;
+	Deselect:
+		LTGN C 1 A_Lower;
+		Loop;
+	Select:
+		LTGN A 1 A_Raise;
+		Loop;
+	Fire:
+		LTGN A 0 Bright A_Startsound("Weapons/Lighninggunstart", CHAN_AUTO);
+	Fireloop:
+		LTGN A 1 Bright
+		{
+			A_GunFlash("Flash"); 
+			A_FireProjectile("MM_Lightningprojectile",0,1,1);		
+		}
+		LTGN A 1 Bright A_Startsound("Weapons/Lighninggunfire", CHAN_WEAPON, CHANF_LOOPING, 1, ATTN_NORM);
+		LTGN A 2 A_ReFire("Fireloop");
+		LTGN A 0 A_Stopsound(CHAN_WEAPON);
+		Goto Ready;
+	Flash:
+		LTGF A 1 Bright A_Light1;
+		LTGF B 1 Bright A_Light2;
+		Goto LightDone;
+	Spawn:
+		LTGP A -1;
+		Stop;
+	}
+}
+
+Class MM_Lightningprojectile : MageWandMissile
+{
+	Default
+	{
+		Speed 300;
+		Radius 13;
+		Height 8;
+		DamageFunction 24;
+		damagetype "Zap";
+		RenderStyle "Add";
+		MissileType "MM_Lightningtrail";
+		Alpha 0.75;
+		Scale 0.4;
+		-RIPPER
+		-CANNOTPUSH
+		-NODAMAGETHRUST
+	}
+  states
+  {
+  Death:
+    APLX BCDE 3 bright;
+    stop;
+  }
+}
+
+Class MM_Lightningtrail : MageWandSmoke
+{
+  Default
+  {
+	Renderstyle "Add";
+	Alpha 0.75;
+	Scale 0.4;
+  }
+  States
+  {
+	Spawn:
+		APLX BCD 1 Bright;
+		stop;
+	Spawn2:
+		APLX CBD 1 Bright;
+		Stop;
+  }
+}
+
+//class MM_Lightningprojectile : FastProjectile
+//{
+	//Default
+	//{
+		//Speed 300;
+		//SeeSound "";
+		//Height 8;
+		//Radius 14;
+		//Damage 7;
+		//DeathSound "";
+		//RenderStyle "Add";
+		//Alpha 0.75;
+		//Projectile;
+		//+RANDOMIZE
+	//}
+	//States
+	//{
+	//Spawn:
+		//EBLT ABC 3 BRIGHT A_BishopMissileWeave;
+		//Loop;
+	//Death:
+		//EBLT DEF 4 Bright;
+		//Stop;
+	//}
+//}
+
+Class MM_Lightninggunpickup : CustomInventory 
+{
+Default
+{
+	INVENTORY.RESTRICTEDTO "ET_Player_Alt";
+	VISIBLETOPLAYERCLASS "ET_Player_alt";
+	//Inventory.PickupSound "Weapons/GLauncherPickup";
+	Inventory.PickupMessage "\cgYou got the lightning gun!";
+}
+	States
+	{
+	Spawn:
+		TNT1 A 0 A_JumpIfInventory("MM_Lightninggun", 1, "Taken");
+		ETRO A -1;
+		Stop;
+	Pickup:
+		TNT1 A 0 A_GiveInventory("MM_Lightninggun", 1);
+		Stop;
+	Taken:
+		TNT1 A 0;
+		Fail;	
+	}
+}

@@ -1,0 +1,106 @@
+
+class MM_Chainsaw : Originalweapon REPLACES CHAINSAW
+{
+	Default
+	{
+		Weapon.Kickback 0;
+		Weapon.SelectionOrder 2200;
+		Weapon.AmmoUse 1;
+		Weapon.AmmoGive 100;
+		Weapon.AmmoType "MM_Chainsawfuel";
+		Weapon.UpSound "weapons/sawup";
+		Weapon.ReadySound "weapons/sawidle";
+		Inventory.PickupSound "Weapons/Sawpickup";
+		+WEAPON.AMMO_OPTIONAL
+		Inventory.PickupMessage "\cgA Chainsaw! Find some \cameat\cg!";
+		Obituary "$OB_MPCHAINSAW";
+		Tag "$TAG_CHAINSAW";
+		+WEAPON.MELEEWEAPON		
+		+WEAPON.NOAUTOSWITCHTO
+		
+	}
+			Action Void A_Sawmelee()
+		{
+			A_Startsound("weapons/sawfull", CHAN_WEAPON, CHANF_LOOPING, 1, ATTN_NORM);
+			A_Saw("","weapons/sawhit",12,"MM_ChainsawPuff",SF_NORANDOM, 80 + 1);
+		}
+		
+				Action Void A_Sawmelee2()
+		{
+			A_Saw("weapons/sawfull","weapons/sawhit",12,"MM_ChainsawPuff",SF_NORANDOM, 80 + 1);
+		}
+		
+	States
+	{
+	Ready:
+		DBSW A 0 A_Startsound("weapons/sawidle", CHAN_WEAPON, 0, 1, ATTN_NORM);
+		DBSW A 0 A_JumpIfInventory("MM_Chainsawfuel",1,"Ready2");
+		DBSW CD 4 A_WeaponReady;
+		Loop;
+	Ready2:
+		DBSW CD 3 A_WeaponReady;
+		Goto Ready;
+	Deselect:
+		DBSW A 1 A_Lower;
+		Loop;
+	Select:
+		DBSW C 1 A_Raise;
+		Loop;
+	Fire:
+		DBSW A 0 A_JumpIfInventory("MM_Chainsawfuel",1,"FireContinue");
+		Goto Slowfire;
+	FireContinue:
+		DBSW A 2 Offset(0,32) A_Sawmelee();
+		DBSW B 1 Offset(0,35) A_Sawmelee();
+		DBSW B 0 A_ReFire("Fire");
+		Goto Ready;
+	SlowFire:
+		DBSW A 4 Offset(0,32) A_Sawmelee2();
+		DBSW B 4 Offset(0,33) A_Sawmelee2();
+		DBSW B 0 A_ReFire;
+		Goto Ready;
+	Spawn:
+		DSAW A -1;
+		Stop;
+	}
+}
+
+class MM_ChainsawPuff : MM_ExtremeBulletPuff
+{
+	Default
+	{
+	DamageType "CHAINSAWGIBING";
+	//+EXTREMEDEATH
+	}
+	States
+	{
+	Spawn:
+		PUFF A 4 Bright;
+		PUFF BCD 4;
+		Stop;
+	}
+}
+
+Class MM_Chainsawpickup : CustomInventory 
+{
+Default
+{
+	INVENTORY.RESTRICTEDTO "ET_Player";
+	VISIBLETOPLAYERCLASS "ET_Player";
+	Inventory.PickupSound "Weapons/Sawpickup";
+	Inventory.PickupMessage "\cgA Chainsaw! Find some \cameat\cg!";
+}
+	States
+	{
+	Spawn:
+		TNT1 A 0 A_JumpIfInventory("MM_Chainsaw", 1, "Taken");
+		DSAW A -1;
+		Stop;
+	Pickup:
+		TNT1 A 0 A_GiveInventory("MM_Chainsaw", 1);
+		Stop;
+	Taken:
+		TNT1 A 0;
+		Fail;	
+	}
+}

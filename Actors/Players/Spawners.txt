@@ -1,0 +1,25 @@
+
+ACTOR ED_chainsaw_spawner  : MM_Slot1spawner REPLACES CHAINSAW
+{}
+
+ACTOR ED_pistol_spawner  : MM_Slot2spawner REPLACES Pistol
+{}
+
+ACTOR ED_shotgun_spawner  : MM_Slot3_1spawner REPLACES shotgun
+{}
+
+ACTOR ED_Supershotgun_spawner  : MM_Slot3_2spawner REPLACES Supershotgun
+{}
+
+ACTOR ED_Chaingun_spawner  :  MM_Slot4spawner REPLACES Chaingun
+{}
+
+ACTOR ED_Rocketlauncher_spawner  : MM_Slot5spawner REPLACES Rocketlauncher
+{}
+
+ACTOR ED_Plasmarifle_spawner  : MM_Slot6spawner REPLACES Plasmarifle
+{}
+
+ACTOR ED_BFG9000_spawner  : MM_Slot7spawner REPLACES BFG9000
+{}
+

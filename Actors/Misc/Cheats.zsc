@@ -1,0 +1,12 @@
+
+Class AllEDweapons : CustomInventory
+{
+	Default
+	{
+		Inventory.PickupMessage "";
+	}
+	States
+	{
+	
+	}
+}
