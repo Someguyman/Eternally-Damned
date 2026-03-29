@@ -96,8 +96,7 @@ class MM_BaronOfHell : BaronOfHell Replaces Baronofhell
 	
 	}
 	
-	Void A_Nobleattack()
-	
+	Void A_Nobleattack()	
 	{
 		A_CustomComboAttack("MM_BaronBall", 30, 40, "baron/melee");
 		A_Facetarget();

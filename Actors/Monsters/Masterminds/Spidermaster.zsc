@@ -157,6 +157,22 @@ class MM_SpiderMasterMind : Spidermastermind Replaces Spidermastermind
 
 class MM_AAMasterMind : MM_SpiderMasterMind Replaces Spidermastermind
 {
+		Void A_Spiderattack2()
+	{
+		A_Startsound("Weapons/NailMGFire", CHAN_WEAPON);
+		A_FaceTarget();
+		A_Spawnprojectile("MGNail",54,0,0,CMF_OFFSETPITCH,frandom(-0.5,0.5));
+		//A_Spawnprojectile("MGNail",45,0,-10,CMF_OFFSETPITCH,frandom(-0.5,0.5));
+		//A_Spawnprojectile("MGNail",45,0,10,CMF_OFFSETPITCH,frandom(-0.5,0.5));
+	}
+	
+		Void A_Spiderattack3()
+	{
+		A_Startsound("director/maulf2", CHAN_WEAPON);
+		A_FaceTarget();
+		A_Spawnprojectile("MGNail",54,0,frandom(-11,11),CMF_OFFSETPITCH,frandom(-7,7));
+	}
+	
 	States
 	{
 	Spawn:
@@ -188,12 +204,11 @@ class MM_AAMasterMind : MM_SpiderMasterMind Replaces Spidermastermind
 		Goto Missile+2;
 	Missile3:
 		DIRE G 8 A_FaceTarget;
-		DIRE H 6 Bright A_Spiderattack3();
-		DIRE U 8 A_FaceTarget;
-		DIRE G 8 A_FaceTarget;
-		DIRE H 6 Bright A_Spiderattack3();
-		DIRE U 8 A_FaceTarget;
-		DIRE G 13 A_SpidRefire;
+		DIRE UUUUUUUUUUUUUUUUUUUUUUUUUUUUU 0 Bright A_Spiderattack3();
+		DIRE U 5 Bright A_Spiderattack3();
+		DIRE G 10;
+		DIRE GTGTGTGTGTGT 2 {A_FaceTarget(); A_Startsound("director/nailin");}
+		DIRE T 0 A_SpidRefire;
 		Goto Missile+2;
 	Pain:
 		DIRE I 3;

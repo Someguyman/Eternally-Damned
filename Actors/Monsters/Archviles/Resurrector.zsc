@@ -3,28 +3,47 @@ class MM_Resurrector : mm_Archvile
 {
 	Default
 	{
-		Health 1500;
+		Health 2000;
 		scale 0.90;
-		Speed 20;
+		Speed 25;
 		-QUICKTORETALIATE
 		+AVOIDHAZARDS
 		+NOINFIGHTING
+		+friendly
+		+DONTFOLLOWPLAYERS
+		//+FRIGHTENED
+		Tag "Resurrector (Not Actually Friendly)";
 	}
 	States
 	{
 	Spawn:
+	Idle:
 		RESS AB 10 A_Look;
 		Loop;
 	See:
+		RESS A 0 A_JumpIfCloser(300,"Scared");
 		RESS AABBCCDDEEFF 2 A_VileChase;
+		RESS A 0 { bfriendly = true; bFRIGHTENED = false; }
 		Loop;
+	Scared:
+		RESS A 0 { bfriendly = false; bFRIGHTENED = true; }
+		goto see +1;
 	Missile:
 		Stop;
 	Heal:
-		RESS GHI 6 BRIGHT;
+		RESS G 0 { bfriendly = false; }
+		RESS G 0 A_TakeInventory("MM_ResurrectorHealThinggy",14);
+	HealLoop:	
+		RESS G 0 A_spawnprojectile("MM_MultiresRadius", 10);
+		RESS G 1 Bright A_GiveInventory("MM_ResurrectorHealThinggy", 1);
+		RESS G 0 A_JumpIfInventory("MM_ResurrectorHealThinggy", 14, 2);
+		RESS G 0 A_Jump(256, "Healloop");
+		RESS G 5 BRIGHT;
+		RESS HI 6 BRIGHT;
+		RESS G 0 { bfriendly = true; bFRIGHTENED = false; }
 		Goto See;
 	Pain:
-		RESS Q 5;
+		RESS Q 5 { bfriendly = true; bFRIGHTENED = true; A_TakeInventory("MM_ResurrectorHealThinggy",14); }
 		RESS Q 5 A_Pain;
 		Goto See;
 	Death:
@@ -37,4 +56,40 @@ class MM_Resurrector : mm_Archvile
 	XDeath:
 		Stop;
 	}
+}
+
+Class MM_ResurrectorHealThinggy : Inventory 
+{ 
+Default
+{
+Inventory.MaxAmount 14;
+}
+}
+
+Class MM_MultiresRadius : actor
+{
+	Default
+	{
+		Radius 8;
+		Height 4;
+		Speed 30;
+		Projectile;
+		+NORADIUSDMG
+		+ISMONSTER
+		+INVULNERABLE
+		+THRUACTORS
+		+FLOORHUGGER
+		+NOCLIP
+		-COUNTKILL
+	}
+	
+	States
+	{
+		Spawn:
+			TNT1 AAAAAAAAAA 2 A_VileChase;
+			Stop;
+		Heal:
+			TNT1 A 1;
+			Stop;
+  }
 }

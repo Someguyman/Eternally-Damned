@@ -1,4 +1,4 @@
-//STARTUPTYPE = "Hexen"
+STARTUPTYPE = "Hexen"
 STARTUPTITLE = "Eternally Damned Alpha"
 STARTUPCOLORS = "fc03e8","000000"
 LOADLIGHTS = 0 

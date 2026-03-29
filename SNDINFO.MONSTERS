@@ -613,6 +613,8 @@ Mastermind/walk24 DSMWALK5
 $attenuation Flyingspider/Death 0
 Flyingspider/Death DSFSPDTH
 Spider/death2 DSSPIDH2
+Director/maulf2 dirmaul2 
+Director/nailin	dirnailn
 
 Weapons/NailMGFire	NAILFIRE
 $attenuation Weapons/NailMGFire 0.6

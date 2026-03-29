@@ -97,11 +97,7 @@ Class TwoWeaponSpawner : Inventory
 		
 		if(p.countinv(Big_Weapons[1]) > 0)
 		{
-			if (CallACS("Gamespawntoggle")==1)
-			{
-			
-			}
-			else
+			if (CallACS("Gamespawntoggle")!=1)
 			{
 				if(p.countinv(Demon_keys[0]) < 1)		
 				{
